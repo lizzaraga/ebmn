@@ -1,0 +1,28 @@
+.v-menu {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    align-items: center;
+    .v-item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        min-height: $navbar-v-thickness;
+        color: #000;
+        &>.text {
+            text-align: center;
+            font-size: 0.6rem;
+            font-weight: 500;
+            display: -webkit-box;
+            -webkit-line-clamp: 1;
+            -webkit-box-orient: vertical;
+            text-overflow: ellipsis;
+            overflow: hidden;
+        }
+        &:hover {
+            background-color: #f8f9fa;
+        }
+    }
+}
