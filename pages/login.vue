@@ -52,8 +52,10 @@ export default class Login extends Vue{
           this.$router.push({name: 'patient'})
           break
         case 'clerk':
-          
           this.$router.push({name: 'clerk'})
+          break
+        case 'manager':
+          this.$router.push({name: 'manager'})
           break
       }
     }
