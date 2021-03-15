@@ -23,5 +23,4 @@ class PatientApi{
     }
   }
 }
-
 export default new PatientApi()

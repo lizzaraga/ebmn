@@ -28,7 +28,7 @@
 }
 
 .aside-menu-link {
-    font-size: 0.6rem;
+    font-size: 0.7rem;
     font-weight: 500;
     display: -webkit-box;
     -webkit-line-clamp: 1;
@@ -41,6 +41,7 @@
     position: relative;
     &.nuxt-link-active {
         color: $primary-color;
+        font-weight: 600;
         &::after {
             content: "";
             position: absolute;

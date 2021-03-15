@@ -1,6 +1,7 @@
 import { Module, VuexAction, VuexModule, VuexMutation } from "nuxt-property-decorator";
 import clerkApi from "~/api/clerk.api";
 import { IClerkDiagnosis, IClerkDrug, IClerkScreening, IClerkSurgery, IClerkVaccine } from "~/api/models/clerk.model";
+import { IHospital } from "~/api/models/hospital.model";
 
 @Module({
   name: 'clerk-store',
@@ -15,6 +16,19 @@ export default class ClerkStore extends VuexModule{
   diagnosis: IClerkDiagnosis[] = []
   surgeries: IClerkSurgery[] = []
 
+  clerkHospital: IHospital = {}
+
+  // Check we have handle clerk hospital change and retrieve data
+  clerkHospitalHasBeenHandled = false
+
+  @VuexMutation
+  setClerkHospital(data: IHospital){
+    this.clerkHospital = data
+  }
+  @VuexMutation
+  setClerkHospitalHandle(data: boolean){
+    this.clerkHospitalHasBeenHandled = data
+  }
 
   @VuexMutation
   setVaccines(data: IClerkVaccine[]){
@@ -38,6 +52,15 @@ export default class ClerkStore extends VuexModule{
     this.surgeries = data
   }
 
+  
+  @VuexAction
+  updateClerkHospitalHandle(data: boolean){
+    this.context.commit('setClerkHospitalHandle', data)
+  }
+  @VuexAction
+  updateClerkHospital(hospital: IHospital){
+    this.context.commit('setClerkHospital', hospital)
+  }
   
   @VuexAction
   async getVaccines(hospitalId: number){

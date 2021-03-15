@@ -31,6 +31,7 @@ import {Component, } from 'vue-property-decorator'
 import {ILogin, IUser} from 'api/models/auth.model'
 import {getModule} from 'vuex-module-decorators'
 import AuthStore from '@/store/auth-store'
+import hospitalApi from '~/api/hospital.api'
 
 @Component
 export default class Login extends Vue{
@@ -51,6 +52,7 @@ export default class Login extends Vue{
           this.$router.push({name: 'patient'})
           break
         case 'clerk':
+          
           this.$router.push({name: 'clerk'})
           break
       }
