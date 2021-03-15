@@ -10,6 +10,7 @@
       <hp-navbar-menu v-if="user.job == 'doctor'"/>
       <manager-navbar-menu v-if="user.job == 'manager'"/>
       <patient-navbar-menu v-if="user.job == 'patient'"/>
+      <admin-navbar-menu v-if="user.job == 'admin'"/>
       <div id="user-bloc">
         <span class="icon">{{userInitial}}</span>
         <span class="text">{{user.username}}</span>
@@ -25,6 +26,7 @@ import Vue from 'vue'
 import Component from 'vue-class-component';
 import { getModule } from 'vuex-module-decorators';
 import { IUser } from '~/api/models/auth.model';
+import AdminNavbarMenuVue from '~/components/navbar-menu/AdminNavbarMenu.vue';
 import ClerkNavbarMenuVue from '~/components/navbar-menu/ClerkNavbarMenu.vue';
 import HpNavbarMenuVue from '~/components/navbar-menu/HpNavbarMenu.vue';
 import ManagerNavbarMenuVue from '~/components/navbar-menu/ManagerNavbarMenu.vue';
@@ -37,6 +39,7 @@ import AuthStore from '~/store/auth-store';
     hpNavbarMenu: HpNavbarMenuVue,
     managerNavbarMenu: ManagerNavbarMenuVue,
     patientNavbarMenu: PatientNavbarMenuVue,
+    adminNavbarMenu: AdminNavbarMenuVue
   }
 })
 export default class Dashboard extends Vue{

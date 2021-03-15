@@ -57,6 +57,9 @@ export default class Login extends Vue{
         case 'manager':
           this.$router.push({name: 'manager'})
           break
+        case 'admin':
+          this.$router.push({name: 'admin'})
+          break
       }
     }
 

@@ -44,3 +44,8 @@ export interface IClerkSurgery{
   manager_status?: string,
   ebase_status?: string
 }
+
+export interface IAdminClerk{
+  user_is_clerk_id: number,
+  user: string
+}
