@@ -112,6 +112,12 @@ export default class Dashboard extends Vue{
     &>.text{
       margin-top: 2px;
       font-size: 0.8rem;
+      display: -webkit-box;
+      -webkit-line-clamp: 1;
+      -webkit-box-orient: vertical;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      width:  $navbar-v-thickness - 10px;
     }
   }
 }
