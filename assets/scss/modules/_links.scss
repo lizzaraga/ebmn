@@ -1,0 +1,23 @@
+.tab-link {
+    position: relative;
+    color: #555;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 1rem;
+    font-size: 0.9rem;
+    &.nuxt-link-active {
+        color: $primary-color;
+        font-weight: 500;
+        &::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            height: 3px;
+            background-color: $primary-color;
+        }
+    }
+}

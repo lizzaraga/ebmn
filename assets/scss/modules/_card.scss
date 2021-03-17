@@ -1,6 +1,6 @@
 $card-data-header: 40px;
 .data {
-    padding: 60px 1rem;
+    padding: 1rem 1rem;
     overflow: auto;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
@@ -19,7 +19,7 @@ $card-data-header: 40px;
             justify-content: space-between;
             &>.title {
                 font-weight: 300;
-                font-size: 1rem;
+                font-size: 0.9rem;
             }
             &>.actions {
                 display: flex;
