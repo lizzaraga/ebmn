@@ -1,0 +1,22 @@
+.input-group-title {
+    position: relative;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    padding-left: 0.9rem;
+    margin: 8px 0;
+    margin-bottom: 1rem;
+    font-size: 0.75rem;
+    color: $primary-color;
+    background-color: rgba($color: $primary-color, $alpha: 0.06);
+    font-weight: 500;
+    &::after {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        width: 2px;
+        background-color: $primary-color;
+    }
+}

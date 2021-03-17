@@ -7,7 +7,7 @@
         <span>New</span>
       </button>
     </header>
-    <div class="emergencies">
+    <div class="data emergencies">
       <div class="card-data" :key="eg.emergency_id" v-for="eg in emergencies">
         <header>
           <span class="title">{{formatDate}}</span>
@@ -117,38 +117,6 @@ export default class Emergencies extends Vue{
   column-gap: 0.8rem;
   row-gap: 0.8rem;
 }
-.card-data{
-  background-color: #fff;
-  border: 1px solid #eee;
-  border-radius: 5px;
-  
-
-  &>header{
-    padding: 0.6rem;
-    border-bottom: 1px solid #eee;
-
-    &>.title{
-      font-weight: 300;
-    }
-  }
-  &>main{
-    padding: 0.6rem;
-
-    .card-data-item{
-      display: flex;
-      flex-direction: column;
-      &>.key{
-        font-size: 0.9rem;
-        color: #555;
-      }
-      &>.value{
-        font-size: 0.8rem;
-        font-weight: 600;
-      }
-    }
-  }
-}
-
 
 
 </style>
