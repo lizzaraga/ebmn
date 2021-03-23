@@ -4,3 +4,7 @@ export interface IHospital{
   hospital_location?: string,
   hospital_description?: string
 }
+export interface IHealthInstitute{
+  health_institute_id: number;
+  health_institute_name: number;
+}

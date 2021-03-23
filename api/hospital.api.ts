@@ -11,6 +11,7 @@ class HospitalApi{
         return Promise.reject(error)
     }
   }
+  
 
 }
 

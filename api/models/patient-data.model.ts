@@ -80,6 +80,12 @@ export interface ILab{
   lab_document_upload_url?: string;
   lab_results_problems_list: String[];
 }
+export interface ILabInstitute{
+  lab_id?: number;
+  lab_loinc_code?: string;
+  lab_description?: string;
+}
+
 
 /**
  * Problem
