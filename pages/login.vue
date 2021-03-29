@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="row mx-auto container d-flex justify-content-center">
-      <form @submit.prevent="doLogin" class="position-relative col-5 auth-form">
+      <form method="post" @submit.prevent="doLogin" class="position-relative col-5 auth-form">
         <header>
           <span class="title">Log In</span>
           <nuxt-link to="/register">Register ?</nuxt-link>

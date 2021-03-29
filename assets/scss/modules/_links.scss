@@ -6,10 +6,17 @@
     align-items: center;
     justify-content: center;
     padding: 0 1rem;
-    font-size: 0.9rem;
+    font-size: 0.85rem;
+    transition: all 0.3s ease;
+    transform: scale(0.85);
+    &:hover {
+        text-decoration: none;
+        color: #000;
+    }
     &.nuxt-link-active {
         color: $primary-color;
         font-weight: 500;
+        transform: scale(1);
         &::after {
             content: '';
             position: absolute;

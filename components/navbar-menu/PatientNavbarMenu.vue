@@ -1,6 +1,6 @@
 <template>
   <div class="v-menu">
-    <nuxt-link class="v-item" :to="{name: 'patient'}">
+    <nuxt-link class="v-item" :to="{name: 'patient-data'}">
       <i class="bi bi-pie-chart icon"></i>
       <span class="text">My data</span>
     </nuxt-link>

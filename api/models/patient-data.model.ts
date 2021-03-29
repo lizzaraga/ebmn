@@ -144,7 +144,7 @@ export interface IEkg{
 /**
  * Vital Sign
  */
-export interface IVitalSign{
+export interface IVitalSigns{
   height?: string;
   weight?: string;
   body_mass_index?: string;
@@ -182,6 +182,11 @@ export interface ISurgery{
   surgery_result_problem_list: string[];
 }
 
+export interface ICptCodeSurgery{
+  surgery_id: number;
+  surgery_cpt_code: string;
+  surgery_description: string;
+}
 /**
  * Medication
  */
@@ -218,6 +223,10 @@ export interface ISurgery{
   allergy_status?: string;
   date_first_recorded?: string;
   comments?: string;
+}
+export interface IRxNormLabel{
+  medication_id: number;
+  medication_rxnorm_label: string;
 }
 
 /**

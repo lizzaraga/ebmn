@@ -1,5 +1,5 @@
 <template>
-  <div id="dashboard">
+  <div id="dashboard" class="h-screen w-screen">
     <nav id="h-navbar" class="d-flex justify-content-between align-items-center">
       <div id="dashboard-logo">
         <img width="35px" src="@/assets/svgs/logo.svg"/>
@@ -67,8 +67,10 @@ export default class Dashboard extends Vue{
   height: $navbar-thickness;
   width: 100%;
   position: fixed;
+  border-bottom: 1px solid #eee;
   background-color: white;
-  box-shadow: 0 2px 4px rgba($color: #000000, $alpha: 0.05);
+  //box-shadow: 0 2px 4px rgba($color: #000000, $alpha: 0.05);
+  box-shadow: 4px 0 12px rgba($color: #000000, $alpha: 0.06);
   z-index: $navbar-zindex;
 
   &>#dashboard-logo{
@@ -82,9 +84,11 @@ export default class Dashboard extends Vue{
   width: $navbar-v-thickness;
   height: 100%;
   left: 0;
+  border-right: 1px solid #eee;
   position: fixed;
   background-color: #fff;
-  box-shadow: 2px 0 4px rgba($color: #000000, $alpha: 0.05);
+  //box-shadow: 2px 0 4px rgba($color: #000000, $alpha: 0.05);
+  box-shadow: 4px 0 12px rgba($color: #000000, $alpha: 0.06);
   z-index: $navbar-zindex - 1;
   padding-top: $navbar-thickness * 1.5;
   display: flex;
@@ -126,9 +130,12 @@ export default class Dashboard extends Vue{
 }
 
 main{
-  padding-top: $navbar-thickness;
+  //padding-top: $navbar-thickness;
   padding-left: $navbar-v-thickness;
   position: relative;
   z-index: 0;
+  height: 100vh;
+  overflow: hidden;
+  
 }
 </style>

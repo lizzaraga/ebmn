@@ -22,10 +22,21 @@ export default class MainContentWithMenu extends Vue{
 .main-content-with-menu{
   display: grid;
   grid-template-columns: 250px 1fr;
+  height: 100vh;
+  overflow: hidden;
 
   &>.main-content-menu{
+    padding-top: $navbar-thickness;
     border-right: 1px solid #eee;
-    padding: 0.8rem;
+    background-color: #fdfeff;
+    box-shadow: 4px 0 12px rgba($color: #000000, $alpha: 0.06);
+    height: 100vh;
+    overflow-y: auto;
+  }
+  &>.main-content{
+    padding-top: $navbar-thickness;
+    position: relative;
+    overflow-y: auto;
   }
 }
 </style>
