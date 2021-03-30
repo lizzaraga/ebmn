@@ -3,20 +3,69 @@
     <div>
       {{ekgs}}
     </div>
+    <div class="patient-data-grid">
+      <div class="data-item" :key="ekg.ekg_id" v-for="ekg in ekgs">
+        <header>
+          <div class="title-field">
+            <span class="title-key" >Loinc Code:</span>
+            <span class="title-value">{{ekg.ekg_loinc_code}}</span>
+          </div>
+          <div class="actions">
+            <i class="bi bi-plus-square action" @click="openCreateEkg"></i>
+            <i class="bi bi-pencil-square action action-edit" @click="openEditEkg(ekg)"></i>
+            <i class="bi bi-trash action action-delete" @click="openDeleteEkg(ekg)"></i>
+          </div>
+        </header>
+        <main>
+          
+        </main>
+        <footer >
+          <div class="date-field">
+            <span class="date-key" >Date Issued</span>
+            <span class="date-value" v-html="convertDate(ekg.radiology_date_issued)"></span>
+          </div>
+          <div class="date-field">
+            <span class="date-key" >Date last modified</span>
+            <span class="date-value" v-html="convertDate(ekg.radiology_date_last_modified)"></span>
+          </div>
+        </footer>
+      </div>
+    </div>
   </div>
 </template>
 <script lang="ts">
 import { Component, getModule } from 'nuxt-property-decorator';
 import Vue from 'vue'
 import EkgStore from '@/store/patient-data/ekg-store'
+import { IEkg } from '~/api/models/patient-data.model';
+import moment from 'moment';
 
 @Component
 export default class Ekgs extends Vue{
   private ekgStore = getModule(EkgStore, this.$store)
-
+  private currentEkg: IEkg = {ekg_id: -1,ekg_results_problems_list: [] }
   
   public get ekgs() {
     return this.ekgStore.ekgs
+  }
+
+  openCreateEkg(){
+    // @ts-ignore
+    this.$bvModal.show('create-ekg-modal')
+  }
+  openDeleteEkg(ekg: IEkg){
+    this.currentEkg = ekg
+    // @ts-ignore
+    this.$bvModal.show('delete-ekg-modal')
+  }
+  openEditLab(ekg: IEkg){
+    this.currentEkg = Object.assign({}, ekg)
+    // @ts-ignore
+    this.$bvModal.show('edit-ekg-modal')
+  }
+
+  convertDate(date: string){
+    return moment(date).format('MMM Do YYYY, [<br/>] h:mm:ss a')
   }
   async mounted(){
     await this.ekgStore.getEkgs(27)

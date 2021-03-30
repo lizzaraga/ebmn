@@ -3,20 +3,66 @@
     <div>
       {{abusiveSubstances}}
     </div>
+     <div class="patient-data-grid">
+      <div class="data-item" :key="subs.substance_id" v-for="subs in abusiveSubstances">
+        <header>
+          <div class="title-field">
+            <span class="title-key" >Substance:</span>
+            <span class="title-value">{{subs.substance}}</span>
+          </div>
+          <div class="actions">
+            <i class="bi bi-plus-square action" @click="openCreateSubstance"></i>
+            <i class="bi bi-pencil-square action action-edit" @click="openEditSubstance(subs)"></i>
+            <i class="bi bi-trash action action-delete" @click="openDeleteSubstance(subs)"></i>
+          </div>
+        </header>
+        <main>
+          
+        </main>
+        <!-- <footer >
+          <div class="date-field">
+            <span class="date-key" >Date first recorded</span>
+            <span class="date-value" v-html="convertDate(allergy.date_first_recorded)"></span>
+          </div>
+          
+        </footer> -->
+      </div>
+    </div>
   </div>
 </template>
 <script lang="ts">
+import moment from 'moment';
 import { Component, getModule } from 'nuxt-property-decorator';
 import Vue from 'vue'
+import { IAbusiveSubstance } from '~/api/models/patient-data.model';
 import ASStore from '~/store/patient-data/as-store';
 
 @Component
 export default class AbusiveSubstances extends Vue{
   private asStore = getModule(ASStore, this.$store)
-
+  private currentAs: IAbusiveSubstance = {substance_id: -1, }
+  
   
   public get abusiveSubstances() {
     return this.asStore.abusiveSubstances
+  }
+  openCreateSubstance(){
+    // @ts-ignore
+    this.$bvModal.show('create-substance-modal')
+  }
+  openDeleteSubstance(subs: IAbusiveSubstance){
+    this.currentAs = subs
+    // @ts-ignore
+    this.$bvModal.show('delete-substance-modal')
+  }
+  openEditSubstance(subs: IAbusiveSubstance){
+    this.currentAs = Object.assign({}, subs)
+    // @ts-ignore
+    this.$bvModal.show('edit-substance-modal')
+  }
+
+  convertDate(date: string){
+    return moment(date).format('MMM Do YYYY, [<br/>] h:mm:ss a')
   }
   async mounted(){
     await this.asStore.getAS(27)

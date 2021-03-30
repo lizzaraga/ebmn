@@ -9,5 +9,5 @@ import { IHospital } from "~/api/models/hospital.model";
 })
 export default class HospitalStore extends VuexModule{
   
-
+  
 }

@@ -6,5 +6,5 @@ export interface IHospital{
 }
 export interface IHealthInstitute{
   health_institute_id: number;
-  health_institute_name: number;
+  health_institute_name: string;
 }
