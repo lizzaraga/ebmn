@@ -28,6 +28,8 @@
         </footer>
       </div>
     </div>
+    <delete-pb-modal :pb="currentPb"/>
+    <edit-pb-modal :pb="currentPb"/>
   </div>
 </template>
 <script lang="ts">
@@ -36,8 +38,15 @@ import { Component, getModule } from 'nuxt-property-decorator';
 import Vue from 'vue'
 import { IProblem } from '~/api/models/patient-data.model';
 import ProblemStore from '~/store/patient-data/problem-store';
+import DeletePbModal from './DeletePbModal.vue';
+import EditPbModal from './EditPbModal.vue';
 
-@Component
+@Component({
+  components:{
+    deletePbModal: DeletePbModal,
+    editPbModal: EditPbModal
+  }
+})
 export default class Problems extends Vue{
   private pbStore = getModule(ProblemStore, this.$store)
   private currentPb: IProblem = {problem_id: -1, }
@@ -52,12 +61,12 @@ export default class Problems extends Vue{
     // @ts-ignore
     this.$bvModal.show('create-pb-modal')
   }
-  openDeleteLab(pb: IProblem){
+  openDeletePb(pb: IProblem){
     this.currentPb = pb
     // @ts-ignore
     this.$bvModal.show('delete-pb-modal')
   }
-  openEditLab(pb: IProblem){
+  openEditPb(pb: IProblem){
     this.currentPb = Object.assign({}, pb)
     // @ts-ignore
     this.$bvModal.show('edit-pb-modal')

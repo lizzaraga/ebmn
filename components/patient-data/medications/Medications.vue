@@ -31,6 +31,8 @@
         </footer>
       </div>
     </div>
+    <delete-md-modal :md="currentMd"/>
+    <edit-md-modal :md="currentMd"/>
   </div>
 </template>
 <script lang="ts">
@@ -39,8 +41,15 @@ import { Component, getModule } from 'nuxt-property-decorator';
 import Vue from 'vue'
 import { IMedication } from '~/api/models/patient-data.model';
 import MedicationStore from '~/store/patient-data/medication-store';
+import DeleteMdModal from './DeleteMdModal.vue';
+import EditMdModal from './EditMdModal.vue';
 
-@Component
+@Component({
+  components:{
+    deleteMdModal: DeleteMdModal,
+    editMdModal: EditMdModal
+  }
+})
 export default class Medications extends Vue{
   private medicationStore = getModule(MedicationStore, this.$store)
   private currentMd: IMedication = {medication_id: -1,medication_related_problems: [] }

@@ -31,6 +31,8 @@
         </footer>
       </div>
     </div>
+    <delete-rd-modal :rd="currentRd"/>
+    <edit-rd-modal :rd="currentRd"/>
   </div>
 </template>
 <script lang="ts">
@@ -39,8 +41,15 @@ import { Component, getModule } from 'nuxt-property-decorator';
 import Vue from 'vue'
 import { IRadiology } from '~/api/models/patient-data.model';
 import RadiologyStore from '~/store/patient-data/radiology-store';
+import DeleteRdModal from './DeleteRdModal.vue';
+import EditRdModal from './EditRdModal.vue';
 
-@Component
+@Component({
+  components:{
+    deleteRdModal: DeleteRdModal,
+    editRdModal: EditRdModal
+  }
+})
 export default class Radiologies extends Vue{
   private radiologyStore = getModule(RadiologyStore, this.$store)
   private currentRd: IRadiology = {radiology_id: -1,radiology_results_problems_list: [] }
@@ -53,12 +62,12 @@ export default class Radiologies extends Vue{
     // @ts-ignore
     this.$bvModal.show('create-rd-modal')
   }
-  openDeleteLab(rd: IRadiology){
+  openDeleteRd(rd: IRadiology){
     this.currentRd = rd
     // @ts-ignore
     this.$bvModal.show('delete-rd-modal')
   }
-  openEditLab(rd: IRadiology){
+  openEditRd(rd: IRadiology){
     this.currentRd = Object.assign({}, rd)
     // @ts-ignore
     this.$bvModal.show('edit-rd-modal')

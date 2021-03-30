@@ -31,6 +31,8 @@
         </footer>
       </div>
     </div>
+    <edit-or-create-ld-modal :isEditing="isEditing" :editData="currentLd"/>
+    <delete-ld-modal :ld="currentLd"/>
   </div>
 </template>
 <script lang="ts">
@@ -39,28 +41,39 @@ import { Component, getModule } from 'nuxt-property-decorator';
 import Vue from 'vue'
 import { ILegalDocument } from '~/api/models/patient-data.model';
 import LDStore from '~/store/patient-data/ld-store';
-@Component
+import DeleteLdModal from './DeleteLdModal.vue';
+import EditOrCreateLdModal from './EditOrCreateLdModal.vue';
+@Component({
+  components:{
+    editOrCreateLdModal: EditOrCreateLdModal,
+    deleteLdModal: DeleteLdModal
+  }
+})
 export default class LegalDocs extends Vue{
   private ldStore = getModule(LDStore, this.$store)
-  private currentld: ILegalDocument = {document_id: -1, }
-  
+  private currentLd: ILegalDocument = {document_id: -1, }
+  isEditing = false
+
   public get lds() {
     return this.ldStore.docs
   }
 
   openCreateLd(){
+    this.isEditing = false
     // @ts-ignore
     this.$bvModal.show('create-ld-modal')
   }
   openDeleteLd(ld: ILegalDocument){
-    this.currentld = ld
+    //console.log(ld)
+    this.currentLd = ld
     // @ts-ignore
     this.$bvModal.show('delete-ld-modal')
   }
   openEditLd(ld: ILegalDocument){
-    this.currentld = Object.assign({}, ld)
+    this.isEditing = true
+    this.currentLd = Object.assign({}, ld)
     // @ts-ignore
-    this.$bvModal.show('edit-ld-modal')
+    this.$bvModal.show('create-ld-modal')
   }
 
   convertDate(date: string){

@@ -28,6 +28,8 @@
         </footer>
       </div>
     </div>
+    <delete-allergy-modal :allergy="currentAllergy"/>
+    <edit-allergy-modal :allergy="currentAllergy"/>
   </div>
 </template>
 <script lang="ts">
@@ -36,8 +38,15 @@ import { Component, getModule } from 'nuxt-property-decorator';
 import Vue from 'vue'
 import { IAllergy } from '~/api/models/patient-data.model';
 import AllergyStore from '~/store/patient-data/allergy-store';
+import DeleteAllergyModal from './DeleteAllergyModal.vue';
+import EditAllergyModal from './EditAllergyModal.vue';
 
-@Component
+@Component({
+  components:{
+    deleteAllergyModal: DeleteAllergyModal,
+    editAllergyModal: EditAllergyModal 
+  }
+})
 export default class Allergies extends Vue{
   private allergyStore = getModule(AllergyStore, this.$store)
   private currentAllergy: IAllergy = {allergy_id: -1, }
