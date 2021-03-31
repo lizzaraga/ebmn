@@ -467,7 +467,7 @@ class PatientDataApi {
              return Promise.reject(error)
          }
     }
-    async createAS(token: string, patientId: string, data: FormData){
+    async createAS(token: string, patientId: number, data: FormData){
         try {
             const response = await Axios.post(`/abusive_substance/create/${patientId}/${token}/`, data)
             return Promise.resolve(response.data)
@@ -477,6 +477,7 @@ class PatientDataApi {
      }
     async updateAS(token: string, asId: number, data: FormData){
         try {
+            
             const response = await Axios.put(`/abusive_substance/update/${token}/${asId}/`, data)
             return Promise.resolve(response.data)
         } catch (error) {

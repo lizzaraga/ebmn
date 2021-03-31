@@ -20,7 +20,7 @@
       </form>
     </main>
     <footer class="x-modal__footer">
-      <button class="btn btn-action" @click="$bvModal.hide('edit-lab-modal')">Cancel</button>
+      <button class="btn btn-action" @click="$bvModal.hide('edit-pb-modal')">Cancel</button>
       <button @click="doStartEdit" class="btn btn-action">Edit</button>
     </footer>
 

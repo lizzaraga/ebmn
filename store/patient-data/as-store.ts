@@ -28,4 +28,34 @@ export default class ASStore extends VuexModule{
       alert('Get abusive substances failed')
     }
   }
+  @VuexAction
+  async createAs({patientId, formData}: {patientId: number, formData: FormData}){
+    const token = this.context.rootGetters['auth-store/token']
+    try {
+      const data = await patientDataApi.createAS(token, patientId, formData)
+      await this.context.dispatch('getAS', patientId)
+    } catch (error) {
+      alert('Create abusive substances failed')
+    }
+  }
+  @VuexAction
+  async editAs({patientId, asId, formData}: {patientId: number, asId: number, formData: FormData}){
+    const token = this.context.rootGetters['auth-store/token']
+    try {
+      await patientDataApi.updateAS(token, asId, formData)
+      await this.context.dispatch('getAS', patientId)
+    } catch (error) {
+      alert('Edit abusive substances failed')
+    }
+  }
+  @VuexAction
+  async deleteAs({patientId, asId}: {patientId: number, asId: number}){
+    const token = this.context.rootGetters['auth-store/token']
+    try {
+      await patientDataApi.deleteAS(token, asId)
+      await this.context.dispatch('getAS', patientId)
+    } catch (error) {
+      alert('Edit abusive substances failed')
+    }
+  }
 }
