@@ -28,4 +28,34 @@ export default class AllergyStore extends VuexModule{
       alert('Get allergies failed')
     }
   }
+  @VuexAction
+  async createAllergy({patientId, formData}: {patientId: number, formData: FormData}){
+    const token = this.context.rootGetters['auth-store/token']
+    try {
+      const docs = await patientDataApi.createAllergy(token, patientId, formData)
+      this.context.dispatch('getAllergies', patientId)
+    } catch (error) {
+      alert("Create Allergy failed")
+    }
+  }
+  @VuexAction
+  async editAllergy({patientId, allergyId, formData}: {patientId: number, allergyId: number, formData: FormData}){
+    const token = this.context.rootGetters['auth-store/token']
+    try {
+      await patientDataApi.updateAllergy(token, allergyId, formData)
+      this.context.dispatch('getAllergies', patientId)
+    } catch (error) {
+      alert("Edit Allergy failed")
+    }
+  }
+  @VuexAction
+  async deleteAllergy({patientId, allergyId}: {patientId: number, allergyId: number}){
+    const token = this.context.rootGetters['auth-store/token']
+    try {
+      await patientDataApi.deleteAllergy(token, allergyId)
+      this.context.dispatch('getAllergies', patientId)
+    } catch (error) {
+      alert("Delete Allergy failed")
+    }
+  }
 }

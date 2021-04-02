@@ -22,7 +22,7 @@ export default class DeleteAllergyModal extends Vue{
   @Prop({required: true}) allergy!: IAllergy
 
   doDeleteAllergy(){
-    alert("Delete")
+    this.$emit('delete', this.allergy)
   }
 }
 </script>

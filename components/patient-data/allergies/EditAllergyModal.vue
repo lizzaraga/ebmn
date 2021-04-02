@@ -4,11 +4,11 @@
       <span class="title">Edit Allergy</span>
     </header>
     <main>
-      <form @submit.prevent="doStartEdit">
+      <form @submit.prevent="doStartEdit" id="edit-allergy-form">
         
         <div class="row">
           <b-form-group class="col-12"  label="Status"> 
-            <b-form-select v-model="allergy.allergy_status" 
+            <b-form-select v-model="allergy.status" 
             :options="status" name="status" id="status" ></b-form-select>
           </b-form-group>
         </div>
@@ -16,7 +16,7 @@
           <b-form-group class="col-12" label="Comments"> 
               <b-form-textarea
                 placeholder="Allergy comments"
-                v-model="allergy.allergy_comments"
+                v-model="allergy.comments"
                 name="comments" id="comments"
                 rows="3"
                 no-resize
@@ -56,7 +56,10 @@ export default class EditAllergyModal extends Vue{
   
 
   doStartEdit(){
-    alert("edit")
+    const form = document.querySelector("#edit-allergy-form")
+    // @ts-ignore
+    const formData = new FormData(form)
+    this.$emit('edit', this.allergy, formData)
   }
 }
 </script>

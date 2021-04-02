@@ -28,8 +28,8 @@
         </footer>
       </div>
     </div>
-    <delete-allergy-modal :allergy="currentAllergy"/>
-    <edit-allergy-modal :allergy="currentAllergy"/>
+    <delete-allergy-modal @delete="onDeleteAllergy" :allergy="currentAllergy"/>
+    <edit-allergy-modal @edit="onEditAllergy" :allergy="currentAllergy"/>
   </div>
 </template>
 <script lang="ts">
@@ -50,7 +50,7 @@ import EditAllergyModal from './EditAllergyModal.vue';
 export default class Allergies extends Vue{
   private allergyStore = getModule(AllergyStore, this.$store)
   private currentAllergy: IAllergy = {allergy_id: -1, }
-  
+  patientId = 27
   
   public get allergies() {
     return this.allergyStore.allergies
@@ -69,6 +69,20 @@ export default class Allergies extends Vue{
     this.currentAllergy = Object.assign({}, al)
     // @ts-ignore
     this.$bvModal.show('edit-allergy-modal')
+  }
+  // Main actions
+  async onCreateAllergy(formData: FormData){
+    await this.allergyStore.createAllergy({patientId: this.patientId, formData})
+  }
+  async onEditAllergy(allergy: IAllergy, formData: FormData){
+    let allergyId = Number(allergy.allergy_id)
+
+    await this.allergyStore.editAllergy({ patientId: this.patientId, allergyId, formData})
+  }
+
+  async onDeleteAllergy(allergy: IAllergy){
+    let allergyId = Number(allergy.allergy_id)
+    await this.allergyStore.deleteAllergy({patientId: this.patientId, allergyId})
   }
 
   convertDate(date: string){

@@ -428,7 +428,7 @@ class PatientDataApi {
             return Promise.reject(error)
         }
     }
-    async createAllergy(token: string, patientId: string, data: FormData){
+    async createAllergy(token: string, patientId: number, data: FormData){
         try {
             const response = await Axios.post(`/allergy/create/${patientId}/${token}/`, data)
             return Promise.resolve(response)
