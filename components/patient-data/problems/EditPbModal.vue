@@ -7,10 +7,10 @@
       <form @submit.prevent="doStartEdit" id="edit-pb-form">
         
         <div class="row">
-          <b-form-group class="col-6"  label="Units"> 
-            <b-form-select v-model="pb.problem_current_status" :options="status" name="status" id="status" ></b-form-select>
+          <b-form-group class="col-6"  label="Status"> 
+            <b-form-select v-model="pb.problem_current_status" :options="status" name="current_status" id="current_status" ></b-form-select>
           </b-form-group>
-          <b-form-group class="col-6" label="Abnormal Flag"> 
+          <b-form-group class="col-6" label="Priority"> 
             <b-form-select v-model="pb.problem_priority" 
             name="priority" id="priority" :options="priorities"></b-form-select>
           </b-form-group>

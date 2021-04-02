@@ -8,7 +8,7 @@
         
         <div class="row">
           <b-form-group class="col-6"  label="Reception Status"> 
-            <b-form-select v-model="md.problem_current_status" 
+            <b-form-select v-model="md.medication_reception_status" 
             :options="status" name="reception_status" id="reception_status" ></b-form-select>
           </b-form-group>
           <b-form-group class="col-6" label="Instructions On Delivery"> 

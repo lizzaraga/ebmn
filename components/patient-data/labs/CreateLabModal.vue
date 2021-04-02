@@ -35,7 +35,8 @@
         </div>
         <div class="row">
           <b-form-group class="col-12" label="Related Problems"> 
-            <b-form-select :value='[]' name="related_problems" :disabled="lab.problems.length <= 0" :options="lab.problems" multiple ></b-form-select>
+            <b-form-select v-model='selectedPbs' name="related_problems" :disabled="lab.problems.length <= 0" :options="lab.problems" multiple ></b-form-select>
+            
           </b-form-group>
         </div>
         <div class="row">
@@ -85,7 +86,7 @@ export default class CreateLabModal extends Vue{
     hi: [],
     problems: []
   }
-
+  selectedPbs = []
   labHis: ILabInstitute[] = []
 
   resultsVisible:boolean = false
@@ -109,6 +110,8 @@ export default class CreateLabModal extends Vue{
     const form = document.querySelector("#create-lab-form")
     // @ts-ignore
     const formData = new FormData(form)
+    formData.set('related_problems', this.selectedPbs.join(','))
+    console.log('Multiselect: ', formData)
     this.$emit('create', formData)
   }
 

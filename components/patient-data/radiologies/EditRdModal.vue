@@ -84,6 +84,9 @@ export default class EditRdModal extends Vue{
     const form = document.querySelector("#edit-rd-form")
     // @ts-ignore
     const formData = new FormData(form)
+    if(formData.get('document_upload') == ''){
+      formData.delete('document_upload')
+    }
     this.$emit('edit', this.rd, formData)
   }
 }

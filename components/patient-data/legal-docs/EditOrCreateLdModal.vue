@@ -91,6 +91,11 @@ export default class EditOrCreateLdModal extends Vue{
     const form = document.querySelector("#create-ld-form")
     // @ts-ignore
     const formData = new FormData(form)
+    // Remove legal_document key from form data
+    console.log(formData.get('legal_document'))
+    if(formData.get('legal_document') == ''){
+      formData.delete('legal_document')
+    }
     if(this.isEditing) this.$emit('edit', this.editData, formData)
     else this.$emit('create', formData)
     this.model = {

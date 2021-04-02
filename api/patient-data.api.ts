@@ -315,7 +315,7 @@ class PatientDataApi {
     }
     async updateMedication(token: string, medicationId: number, data: FormData){
         try {
-            const response = await Axios.put(`/lab/update/${token}/${medicationId}/`, data)
+            const response = await Axios.put(`/medication/update/${token}/${medicationId}/`, data)
             return Promise.resolve(response.data)
         } catch (error) {
             return Promise.reject(error)
