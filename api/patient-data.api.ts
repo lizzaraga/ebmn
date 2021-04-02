@@ -96,7 +96,7 @@ class PatientDataApi {
             return Promise.reject(error)
         }
     }
-    async createLab(token: string, patientId: string, data: FormData){
+    async createLab(token: string, patientId: number, data: FormData){
         try {
             const response = await Axios.post(`/lab/create/${patientId}/${token}/`, data)
             return Promise.resolve(response)
@@ -175,7 +175,7 @@ class PatientDataApi {
             return Promise.reject(error)
         }
     }
-    async createRadiology(token: string, patientId: string, data: FormData){
+    async createRadiology(token: string, patientId: number, data: FormData){
         try {
             const response = await Axios.post(`/radiology/create/${patientId}/${token}/`, data)
             return Promise.resolve(response)
@@ -216,7 +216,7 @@ class PatientDataApi {
             return Promise.reject(error)
         }
     }
-    async createEkg(token: string, patientId: string, data: FormData){
+    async createEkg(token: string, patientId: number, data: FormData){
         try {
             const response = await Axios.post(`/ekg/create/${patientId}/${token}/`, data)
             return Promise.resolve(response)
@@ -296,7 +296,7 @@ class PatientDataApi {
         }
     }
 
-    async createMedication(token: string, patientId: string, data: FormData){
+    async createMedication(token: string, patientId: number, data: FormData){
         try {
             const response = await Axios.post(`/medication/create/${patientId}/${token}/`, data)
             return Promise.resolve(response)

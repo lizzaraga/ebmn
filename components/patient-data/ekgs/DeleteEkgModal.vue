@@ -21,7 +21,7 @@ import {  IEkg } from '~/api/models/patient-data.model'
 export default class DeleteEkgModal extends Vue{
   @Prop({required: true}) ekg!: IEkg
   doDeleteEkg(){
-    alert("Delete")
+    this.$emit('delete', this.ekg)
   }
 }
 </script>

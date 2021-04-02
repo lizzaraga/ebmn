@@ -22,7 +22,7 @@ export default class DeleteLabModal extends Vue{
   @Prop({required: true}) lab!: ILab
 
   doDeleteLab(){
-    alert("Delete")
+    this.$emit('delete', this.lab)
   }
 }
 </script>

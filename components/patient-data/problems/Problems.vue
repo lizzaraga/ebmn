@@ -28,8 +28,8 @@
         </footer>
       </div>
     </div>
-    <delete-pb-modal :pb="currentPb"/>
-    <edit-pb-modal :pb="currentPb"/>
+    <delete-pb-modal @delete="onDeletePb" :pb="currentPb"/>
+    <edit-pb-modal @edit="onEditPb" :pb="currentPb"/>
   </div>
 </template>
 <script lang="ts">
@@ -50,7 +50,7 @@ import EditPbModal from './EditPbModal.vue';
 export default class Problems extends Vue{
   private pbStore = getModule(ProblemStore, this.$store)
   private currentPb: IProblem = {problem_id: -1, }
-  
+  patientId = 27
   
   public get problems() {
     return this.pbStore.problems
@@ -70,6 +70,20 @@ export default class Problems extends Vue{
     this.currentPb = Object.assign({}, pb)
     // @ts-ignore
     this.$bvModal.show('edit-pb-modal')
+  }
+
+  // Main actions
+  async onCreatePb(formData: FormData){
+    await this.pbStore.createProblem({patientId: this.patientId, formData})
+  }
+  async onEditPb(pb: IProblem, formData: FormData){
+    let pbId = Number(pb.problem_id)
+
+    await this.pbStore.editProblem({ patientId: this.patientId, pbId, formData})
+  }
+  async onDeletePb(pb: IProblem){
+    let pbId = Number(pb.problem_id)
+    await this.pbStore.deleteProblem({patientId: this.patientId, pbId})
   }
 
   convertDate(date: string){

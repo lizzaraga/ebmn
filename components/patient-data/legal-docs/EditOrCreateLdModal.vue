@@ -4,11 +4,13 @@
       <span class="title">{{ isEditing ? 'Edit': 'Create'}} Document</span>
     </header>
     <main>
-      <form id="editLd" @submit.prevent="doStartEdit">
+      <form 
+       @submit.prevent="doStartEdit" id="create-ld-form">
         <div class="row">
           <b-form-group label-for="document_category" class="col-6 position-relative"  label="Document Category"> 
             <b-form-select  v-model="model.document_category" 
             name="document_category" id="document_category" :options="categories"/>
+            
           </b-form-group>
           <b-form-group class="col-6"  label="Date of establishment"> 
             <b-form-input v-model='model.document_date_of_establishment' type="date" 
@@ -45,7 +47,7 @@
     </main>
     <footer class="x-modal__footer">
       <button class="btn btn-action" @click="$bvModal.hide('create-ld-modal')">Cancel</button>
-      <button @click="doStartEdit" class="btn btn-action">Edit</button>
+      <button @click="doStartEdit" class="btn btn-action">{{ isEditing ? 'Edit': 'Create'}}</button>
     </footer>
 
   </b-modal>
@@ -85,7 +87,21 @@ export default class EditOrCreateLdModal extends Vue{
     if(this.isEditing) this.model = value
   }
 
-  doStartEdit(){}
+  doStartEdit(){
+    const form = document.querySelector("#create-ld-form")
+    // @ts-ignore
+    const formData = new FormData(form)
+    if(this.isEditing) this.$emit('edit', this.editData, formData)
+    else this.$emit('create', formData)
+    this.model = {
+    document_category: '',
+    document_date_of_establishment: '',
+    document_decision_date: '',
+    document_reason_for_capacity: '',
+    document_reason_for_determination: '',
+    document_legal_document: ''
+  }
+  }
 
 }
 </script>

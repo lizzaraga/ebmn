@@ -27,4 +27,34 @@ export default class MedicationStore extends VuexModule{
       alert('Get medications failed')
     }
   }
+  @VuexAction
+  async createMedication({patientId, formData}: {patientId: number, formData: FormData}){
+    const token = this.context.rootGetters['auth-store/token']
+    try {
+      const docs = await patientDataApi.createMedication(token, patientId, formData)
+      this.context.dispatch('getMedications', patientId)
+    } catch (error) {
+      alert("Create Medication failed")
+    }
+  }
+  @VuexAction
+  async editMedication({patientId, mdId, formData}: {patientId: number, mdId: number, formData: FormData}){
+    const token = this.context.rootGetters['auth-store/token']
+    try {
+      await patientDataApi.updateMedication(token, mdId, formData)
+      this.context.dispatch('getMedications', patientId)
+    } catch (error) {
+      alert("Edit Medication failed")
+    }
+  }
+  @VuexAction
+  async deleteMedication({patientId, mdId}: {patientId: number, mdId: number}){
+    const token = this.context.rootGetters['auth-store/token']
+    try {
+      await patientDataApi.deleteMedication(token, mdId)
+      this.context.dispatch('getMedications', patientId)
+    } catch (error) {
+      alert("Delete Medication failed")
+    }
+  }
 }

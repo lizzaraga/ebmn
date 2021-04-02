@@ -31,8 +31,8 @@
         </footer>
       </div>
     </div>
-    <delete-rd-modal :rd="currentRd"/>
-    <edit-rd-modal :rd="currentRd"/>
+    <delete-rd-modal @delete="onDeleteRd" :rd="currentRd"/>
+    <edit-rd-modal @edit="onEditRd" :rd="currentRd"/>
   </div>
 </template>
 <script lang="ts">
@@ -54,6 +54,8 @@ export default class Radiologies extends Vue{
   private radiologyStore = getModule(RadiologyStore, this.$store)
   private currentRd: IRadiology = {radiology_id: -1,radiology_results_problems_list: [] }
   
+  patientId = 27;
+
   public get radiologies() {
     return this.radiologyStore.radiologies
   }
@@ -73,11 +75,25 @@ export default class Radiologies extends Vue{
     this.$bvModal.show('edit-rd-modal')
   }
 
+  // Main actions
+  async onCreateRd(formData: FormData){
+    await this.radiologyStore.createRadiology({patientId: this.patientId, formData})
+  }
+  async onEditRd(rd: IRadiology, formData: FormData){
+    let rdId = Number(rd.radiology_id)
+
+    await this.radiologyStore.editRadiology({ patientId: this.patientId, rdId, formData})
+  }
+
+  async onDeleteRd(rd: IRadiology){
+    let rdId = Number(rd.radiology_id)
+    await this.radiologyStore.deleteRadiology({patientId: this.patientId, rdId})
+  }
   convertDate(date: string){
     return moment(date).format('MMM Do YYYY, [<br/>] h:mm:ss a')
   }
   async mounted(){
-    await this.radiologyStore.getRadiologies(27)
+    await this.radiologyStore.getRadiologies(this.patientId)
   }
 }
 </script>

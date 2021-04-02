@@ -22,7 +22,7 @@ export default class DeleteRdModal extends Vue{
   @Prop({required: true}) rd!: IRadiology
 
   doDeleteRd(){
-    alert("Delete")
+    this.$emit('delete', this.rd)
   }
 }
 </script>

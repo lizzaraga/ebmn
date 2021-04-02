@@ -26,4 +26,34 @@ export default class LDStore extends VuexModule{
       alert("Get legal docs failed")
     }
   }
+  @VuexAction
+  async createDoc({patientId, formData}: {patientId: number, formData: FormData}){
+    const token = this.context.rootGetters['auth-store/token']
+    try {
+      const docs = await patientDataApi.createLegalDoc(patientId, token, formData)
+      this.context.dispatch('getDocs', patientId)
+    } catch (error) {
+      alert("Create legal doc failed")
+    }
+  }
+  @VuexAction
+  async editDoc({patientId, docId, formData}: {patientId: number, docId: number, formData: FormData}){
+    const token = this.context.rootGetters['auth-store/token']
+    try {
+      await patientDataApi.updateLegalDoc(docId, token, formData)
+      this.context.dispatch('getDocs', patientId)
+    } catch (error) {
+      alert("Edit legal doc failed")
+    }
+  }
+  @VuexAction
+  async deleteDoc({patientId, docId}: {patientId: number, docId: number}){
+    const token = this.context.rootGetters['auth-store/token']
+    try {
+      await patientDataApi.deleteAS(token, docId)
+      this.context.dispatch('getDocs', patientId)
+    } catch (error) {
+      alert("Delete legal doc failed")
+    }
+  }
 }

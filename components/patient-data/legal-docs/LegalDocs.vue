@@ -31,8 +31,8 @@
         </footer>
       </div>
     </div>
-    <edit-or-create-ld-modal :isEditing="isEditing" :editData="currentLd"/>
-    <delete-ld-modal :ld="currentLd"/>
+    <edit-or-create-ld-modal @create="onCreateLd" @edit="onEditLd" :isEditing="isEditing" :editData="currentLd"/>
+    <delete-ld-modal @delete="onDeleteLd" :ld="currentLd"/>
   </div>
 </template>
 <script lang="ts">
@@ -53,6 +53,7 @@ export default class LegalDocs extends Vue{
   private ldStore = getModule(LDStore, this.$store)
   private currentLd: ILegalDocument = {document_id: -1, }
   isEditing = false
+  patientId = 27
 
   public get lds() {
     return this.ldStore.docs
@@ -76,6 +77,22 @@ export default class LegalDocs extends Vue{
     this.$bvModal.show('create-ld-modal')
   }
 
+  async onCreateLd(formData: FormData){
+    await this.ldStore.createDoc({patientId: this.patientId, formData})
+  }
+  async onEditLd(ld: ILegalDocument, formData: FormData){
+    await this.ldStore.editDoc({
+      patientId: this.patientId,
+      docId: ld.document_id!!,
+      formData
+    })
+  }
+  async onDeleteLd(ld: ILegalDocument){
+    await this.ldStore.deleteDoc({
+      patientId: this.patientId,
+      docId: ld.document_id!!
+    })
+  }
   convertDate(date: string){
     return moment(date).format('MMM Do YYYY, [<br/>] h:mm:ss a')
   }

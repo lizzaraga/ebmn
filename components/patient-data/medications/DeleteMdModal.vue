@@ -22,7 +22,7 @@ export default class DeleteMdModal extends Vue{
   @Prop({required: true}) md!: IMedication
 
   doDeleteMd(){
-    alert("Delete")
+    this.$emit('delete', this.md)
   }
 }
 </script>

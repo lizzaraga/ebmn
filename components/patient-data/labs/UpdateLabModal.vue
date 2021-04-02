@@ -4,7 +4,7 @@
       <span class="title">Edit Lab</span>
     </header>
     <main>
-      <form @submit.prevent="doStartEdit">
+      <form @submit.prevent="doStartEdit" id="edit-lab-form">
         
         <div class="row">
           <b-form-group class="col-6"  label="Units"> 
@@ -81,7 +81,10 @@ export default class EditLabModal extends Vue{
   
 
   doStartEdit(){
-    alert("edit")
+    const form = document.querySelector("#edit-lab-form")
+    // @ts-ignore
+    const formData = new FormData(form)
+    this.$emit('edit', this.lab, formData)
   }
 }
 </script>

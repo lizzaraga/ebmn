@@ -4,7 +4,7 @@
       <span class="title">Edit Medication</span>
     </header>
     <main>
-      <form @submit.prevent="doStartEdit">
+      <form @submit.prevent="doStartEdit" id="edit-md-form">
         
         <div class="row">
           <b-form-group class="col-6"  label="Reception Status"> 
@@ -50,7 +50,10 @@ export default class EditMdModal extends Vue{
   
 
   doStartEdit(){
-    alert("edit")
+    const form = document.querySelector("#edit-md-form")
+    // @ts-ignore
+    const formData = new FormData(form)
+    this.$emit('edit', this.md, formData)
   }
 }
 </script>

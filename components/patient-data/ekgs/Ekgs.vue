@@ -31,8 +31,8 @@
         </footer>
       </div>
     </div>
-    <delete-ekg-modal :ekg="currentEkg"/>
-    <edit-ekg-modal :ekg="currentEkg"/>
+    <delete-ekg-modal @delete="onDeleteEkg" :ekg="currentEkg"/>
+    <edit-ekg-modal @edit="onEditEkg" :ekg="currentEkg"/>
   </div>
 </template>
 <script lang="ts">
@@ -53,7 +53,8 @@ import EditEkgModal from './EditEkgModal.vue';
 export default class Ekgs extends Vue{
   private ekgStore = getModule(EkgStore, this.$store)
   private currentEkg: IEkg = {ekg_id: -1,ekg_results_problems_list: [] }
-  
+  patientId = 27
+
   public get ekgs() {
     return this.ekgStore.ekgs
   }
@@ -71,6 +72,21 @@ export default class Ekgs extends Vue{
     this.currentEkg = Object.assign({}, ekg)
     // @ts-ignore
     this.$bvModal.show('edit-ekg-modal')
+  }
+
+  // Main actions
+  async onCreateEkg(formData: FormData){
+    await this.ekgStore.createEkg({patientId: this.patientId, formData})
+  }
+  async onEditEkg(ekg: IEkg, formData: FormData){
+    let ekgId = Number(ekg.ekg_id)
+
+    await this.ekgStore.editEkg({ patientId: this.patientId, ekgId, formData})
+  }
+
+  async onDeleteEkg(ekg: IEkg){
+    let ekgId = Number(ekg.ekg_id)
+    await this.ekgStore.deleteEkg({patientId: this.patientId, ekgId})
   }
 
   convertDate(date: string){

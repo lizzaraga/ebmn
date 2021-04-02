@@ -4,7 +4,7 @@
       <span class="title">Edit Problem</span>
     </header>
     <main>
-      <form @submit.prevent="doStartEdit">
+      <form @submit.prevent="doStartEdit" id="edit-pb-form">
         
         <div class="row">
           <b-form-group class="col-6"  label="Units"> 
@@ -57,7 +57,10 @@ export default class EditPbModal extends Vue{
   
 
   doStartEdit(){
-    alert("edit")
+    const form = document.querySelector("#edit-pb-form")
+    // @ts-ignore
+    const formData = new FormData(form)
+    this.$emit('edit', this.pb, formData)
   }
 }
 </script>

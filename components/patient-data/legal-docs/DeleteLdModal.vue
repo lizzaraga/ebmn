@@ -22,7 +22,7 @@ export default class DeleteLdModal extends Vue{
   @Prop({required: true}) ld!: ILegalDocument
 
   doDeleteLd(){
-    alert("Delete")
+    this.$emit('delete', this.ld)
   }
 }
 </script>

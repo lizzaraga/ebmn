@@ -31,8 +31,8 @@
         </footer>
       </div>
     </div>
-    <delete-md-modal :md="currentMd"/>
-    <edit-md-modal :md="currentMd"/>
+    <delete-md-modal @delete="onDeleteMd" :md="currentMd"/>
+    <edit-md-modal @edit="onEditMd" :md="currentMd"/>
   </div>
 </template>
 <script lang="ts">
@@ -53,7 +53,7 @@ import EditMdModal from './EditMdModal.vue';
 export default class Medications extends Vue{
   private medicationStore = getModule(MedicationStore, this.$store)
   private currentMd: IMedication = {medication_id: -1,medication_related_problems: [] }
-  
+  patientId = 27
   
   public get medications() {
     return this.medicationStore.medications
@@ -73,6 +73,21 @@ export default class Medications extends Vue{
     // @ts-ignore
     this.$bvModal.show('edit-md-modal')
   }
+
+  // Main actions
+  async onCreateMd(formData: FormData){
+    await this.medicationStore.createMedication({patientId: this.patientId, formData})
+  }
+  async onEditMd(md: IMedication, formData: FormData){
+    let mdId = Number(md.medication_id)
+
+    await this.medicationStore.editMedication({ patientId: this.patientId, mdId, formData})
+  }
+  async onDeleteMd(md: IMedication){
+    let mdId = Number(md.medication_id)
+    await this.medicationStore.deleteMedication({patientId: this.patientId, mdId})
+  }
+
 
   convertDate(date: string){
     return moment(date).format('MMM Do YYYY, [<br/>] h:mm:ss a')

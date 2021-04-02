@@ -28,4 +28,34 @@ export default class ProblemStore extends VuexModule{
       alert('Get problems failed')
     }
   }
+  @VuexAction
+  async createProblem({patientId, formData}: {patientId: number, formData: FormData}){
+    const token = this.context.rootGetters['auth-store/token']
+    try {
+      const docs = await patientDataApi.createProblem(token, patientId, formData)
+      this.context.dispatch('getProblems', patientId)
+    } catch (error) {
+      alert("Create problem failed")
+    }
+  }
+  @VuexAction
+  async editProblem({patientId, pbId, formData}: {patientId: number, pbId: number, formData: FormData}){
+    const token = this.context.rootGetters['auth-store/token']
+    try {
+      await patientDataApi.updateProblem(token, pbId, formData)
+      this.context.dispatch('getProblems', patientId)
+    } catch (error) {
+      alert("Edit Problem failed")
+    }
+  }
+  @VuexAction
+  async deleteProblem({patientId, pbId}: {patientId: number, pbId: number}){
+    const token = this.context.rootGetters['auth-store/token']
+    try {
+      await patientDataApi.deleteProblem(pbId, token)
+      this.context.dispatch('getProblems', patientId)
+    } catch (error) {
+      alert("Delete Problem failed")
+    }
+  }
 }

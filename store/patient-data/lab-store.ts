@@ -26,4 +26,34 @@ export default class LabStore extends VuexModule{
       alert('Get labs failed')
     }
   }
+  @VuexAction
+  async createLab({patientId, formData}: {patientId: number, formData: FormData}){
+    const token = this.context.rootGetters['auth-store/token']
+    try {
+      const docs = await patientDataApi.createLab(token, patientId, formData)
+      this.context.dispatch('getLabs', patientId)
+    } catch (error) {
+      alert("Create lab failed")
+    }
+  }
+  @VuexAction
+  async editLab({patientId, labId, formData}: {patientId: number, labId: number, formData: FormData}){
+    const token = this.context.rootGetters['auth-store/token']
+    try {
+      await patientDataApi.updateLab(labId, token, formData)
+      this.context.dispatch('getLabs', patientId)
+    } catch (error) {
+      alert("Edit lab failed")
+    }
+  }
+  @VuexAction
+  async deleteLab({patientId, labId}: {patientId: number, labId: number}){
+    const token = this.context.rootGetters['auth-store/token']
+    try {
+      await patientDataApi.deleteLab(labId, token)
+      this.context.dispatch('getLabs', patientId)
+    } catch (error) {
+      alert("Delete lab failed")
+    }
+  }
 }

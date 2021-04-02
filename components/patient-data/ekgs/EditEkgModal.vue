@@ -4,7 +4,7 @@
       <span class="title">Edit Ekg</span>
     </header>
     <main>
-      <form @submit.prevent="doStartEdit">
+      <form @submit.prevent="doStartEdit" id="edit-ekg-form">
         
         <div class="row">
           <b-form-group class="col-6"  label="Units"> 
@@ -81,7 +81,10 @@ export default class EditEkgModal extends Vue{
   
 
   doStartEdit(){
-    alert("edit")
+    const form = document.querySelector("#edit-ekg-form")
+    // @ts-ignore
+    const formData = new FormData(form)
+    this.$emit('edit', this.ekg, formData)
   }
 }
 </script>

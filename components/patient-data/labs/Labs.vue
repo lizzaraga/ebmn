@@ -29,9 +29,9 @@
         </footer>
       </div>
     </div>
-    <delete-lab-modal :lab="currentLab"/>
-    <edit-lab-modal :lab="currentLab"/>
-    <create-lab-modal/>
+    <delete-lab-modal @delete="onDeleteLab" :lab="currentLab"/>
+    <edit-lab-modal @edit="onEditLab" :lab="currentLab"/>
+    <create-lab-modal @create="onCreateLab"/>
     <div class="fab">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Eveniet, neque!</div>
   </div>
 </template>
@@ -54,6 +54,7 @@ import CreateLabModal from './CreateLabModal.vue';
 export default class Labs extends Vue{
   private labStore = getModule(LabStore, this.$store)
   private currentLab: ILab = {lab_id: -1, lab_results_problems_list: []}
+  patientId = 27
   
   public get labs() {
     return this.labStore.labs
@@ -74,6 +75,20 @@ export default class Labs extends Vue{
     this.$bvModal.show('edit-lab-modal')
   }
 
+  // Main actions
+  async onCreateLab(formData: FormData){
+    await this.labStore.createLab({patientId: this.patientId, formData})
+  }
+  async onEditLab(lab: ILab, formData: FormData){
+    let labId = Number(lab.lab_id)
+
+    await this.labStore.editLab({ patientId: this.patientId, labId, formData})
+  }
+
+  async onDeleteLab(lab: ILab){
+    let labId = Number(lab.lab_id)
+    await this.labStore.deleteLab({patientId: this.patientId, labId})
+  }
   convertDate(date: string){
     return moment(date).format('MMM Do YYYY, [<br/>] h:mm:ss a')
   }

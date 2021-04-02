@@ -22,7 +22,7 @@ export default class DeletePbModal extends Vue{
   @Prop({required: true}) pb!: IProblem
 
   doDeletePb(){
-    alert("Delete")
+    this.$emit('delete', this.pb)
   }
 }
 </script>

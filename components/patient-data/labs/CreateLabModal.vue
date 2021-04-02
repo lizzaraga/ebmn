@@ -1,14 +1,15 @@
 <template>
   <b-modal size="lg" hide-header hide-footer  body-class="x-modal" id="create-lab-modal">
     <header class="x-modal__header">
-      <span class="title">Edit Lab</span>
+      <span class="title">Create Lab</span>
     </header>
     <main>
-      <form id="createLab" @submit.prevent="doStartCreate">
+      <form id="create-lab-form" @submit.prevent="doStartCreate">
         <div class="row">
           <b-form-group class="col-6 position-relative"  label="Description"> 
-            <b-form-input debounce="500" v-model="lab.description"  name="description" id="description"></b-form-input>
-            <div class="input-search-results-box">
+            <b-form-input  debounce="100" @focus="showSearchResults"
+             v-model="lab.description"  name="description" id="description"></b-form-input>
+            <div  v-show="resultsVisible" class="input-search-results-box">
               <header>
                 <span class="title">Results</span>
               </header>
@@ -34,7 +35,7 @@
         </div>
         <div class="row">
           <b-form-group class="col-12" label="Related Problems"> 
-            <b-form-select name="related_problems" :disabled="lab.problems.length <= 0" :options="lab.problems" multiple ></b-form-select>
+            <b-form-select :value='[]' name="related_problems" :disabled="lab.problems.length <= 0" :options="lab.problems" multiple ></b-form-select>
           </b-form-group>
         </div>
         <div class="row">
@@ -53,7 +54,7 @@
     </main>
     <footer class="x-modal__footer">
       <button class="btn btn-action" @click="$bvModal.hide('create-lab-modal')">Cancel</button>
-      <button @click="doStartCreate" class="btn btn-action">Edit</button>
+      <button @click="doStartCreate" class="btn btn-action">Create</button>
     </footer>
 
   </b-modal>
@@ -87,6 +88,8 @@ export default class CreateLabModal extends Vue{
 
   labHis: ILabInstitute[] = []
 
+  resultsVisible:boolean = false
+
   @Watch('lab.description')
   onDescriptionChanged(value: string){
     this.onSearchLoincCodes(value)
@@ -96,7 +99,18 @@ export default class CreateLabModal extends Vue{
     this.getHIFromLoincCode(value)
   }
 
-  doStartCreate(){}
+  showSearchResults(){
+    this.resultsVisible = true
+  }
+  hideSearchResults(){
+    this.resultsVisible = false
+  }
+  doStartCreate(){
+    const form = document.querySelector("#create-lab-form")
+    // @ts-ignore
+    const formData = new FormData(form)
+    this.$emit('create', formData)
+  }
 
   async onSearchLoincCodes(searchTerm: string){
     try {
@@ -125,8 +139,11 @@ export default class CreateLabModal extends Vue{
     }
   }
   onSelectLab(lab: ILabInstitute){
+    console.log('Selected Lab: ', lab)
     // @ts-ignore
-    this.lab = {...this.lab, ...{loincCode: lab.lab_loinc_code}}
+    this.lab = {...this.lab, ...{loincCode: lab.lab_loinc_code, description: lab.lab_description}}
+    this.hideSearchResults()
+    
   }
 
   async created(){
@@ -151,11 +168,11 @@ export default class CreateLabModal extends Vue{
       await this.problemStore.getProblems(27)
       const pbs = this.problemStore.problems.map(p => {
         return {
-          text: p.problem_name, value: p.problem_name
+          text: p.problem_name, value: p.problem_id
         }
       })
       // @ts-ignore
-      pbs.unshift({value: null, text: 'Please select your problems'})
+      pbs.unshift({value: null, text: 'Please select your problems', disabled: true})
       // @ts-ignore
       this.lab = {...this.lab, ...{problems: pbs}}
     } catch (error) {
@@ -167,48 +184,4 @@ export default class CreateLabModal extends Vue{
 }
 </script>
 
-<style lang="scss">
-.input-search-results-box{
-  position: absolute;
-  left: 0;
-  right: 0;
-  z-index: 4;
-  background-color: #fff;
-  margin: 0 0.9rem;
-  margin-top: 0.3rem;
-  border: 1px solid #eee;
-  box-shadow: 0 3px 6px rgba($color: #000000, $alpha: 0.05);
-  &>header{
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0.7rem 1rem;
-    border-bottom: 1px solid #eee;
-    &>.title{
-      font-size: 0.8rem;
-      color: #888;
-      
-    }
-  }
-  &>main{
-    padding: 0rem;
-    &>.items{
-      display: flex;
-      flex-direction: column;
-      &>.item{
-        padding: 0.7rem 1rem;
-        border-bottom: 1px solid #EAEAEA;
-        font-size: 0.8rem;
-        font-weight: 500;
-        cursor: pointer;
-        &:last-child{
-          border-bottom: none;
-        }
-        &:hover{
-          background-color: #FAFAFA;
-        }
-      }
-    }
-  }
-}
-</style>
+
