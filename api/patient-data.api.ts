@@ -15,7 +15,7 @@ class PatientDataApi {
         return Promise.reject(error)
         }
     }
-    async updateGIField(patientId: number, token: string, request: IUpdateGI){
+    async updateGIField(patientId: number, token: string, request: any){
         try {
         const response = await Axios.put(`/general_info/update/${patientId}/${token}/`, request)
             return Promise.resolve(response.data)
@@ -23,9 +23,9 @@ class PatientDataApi {
         return Promise.reject(error)
         }
     }
-    async updateGIBinaryField(patientId: number, token: string, request: IUpdateGIFile){
+    async updateGIBinaryField(patientId: number, token: string, data: any){
         try {
-        await Axios.put(`/general_info/update/${patientId}/${token}/`, request.data, {
+        await Axios.put(`/general_info/update/${patientId}/${token}/`, data, {
             headers: {
             'Content-Type': 'multipart/form-data'
             }

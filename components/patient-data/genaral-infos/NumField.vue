@@ -1,5 +1,5 @@
 <template>
-  <b-modal centered  hide-header hide-footer  body-class="x-modal" id="gi-tel-modal">
+  <b-modal centered  hide-header hide-footer  body-class="x-modal" id="gi-number-modal">
       <header class="x-modal__header">
         <span class="title">Update <span>{{field.name | formatName}}</span></span>
       </header>
@@ -7,7 +7,7 @@
         
         <form @submit.prevent="onUpdate">
           <b-form-group :label="formatName(field.name)"> 
-            <b-input type="tel" v-model='innerField.value' :placeholder="`New ${formatName(field.name)}`"/>
+            <b-input type="number" v-model='innerField.value' :placeholder="`New ${formatName(field.name)}`"/>
           </b-form-group>
           {{innerField}}
         </form>
@@ -30,7 +30,7 @@ import Vue from 'vue'
     }
   }
 })
-export default class GITelModal extends Vue{
+export default class GINumModal extends Vue{
   @Prop({default: {name: '', value: ''}}) field!: {name: string, value: string} 
 
   // Data

@@ -17,7 +17,7 @@ export default class GIStore extends VuexModule{
     this.gi = data
   }
   @VuexMutation
-  updateField({name, value}: {name: string, value: string}){
+  UPDATE_FIELD({name, value}: {name: string, value: string}){
     const temp = {}
     // @ts-ignore
     temp[name] = value
@@ -36,22 +36,27 @@ export default class GIStore extends VuexModule{
   }
 
   @VuexAction
-  async updateGIField(patientId: number, request: IUpdateGI){
+  async updateGIField({patientId, request}: {patientId: number, request: IUpdateGI}){
     const token = this.context.rootGetters['auth-store/token']
+    const data = {}
+    //@ts-ignore
+    data[request.name] = request.value
+    console.log('Data: ', data)
     try {
-      await patientDataApi.updateGIField(patientId, token, request)
-      this.context.commit('updateField', request)
+      await patientDataApi.updateGIField(patientId, token, data)
+      this.context.commit('UPDATE_FIELD', request)
     } catch (error) {
       console.log('Update general info field failed')
     }
   }
 
   @VuexAction
-  async updateGIBinaryField(patientId: number, request: IUpdateGIFile){
+  async updateGIBinaryField({patientId, request}:{patientId: number, request: IUpdateGIFile}){
     const token = this.context.rootGetters['auth-store/token']
     try {
-      await patientDataApi.updateGIBinaryField(patientId, token, request)
-      this.context.commit('updateField', request)
+      console.log('Request: ', request.data)
+      await patientDataApi.updateGIBinaryField(patientId, token, request.data)
+      this.context.commit('UPDATE_FIELD', request)
     } catch (error) {
       console.log('Update general info binary field failed')
     }

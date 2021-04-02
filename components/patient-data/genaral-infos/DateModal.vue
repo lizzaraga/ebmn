@@ -5,7 +5,7 @@
       </header>
       <main>
         
-        <form>
+        <form @submit.prevent="onUpdate">
           <b-form-group :label="formatName(field.name)"> 
             <b-input type="date" v-model='innerField.value' :placeholder="`New ${formatName(field.name)}`"/>
           </b-form-group>

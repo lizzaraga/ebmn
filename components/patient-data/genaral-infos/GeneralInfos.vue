@@ -29,9 +29,9 @@
         </main>
       </div>
       <div class="gi-data-group">
-        <header>GPS fields</header>
+        <header>Nums fields</header>
         <main>
-          <div @click="selectedField = {name, value: gi[name]}" v-b-modal="'gi-number-modal'" :key="name" v-for="name in gpsFields" class="gi-data-item">
+          <div @click="selectedField = {name, value: gi[name]}" v-b-modal="'gi-number-modal'" :key="name" v-for="name in numFields" class="gi-data-item">
             <span class="name">{{name | formatName}}</span>
             <span class="value">{{ gi[name] == null || gi[name].trim() == ""  ? 'N/A': gi[name].trim()}}</span>
           </div>
@@ -61,17 +61,23 @@
         <main>
           <div @click="selectedField = {name, value: gi[name]}" v-b-modal="'gi-file-modal'" :key="name" v-for="name in fileFields" class="gi-data-item">
             <span class="name">{{name | formatName}}</span>
-            <span class="value">{{ gi[name] == null || gi[name].trim() == ""  ? 'N/A': gi[name].trim()}}</span>
+            <span  v-if='gi[name] == null || gi[name].trim() == ""' class="value">
+              N/A
+            </span>
+            <a v-else @click.self.stop target="_blank" :href="gi[name].trim()" class="value">
+              {{getFileName(gi[name].trim())}}
+            </a>
           </div>
         </main>
       </div>
     </div>
-    <gi-text-modal :field="selectedField"/>
-    <gi-email-modal :field="selectedField"/>
-    <gi-tel-modal :field="selectedField"/>
-    <gi-date-modal :field="selectedField"/>
-    <gi-file-modal :field="selectedField"/>
-    <gi-select-modal :field="selectedField"/>
+    <gi-text-modal @update='onUpdateField' :field="selectedField"/>
+    <gi-email-modal @update='onUpdateField' :field="selectedField"/>
+    <gi-tel-modal @update='onUpdateField' :field="selectedField"/>
+    <gi-num-modal @update='onUpdateField' :field="selectedField"/>
+    <gi-date-modal @update='onUpdateField' :field="selectedField"/>
+    <gi-file-modal @update="onUpdateFile" :field="selectedField"/>
+    <gi-select-modal @update='onUpdateField' :field="selectedField"/>
     
   </div>
 </template>
@@ -83,6 +89,7 @@ import GIStore from '~/store/patient-data/gi-store';
 import GIDateModal from './DateModal.vue';
 import GIEmailModal from './EmailModal.vue';
 import GIFileModal from './FileModal.vue';
+import GINumModal from './NumField.vue';
 import GISelectModal from './SelectModal.vue';
 import GITelModal from './TelModal.vue';
 import GITextModal from './TextModal.vue';
@@ -93,7 +100,8 @@ import GITextModal from './TextModal.vue';
     giTelModal: GITelModal,
     giDateModal: GIDateModal,
     giFileModal: GIFileModal,
-    giSelectModal: GISelectModal
+    giSelectModal: GISelectModal,
+    giNumModal: GINumModal,
   },
   filters: {
     formatName(value: string){
@@ -106,11 +114,11 @@ export default class GeneralInfos extends Vue{
   private giStore = getModule(GIStore, this.$store)
   textFields = ['username', 'title', 'first_name', 'middle_name',
   'last_name', 'sufix', 'place_of_birth', 'ethnicity', 'language', 'occupation', 'religion',
-  'region_of_residence', 'number_of_children', 'employer_name', 'employer_address',
+  'region_of_residence',  'employer_name', 'employer_address',
   ]
   mailFields = ['email', 'alternate_email']
   telFields = ['phone_number', 'office_phone', 'employer_phone']
-  gpsFields = ['gps_longitude', 'gps_latitude']
+  numFields = ['number_of_children','gps_longitude', 'gps_latitude']
   dateFields = ['date_of_birth']
   fileFields = ['signature_file', 'house_map', 'photo']
   selectFields = [
@@ -119,7 +127,7 @@ export default class GeneralInfos extends Vue{
       values: ['Female', 'Male']
     },
     {
-      name: 'Race',
+      name: 'race',
       values: ['Black', 'White']
     },
     {
@@ -146,8 +154,15 @@ export default class GeneralInfos extends Vue{
   ]
 
   selectedField = {}
+  patientId = 27
+
   get gi(): IGeneralInfo{
     return this.giStore.gi
+  }
+
+  getFileName(path: string){
+    const parts = path.split('/')
+    return parts.pop()
   }
   
   prepareSelectModal(field:  {name: string, value: string}){
@@ -157,6 +172,13 @@ export default class GeneralInfos extends Vue{
     this.selectedField = newField
   }
 
+  async onUpdateField(field: any){
+    await this.giStore.updateGIField({ patientId: this.patientId, request: field})
+  }
+  async onUpdateFile(field: any){
+    console.log(field)
+    await this.giStore.updateGIBinaryField({ patientId: this.patientId, request: field})
+  }
   async mounted(){
     await this.giStore.getGeneralInfo(27)
   }

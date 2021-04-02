@@ -5,13 +5,13 @@
       </header>
       <main>
         
-        <form>
-          <b-form-file
-          v-model="file"
-          :state="Boolean(file)"
-          placeholder="Choose a file or drop it here..."
-          drop-placeholder="Drop file here..."
-        ></b-form-file>
+        <form @submit.prevent="onUpdate" id="gi-file-form">
+          <div class="form-group">
+            <input type="file" :name="field.name" :id="field.name" @change="onChanged($event)"
+              placeholder="Choose a file or drop it here..."
+              class="form-control"
+            />
+          </div>
           {{innerField}}
         </form>
       </main>
@@ -46,7 +46,15 @@ export default class GIFileModal extends Vue{
   }
 
   async onUpdate(){
-    this.$emit('update', Object.assign({}, this.innerField))
+    const form = document.querySelector('#gi-file-form')
+    //@ts-ignore
+    const filename = `https://storage.googleapis.com/sincere-signal-267510.appspot.com/ebmnet/photos/${this.file?.name}`
+    //@ts-ignore
+    this.$emit('update', Object.assign({}, this.innerField, {value: filename, data: new FormData(form)}))
+  }
+
+  onChanged(e: any){
+    this.file = e.target.files[0]
   }
   formatName(value: string){
     if(!value) return '';
