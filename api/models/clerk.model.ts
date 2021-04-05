@@ -46,6 +46,6 @@ export interface IClerkSurgery{
 }
 
 export interface IAdminClerk{
-  user_is_clerk_id: number,
-  user: string
+  user_is_clerk_id?: number,
+  user?: string
 }

@@ -93,6 +93,26 @@ export default class AdminStore extends VuexModule{
     }
   }
   @VuexAction
+  async createClerk(formData: FormData){
+    const token = this.context.rootGetters['auth-store/token']
+    try {
+      await adminApi.createClerk(token, formData)
+      this.context.dispatch('getClerks')
+    } catch (error) {
+      alert("Create clerk failed")
+    }
+  }
+  @VuexAction
+  async deleteClerk(clerkId: number){
+    const token = this.context.rootGetters['auth-store/token']
+    try {
+      await adminApi.deleteClerk(token, clerkId)
+      this.context.dispatch('getClerks')
+    } catch (error) {
+      alert("Delete clerk failed")
+    }
+  }
+  @VuexAction
   async getGuidelines(){
     const token = this.context.rootGetters['auth-store/token']
     try {
@@ -100,6 +120,16 @@ export default class AdminStore extends VuexModule{
       this.context.commit('setGuidelines', guidelines)
     } catch (error) {
       alert("Fetch guidelines failed")
+    }
+  }
+  @VuexAction
+  async editGuideline({guidelineId, formData}:{guidelineId: number, formData: FormData}){
+    const token = this.context.rootGetters['auth-store/token']
+    try {
+      await adminApi.updateGuideline(token, guidelineId, formData)
+      this.context.dispatch('getGuidelines')
+    } catch (error) {
+      alert("Edit guideline failed")
     }
   }
 
