@@ -2,7 +2,7 @@ import { VuexAction, VuexMutation } from "nuxt-property-decorator";
 import { Module, VuexModule } from "vuex-module-decorators";
 import adminApi from "~/api/admin.api";
 import hospitalApi from "~/api/hospital.api";
-import { IGuideline } from "~/api/models/admin.model";
+import { IAdminUser, IGuideline } from "~/api/models/admin.model";
 import { IAdminClerk } from "~/api/models/clerk.model";
 import { IHospital } from "~/api/models/hospital.model";
 import { IAdminManager } from "~/api/models/manager.model";
@@ -15,15 +15,13 @@ import { IAdminManager } from "~/api/models/manager.model";
 })
 export default class AdminStore extends VuexModule{
 
-  hospitals: IHospital[] = []
+  
   managers: IAdminManager[] = []
   clerks: IAdminClerk[] = []
   guidelines: IGuideline[] = []
+  users: IAdminUser[] = []
 
-  @VuexMutation
-  setHospitals(data: IHospital[]){
-    this.hospitals = data
-  }
+  
   @VuexMutation
   setManagers(data: IAdminManager[]){
     this.managers = data
@@ -36,18 +34,13 @@ export default class AdminStore extends VuexModule{
   setGuidelines(data: IGuideline[]){
     this.guidelines = data
   }
-
-
-  @VuexAction
-  async getHospitals(){
-    const token = this.context.rootGetters['auth-store/token']
-    try {
-      const hospitals = await hospitalApi.getHospitals(token)
-      this.context.commit('setHospitals', hospitals)
-    } catch (error) {
-      alert("Fetch hospitals failed")
-    }
+  @VuexMutation
+  SET_USERS(data: IAdminUser[]){
+    this.users = data
   }
+
+
+  
   @VuexAction
   async getManagers(){
     const token = this.context.rootGetters['auth-store/token']
@@ -58,6 +51,37 @@ export default class AdminStore extends VuexModule{
       alert("Fetch managers failed")
     }
   }
+  @VuexAction
+  async createManager(formData: FormData){
+    const token = this.context.rootGetters['auth-store/token']
+    try {
+      await adminApi.createManager(token, formData)
+      this.context.dispatch('getManagers')
+    } catch (error) {
+      alert("Create manager failed")
+    }
+  }
+  @VuexAction
+  async deleteManager(managerId: number){
+    const token = this.context.rootGetters['auth-store/token']
+    try {
+      await adminApi.deleteManager(token, managerId)
+      this.context.dispatch('getManagers')
+    } catch (error) {
+      alert("Delete manager failed")
+    }
+  }
+  @VuexAction
+  async getUsers(){
+    const token = this.context.rootGetters['auth-store/token']
+    try {
+      const users = await adminApi.getUsers(token)
+      this.context.commit('SET_USERS', users)
+    } catch (error) {
+      alert("Fetch users failed")
+    }
+  }
+
   @VuexAction
   async getClerks(){
     const token = this.context.rootGetters['auth-store/token']

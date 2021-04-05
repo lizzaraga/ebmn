@@ -1,5 +1,5 @@
 import Axios from 'axios'
-import { IGuideline } from './models/admin.model'
+import { IAdminUser, IGuideline } from './models/admin.model'
 import { IAdminClerk } from './models/clerk.model'
 import { IAdminManager } from './models/manager.model'
 
@@ -49,6 +49,15 @@ class AdminApi{
           return Promise.reject(error)
       }
   }
+
+  async getUsers(token: string){
+    try {
+        const response = await Axios.get(`/users/get/${token}/`)
+        return Promise.resolve<IAdminUser[]>(response.data.users)
+    } catch (error) {
+        return Promise.reject(error)
+    }
+}
 
   // Clerks
   async getClerks(token: string) {

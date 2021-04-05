@@ -37,7 +37,7 @@ class HIApi{
     async getHIFromCptCode(token: string, cpCode: string){
       try {
           const response = await Axios.get(`hospitals/get/surgery/${cpCode}/${token}/`)
-          return Promise.resolve<IHealthInstitute>(response.data.health_institute)
+          return Promise.resolve<IHealthInstitute[]>(response.data.health_institutes)
       } catch (error) {
           return Promise.reject(error)
       }

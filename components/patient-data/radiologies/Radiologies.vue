@@ -33,6 +33,7 @@
     </div>
     <delete-rd-modal @delete="onDeleteRd" :rd="currentRd"/>
     <edit-rd-modal @edit="onEditRd" :rd="currentRd"/>
+    <create-rd-modal @create="onCreateRd"/>
   </div>
 </template>
 <script lang="ts">
@@ -41,13 +42,15 @@ import { Component, getModule } from 'nuxt-property-decorator';
 import Vue from 'vue'
 import { IRadiology } from '~/api/models/patient-data.model';
 import RadiologyStore from '~/store/patient-data/radiology-store';
+import CreateRdModal from './CreateRdModal.vue';
 import DeleteRdModal from './DeleteRdModal.vue';
 import EditRdModal from './EditRdModal.vue';
 
 @Component({
   components:{
     deleteRdModal: DeleteRdModal,
-    editRdModal: EditRdModal
+    editRdModal: EditRdModal,
+    createRdModal: CreateRdModal
   }
 })
 export default class Radiologies extends Vue{

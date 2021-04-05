@@ -11,10 +11,12 @@
             <b-input
                 placeholder="Surgery response"
                 name="surgery_response"
+                v-model="sg.surgery_response"
               ></b-input>
           </b-form-group>
           <b-form-group class="col-12"  label="Comments after"> 
             <b-form-textarea
+                v-model="sg.surgery_comments_after"
                 placeholder="Comments after"
                 rows="3"
                 class="form-control"
@@ -41,7 +43,7 @@ import Vue from 'vue'
 import { Prop } from 'vue-property-decorator'
 import { ISurgery } from '~/api/models/patient-data.model'
 @Component
-export default class EditPbModal extends Vue{
+export default class EditSurgeryModal extends Vue{
   @Prop({required: true}) sg!: ISurgery
   
   doStartEdit(){

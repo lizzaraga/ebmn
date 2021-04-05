@@ -18,7 +18,7 @@ import Vue from 'vue'
 import { Prop } from 'vue-property-decorator'
 import { ISurgery } from '~/api/models/patient-data.model'
 @Component
-export default class DeleteRdModal extends Vue{
+export default class DeleteSurgeryModal extends Vue{
   @Prop({required: true}) sg!: ISurgery
 
   doDeleteSg(){

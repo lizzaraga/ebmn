@@ -12,3 +12,7 @@ export interface IGuideline{
   treatment?: string,
   diagnosis?: string
 }
+export interface IAdminUser{
+  user_id: number,
+  user_name: string
+}

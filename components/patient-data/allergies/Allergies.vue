@@ -30,6 +30,7 @@
     </div>
     <delete-allergy-modal @delete="onDeleteAllergy" :allergy="currentAllergy"/>
     <edit-allergy-modal @edit="onEditAllergy" :allergy="currentAllergy"/>
+    <create-allergy-modal @create="onCreateAllergy" />
   </div>
 </template>
 <script lang="ts">
@@ -38,13 +39,15 @@ import { Component, getModule } from 'nuxt-property-decorator';
 import Vue from 'vue'
 import { IAllergy } from '~/api/models/patient-data.model';
 import AllergyStore from '~/store/patient-data/allergy-store';
+import CreateAllergyModal from './CreateAllergyModal.vue';
 import DeleteAllergyModal from './DeleteAllergyModal.vue';
 import EditAllergyModal from './EditAllergyModal.vue';
 
 @Component({
   components:{
     deleteAllergyModal: DeleteAllergyModal,
-    editAllergyModal: EditAllergyModal 
+    editAllergyModal: EditAllergyModal,
+    createAllergyModal: CreateAllergyModal 
   }
 })
 export default class Allergies extends Vue{

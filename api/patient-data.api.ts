@@ -321,6 +321,25 @@ class PatientDataApi {
             return Promise.reject(error)
         }
     }
+    private searchMdFromRxnormTokenSource?: CancelTokenSource;
+
+    async searchMdFromRxService(token: string, searchTerm: string){
+        if(this.searchMdFromRxnormTokenSource != null){
+            this.searchMdFromRxnormTokenSource.cancel("Request was cancelled due to the new request")
+        }
+        this.searchMdFromRxnormTokenSource = Axios.CancelToken.source()
+
+        try {
+            const response = await Axios.get(`/rxnorm_label/get/${token}/${searchTerm}/`, {
+                cancelToken: this.searchMdFromRxnormTokenSource.token
+            })
+            return Promise.resolve<IRxNormLabel[]>(response.data.medications)
+        } catch (error) {
+            if(Axios.isCancel(error))
+                return Promise.reject(false)
+            return Promise.reject(error)
+        }
+    }
 
     /**
      * Vital Signs
@@ -333,7 +352,7 @@ class PatientDataApi {
             return Promise.reject(error)
         }
     }
-    async updateVitalSigns(token: string, patientId: number, data: FormData){
+    async updateVitalSigns(token: string, patientId: number, data: IVitalSigns){
         try {
             const response =  Axios.put(`/vital_signs/update/${patientId}/${token}/`, data)
             return Promise.resolve((await response).data)
@@ -363,7 +382,7 @@ class PatientDataApi {
     }
     async deleteSurgery(token: string, surgeryId: number){
         try {
-            const response = await Axios.put(`/surgery/delete/${token}/${surgeryId}/`)
+            const response = await Axios.delete(`/surgery/delete/${token}/${surgeryId}/`)
             return Promise.resolve(response.data)
         } catch (error) {
             return Promise.reject(error)
@@ -382,16 +401,16 @@ class PatientDataApi {
         }
     }
 
-    searchSurgeriesByCodeTokenSource!: CancelTokenSource;
-    async searchSurgeryCptCodesService(token: string, searchTerm: string){
-        if(this.searchSurgeriesByCodeTokenSource != null){
-            this.searchSurgeriesByCodeTokenSource.cancel("Request was cancelled due to the new request")
+    searchSgFromCptCodeTokenSource!: CancelTokenSource;
+    async searchSgFromCptCode(token: string, searchTerm: string){
+        if(this.searchSgFromCptCodeTokenSource != null){
+            this.searchSgFromCptCodeTokenSource.cancel("Request was cancelled due to the new request")
         }
-        this.searchSurgeriesByCodeTokenSource = Axios.CancelToken.source()
+        this.searchSgFromCptCodeTokenSource = Axios.CancelToken.source()
 
         try {
             const response = Axios.get(`/cpt_code/get/${token}/${searchTerm}/`, {
-                cancelToken: this.searchSurgeriesByCodeTokenSource.token
+                cancelToken: this.searchSgFromCptCodeTokenSource.token
             })
             return Promise.resolve<ICptCodeSurgery[]>((await response).data.surgery_list)
         } catch (error) {
@@ -437,7 +456,7 @@ class PatientDataApi {
         }
     }
     
-    searchAllergyMedicationsTokenSource!: CancelTokenSource;
+    private searchAllergyMedicationsTokenSource!: CancelTokenSource;
     async searchAllergyMedicationsService(token: string, searchTerm: string){
         if(this.searchAllergyMedicationsTokenSource != null){
             this.searchAllergyMedicationsTokenSource.cancel("Request was cancelled due to the new request")

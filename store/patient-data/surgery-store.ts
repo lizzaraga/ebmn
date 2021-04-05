@@ -28,4 +28,34 @@ export default class SurgeryStore extends VuexModule{
       alert('Get surgeries failed')
     }
   }
+  @VuexAction
+  async createSurgery({patientId, formData}: {patientId: number, formData: FormData}){
+    const token = this.context.rootGetters['auth-store/token']
+    try {
+      const docs = await patientDataApi.createSurgery(token, patientId, formData)
+      this.context.dispatch('getSurgeries', patientId)
+    } catch (error) {
+      alert("Create surgery failed")
+    }
+  }
+  @VuexAction
+  async editSurgery({patientId, sgId, formData}: {patientId: number, sgId: number, formData: FormData}){
+    const token = this.context.rootGetters['auth-store/token']
+    try {
+      await patientDataApi.updateSurgery(token, sgId, formData)
+      this.context.dispatch('getSurgeries', patientId)
+    } catch (error) {
+      alert("Edit surgery failed")
+    }
+  }
+  @VuexAction
+  async deleteSurgery({patientId, sgId}: {patientId: number, sgId: number}){
+    const token = this.context.rootGetters['auth-store/token']
+    try {
+      await patientDataApi.deleteSurgery(token, sgId)
+      this.context.dispatch('getSurgeries', patientId)
+    } catch (error) {
+      alert("Delete surgery failed")
+    }
+  }
 }

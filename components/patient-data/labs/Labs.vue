@@ -32,7 +32,7 @@
     <delete-lab-modal @delete="onDeleteLab" :lab="currentLab"/>
     <edit-lab-modal @edit="onEditLab" :lab="currentLab"/>
     <create-lab-modal @create="onCreateLab"/>
-    <div class="fab">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Eveniet, neque!</div>
+    
   </div>
 </template>
 <script lang="ts">

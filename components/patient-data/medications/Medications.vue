@@ -33,6 +33,7 @@
     </div>
     <delete-md-modal @delete="onDeleteMd" :md="currentMd"/>
     <edit-md-modal @edit="onEditMd" :md="currentMd"/>
+    <create-md-modal @create="onCreateMd"/>
   </div>
 </template>
 <script lang="ts">
@@ -41,13 +42,15 @@ import { Component, getModule } from 'nuxt-property-decorator';
 import Vue from 'vue'
 import { IMedication } from '~/api/models/patient-data.model';
 import MedicationStore from '~/store/patient-data/medication-store';
+import CreateMdModal from './CreateMdModal.vue';
 import DeleteMdModal from './DeleteMdModal.vue';
 import EditMdModal from './EditMdModal.vue';
 
 @Component({
   components:{
     deleteMdModal: DeleteMdModal,
-    editMdModal: EditMdModal
+    editMdModal: EditMdModal,
+    createMdModal: CreateMdModal
   }
 })
 export default class Medications extends Vue{
@@ -76,6 +79,7 @@ export default class Medications extends Vue{
 
   // Main actions
   async onCreateMd(formData: FormData){
+    
     await this.medicationStore.createMedication({patientId: this.patientId, formData})
   }
   async onEditMd(md: IMedication, formData: FormData){

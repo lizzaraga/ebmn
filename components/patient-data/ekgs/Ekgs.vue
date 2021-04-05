@@ -33,6 +33,7 @@
     </div>
     <delete-ekg-modal @delete="onDeleteEkg" :ekg="currentEkg"/>
     <edit-ekg-modal @edit="onEditEkg" :ekg="currentEkg"/>
+    <create-ekg-modal @create="onCreateEkg"/>
   </div>
 </template>
 <script lang="ts">
@@ -43,11 +44,13 @@ import { IEkg } from '~/api/models/patient-data.model';
 import moment from 'moment';
 import DeleteEkgModal from './DeleteEkgModal.vue';
 import EditEkgModal from './EditEkgModal.vue';
+import CreateEkgModal from './CreateEkgModal.vue';
 
 @Component({
   components: {
     deleteEkgModal: DeleteEkgModal,
-    editEkgModal: EditEkgModal
+    editEkgModal: EditEkgModal,
+    createEkgModal: CreateEkgModal
   }
 })
 export default class Ekgs extends Vue{

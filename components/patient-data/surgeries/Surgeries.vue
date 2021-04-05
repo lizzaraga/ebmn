@@ -31,7 +31,9 @@
         </footer>
       </div>
     </div>
-    
+    <edit-surgery-modal @edit="onEditSg" :sg="currentSg"/>
+    <delete-surgery-modal @delete="onDeleteSg" :sg="currentSg"/>
+    <create-surgery-modal @create="onCreateSg"/>
   </div>
 </template>
 <script lang="ts">
@@ -40,7 +42,16 @@ import Vue from 'vue'
 import SurgeryStore from '@/store/patient-data/surgery-store'
 import { ISurgery } from '~/api/models/patient-data.model';
 import moment from 'moment';
-@Component
+import DeleteSurgeryModal from './DeleteSurgeryModal.vue';
+import EditSurgeryModal from './EditSurgeryModal.vue';
+import CreateSgModal from './CreateSurgeryModal.vue';
+@Component({
+  components:{
+    deleteSurgeryModal: DeleteSurgeryModal,
+    editSurgeryModal: EditSurgeryModal,
+    createSurgeryModal: CreateSgModal
+  }
+})
 export default class Surgeries extends Vue{
   private surgeryStore = getModule(SurgeryStore, this.$store)
   private currentSg: ISurgery = {surgery_id: -1,surgery_result_problem_list: [] }
@@ -65,6 +76,20 @@ export default class Surgeries extends Vue{
     this.$bvModal.show('edit-sg-modal')
   }
 
+  // Main actions
+  async onCreateSg(formData: FormData){
+    await this.surgeryStore.createSurgery({patientId: this.patientId, formData})
+  }
+  async onEditSg(sg: ISurgery, formData: FormData){
+    let sgId = Number(sg.surgery_id)
+
+    await this.surgeryStore.editSurgery({ patientId: this.patientId, sgId, formData})
+  }
+
+  async onDeleteSg(sg: ISurgery){
+    let sgId = Number(sg.surgery_id)
+    await this.surgeryStore.deleteSurgery({patientId: this.patientId, sgId})
+  }
   convertDate(date: string){
     return moment(date).format('MMM Do YYYY, [<br/>] h:mm:ss a')
   }
