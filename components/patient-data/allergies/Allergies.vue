@@ -1,7 +1,7 @@
 <template>
   <div id="allergies">
     <div>
-      {{allergies}}
+      <!-- {{allergies}} -->
     </div>
     <div class="patient-data-grid">
       <div class="data-item" :key="allergy.allergy_id" v-for="allergy in allergies">
@@ -35,7 +35,7 @@
 </template>
 <script lang="ts">
 import moment from 'moment';
-import { Component, getModule } from 'nuxt-property-decorator';
+import { Component, getModule, Prop } from 'nuxt-property-decorator';
 import Vue from 'vue'
 import { IAllergy } from '~/api/models/patient-data.model';
 import AllergyStore from '~/store/patient-data/allergy-store';
@@ -51,9 +51,9 @@ import EditAllergyModal from './EditAllergyModal.vue';
   }
 })
 export default class Allergies extends Vue{
+  @Prop({required: true}) patientId!:number
   private allergyStore = getModule(AllergyStore, this.$store)
   private currentAllergy: IAllergy = {allergy_id: -1, }
-  patientId = 27
   
   public get allergies() {
     return this.allergyStore.allergies

@@ -4,7 +4,7 @@
       <span class="title">Edit Surgery</span>
     </header>
     <main>
-      <form @submit.prevent="doStartEdit" id="edit-sg-form">
+      <form @submit.prevent id="edit-sg-form">
         
         <div class="row">
           <b-form-group class="col-12"  label="Surgery response"> 
@@ -27,13 +27,14 @@
           
         </div>
         
-       
+       <footer class="x-modal__footer">
+        <button @click="doStartEdit" class="btn btn-action main-action">Edit</button>
+        <button class="btn btn-action" @click="$bvModal.hide('edit-sg-modal')">Cancel</button>
+        
+      </footer>
       </form>
     </main>
-    <footer class="x-modal__footer">
-      <button class="btn btn-action" @click="$bvModal.hide('edit-sg-modal')">Cancel</button>
-      <button @click="doStartEdit" class="btn btn-action">Edit</button>
-    </footer>
+    
 
   </b-modal>
 </template>
@@ -51,6 +52,8 @@ export default class EditSurgeryModal extends Vue{
     // @ts-ignore
     const formData = new FormData(form)
     this.$emit('edit', this.sg, formData)
+    //@ts-ignore
+    this.$bvModal.hide('edit-sg-modal')
   }
 }
 </script>

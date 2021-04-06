@@ -4,7 +4,7 @@
       <span class="title">Create Substance</span>
     </header>
     <main>
-      <form @submit.prevent="doStartCreate" id="create-as-form">
+      <form @submit.prevent id="create-as-form">
         
         <div class="row">
           <b-form-group class="col-6"  label="Substance"> 
@@ -30,13 +30,14 @@
               ></b-form-textarea>
           </b-form-group>
         </div>
-       
+       <footer class="x-modal__footer">
+         <button @click="doStartCreate" class="btn btn-action main-action">Create</button>
+        <button class="btn btn-action" @click="$bvModal.hide('create-as-modal')">Cancel</button>
+        
+      </footer>
       </form>
     </main>
-    <footer class="x-modal__footer">
-      <button class="btn btn-action" @click="$bvModal.hide('create-as-modal')">Cancel</button>
-      <button @click="doStartCreate" class="btn btn-action">Create</button>
-    </footer>
+    
 
   </b-modal>
 </template>
@@ -64,6 +65,8 @@ export default class CreateAsModal extends Vue{
     // @ts-ignore
     const formData = new FormData(form)
     this.$emit('create', formData)
+    // @ts-ignore
+    this.$bvModal.hide('create-as-modal')
   }
 }
 </script>

@@ -5,11 +5,13 @@
     </header>
     <main>
       Are you sure you want to delete: Problem {{pb.problem_id}} ?
+      <footer class="x-modal__footer">
+        <button @click="doDeletePb" class="btn btn-action main-action">Delete</button>
+        <button class="btn btn-action" @click="$bvModal.hide('delete-pb-modal')">Cancel</button>
+        
+      </footer>
     </main>
-    <footer class="x-modal__footer">
-      <button class="btn btn-action" @click="$bvModal.hide('delete-pb-modal')">Cancel</button>
-      <button @click="doDeletePb" class="btn btn-action">Delete</button>
-    </footer>
+    
   </b-modal>
 </template>
 <script lang="ts">
@@ -23,6 +25,8 @@ export default class DeletePbModal extends Vue{
 
   doDeletePb(){
     this.$emit('delete', this.pb)
+    //@ts-ignore
+    this.$bvModal.hide('delete-pb-modal')
   }
 }
 </script>

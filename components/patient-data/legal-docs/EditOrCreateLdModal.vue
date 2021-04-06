@@ -4,51 +4,67 @@
       <span class="title">{{ isEditing ? 'Edit': 'Create'}} Document</span>
     </header>
     <main>
-      <form 
-       @submit.prevent="doStartEdit" id="create-ld-form">
-        <div class="row">
-          <b-form-group label-for="document_category" class="col-6 position-relative"  label="Document Category"> 
-            <b-form-select  v-model="model.document_category" 
-            name="document_category" id="document_category" :options="categories"/>
-            
-          </b-form-group>
-          <b-form-group class="col-6"  label="Date of establishment"> 
-            <b-form-input v-model='model.document_date_of_establishment' type="date" 
-             name="date_of_establishment" id="date_of_establishment"></b-form-input>
-          </b-form-group>
-        </div>
-        <div class="row">
-          <b-form-group class="col-6"  label="Expiry date"> 
-            <b-form-input type="date" 
-             name="expiry_date" id="expiry_date"></b-form-input>
-          </b-form-group>
-          <b-form-group class="col-6"  label="Decision date"> 
-            <b-form-input type="date" v-model="model.document_decision_date"
-             name="decision_date" id="decision_date"></b-form-input>
-          </b-form-group>
-        </div>
-        <div class="row">
-          <b-form-group class="col-6"  label="Reason for capacity"> 
-            <b-form-input type="text" v-model="model.document_reason_for_capacity"
-             name="reason_for_capacity" id="reason_for_capacity"></b-form-input>
-          </b-form-group>
-          <b-form-group class="col-6"  label="Reason for determination"> 
-            <b-form-input type="text" v-model="model.document_reason_for_determination"
-             name="reason_for_determination" id="reason_for_determination"></b-form-input>
-          </b-form-group>
-        </div>
-        <div class="row">
-          <b-form-group class="col-12" label="Legal document"> 
-            <input type="file" name="legal_document" id="legal_document" class="form-control">
-          </b-form-group>
-        </div>
-        
-      </form>
+      <ValidationObserver v-slot="{invalid}">
+        <form 
+        @submit.prevent id="create-ld-form">
+          <div class="row">
+            <ValidationProvider rules="required" class="col-6">
+              <b-form-group label-for="document_category" class="position-relative"  label="Document Category"> 
+                <b-form-select  v-model="model.document_category" 
+                name="document_category" id="document_category" :options="categories"/>
+                
+              </b-form-group>
+            </ValidationProvider>
+            <ValidationProvider rules="required" class="col-6">
+              <b-form-group   label="Date of establishment"> 
+                <b-form-input v-model='model.document_date_of_establishment' type="date" 
+                name="date_of_establishment" id="date_of_establishment"></b-form-input>
+              </b-form-group>
+            </ValidationProvider>
+          </div>
+          <div class="row">
+            <ValidationProvider rules="required" class="col-6">
+              <b-form-group label="Expiry date"> 
+                <b-form-input type="date" 
+                name="expiry_date" id="expiry_date"></b-form-input>
+              </b-form-group>
+            </ValidationProvider>
+            <ValidationProvider class="col-6"  rules="required">
+              <b-form-group  label="Decision date"> 
+                <b-form-input type="date" v-model="model.document_decision_date"
+                name="decision_date" id="decision_date"></b-form-input>
+              </b-form-group>
+            </ValidationProvider>
+          </div>
+          <div class="row">
+            <ValidationProvider class="col-6"  rules="required">
+              <b-form-group  label="Reason for capacity"> 
+                <b-form-input type="text" v-model="model.document_reason_for_capacity"
+                name="reason_for_capacity" id="reason_for_capacity"></b-form-input>
+              </b-form-group>
+            </ValidationProvider>
+            <ValidationProvider class="col-6" rules="required">
+              <b-form-group   label="Reason for determination"> 
+                <b-form-input type="text" v-model="model.document_reason_for_determination"
+                name="reason_for_determination" id="reason_for_determination"></b-form-input>
+              </b-form-group>
+            </ValidationProvider>
+          </div>
+          <div class="row">
+            <b-form-group class="col-12" label="Legal document"> 
+              <input type="file" name="legal_document" id="legal_document" class="form-control">
+            </b-form-group>
+          </div>
+          
+        </form>
+        <footer class="x-modal__footer">
+          <button :disabled="invalid" @click="doStartEdit" class="btn btn-action main-action">{{ isEditing ? 'Edit': 'Create'}}</button>
+          <button class="btn btn-action" @click="$bvModal.hide('create-ld-modal')">Cancel</button>
+        </footer>
+      </ValidationObserver>
+      
     </main>
-    <footer class="x-modal__footer">
-      <button class="btn btn-action" @click="$bvModal.hide('create-ld-modal')">Cancel</button>
-      <button @click="doStartEdit" class="btn btn-action">{{ isEditing ? 'Edit': 'Create'}}</button>
-    </footer>
+    
 
   </b-modal>
 </template>
@@ -57,8 +73,13 @@ import Vue from 'vue'
 import Component from 'vue-class-component';
 import { Prop, Watch } from 'vue-property-decorator';
 import { ILegalDocument } from '~/api/models/patient-data.model';
+import {ValidationProvider, ValidationObserver} from 'vee-validate'
 
-@Component
+@Component({
+  components:{
+    ValidationObserver, ValidationProvider
+  }
+})
 export default class EditOrCreateLdModal extends Vue{
   @Prop({default: false}) isEditing!: boolean
   @Prop({}) editData!: ILegalDocument
@@ -99,13 +120,15 @@ export default class EditOrCreateLdModal extends Vue{
     if(this.isEditing) this.$emit('edit', this.editData, formData)
     else this.$emit('create', formData)
     this.model = {
-    document_category: '',
-    document_date_of_establishment: '',
-    document_decision_date: '',
-    document_reason_for_capacity: '',
-    document_reason_for_determination: '',
-    document_legal_document: ''
-  }
+      document_category: '',
+      document_date_of_establishment: '',
+      document_decision_date: '',
+      document_reason_for_capacity: '',
+      document_reason_for_determination: '',
+      document_legal_document: ''
+    }
+    //@ts-ignore
+    this.$bvModal.hide('create-ld-modal')
   }
 
 }

@@ -5,7 +5,7 @@
       </header>
       <main>
         <ValidationObserver v-slot="{invalid}">
-          <form @submit.prevent="onUpdate">
+          <form @submit.prevent>
             <ValidationProvider v-slot='{errors}' rules='required|email'>
               <div class="form-group">
                 <label :for="field.name">{{formatName(field.name)}}</label>
@@ -17,7 +17,7 @@
               </p>
             </ValidationProvider>
             <footer class="x-modal__footer">
-              <button type="submit" :disabled="invalid" class="btn btn-action main-action">Update</button>
+              <button @click="onUpdate" :disabled="invalid" class="btn btn-action main-action">Update</button>
               <button type="cancel" @click="$bvModal.hide('gi-email-modal')" class="btn btn-action">Cancel</button>
             </footer>
           </form>

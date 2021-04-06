@@ -8,14 +8,13 @@ import { Component, getModule } from 'nuxt-property-decorator';
 import Vue from 'vue'
 import PatientData from '~/components/patient-data/PatientData.vue';
 import AuthStore from '~/store/auth-store';
-import IdStore from '~/store/patient-data/id-store';
 @Component({
   layout: 'dashboard',
   components:{
     patientData: PatientData
   }
 })
-export default class ManagerDataPage extends Vue{
+export default class HpDataPage extends Vue{
   private authStore = getModule(AuthStore, this.$store)
   get patientId(){
     return this.authStore.user.id

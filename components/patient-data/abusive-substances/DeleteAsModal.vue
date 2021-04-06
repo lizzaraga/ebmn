@@ -5,11 +5,13 @@
     </header>
     <main>
       Are you sure you want to delete: Substance {{as.substance_id}} ?
+      <footer class="x-modal__footer">
+        <button @click="doDeleteAs" class="btn btn-action main-action">Delete</button>
+        <button class="btn btn-action" @click="$bvModal.hide('delete-as-modal')">Cancel</button>
+        
+      </footer>
     </main>
-    <footer class="x-modal__footer">
-      <button class="btn btn-action" @click="$bvModal.hide('delete-as-modal')">Cancel</button>
-      <button @click="doDeleteAs" class="btn btn-action">Delete</button>
-    </footer>
+    
   </b-modal>
 </template>
 <script lang="ts">
@@ -23,6 +25,8 @@ export default class DeleteAsModal extends Vue{
 
   doDeleteAs(){
     this.$emit('delete', this.as)
+    //@ts-ignore
+    this.$bvModal.hide('delete-as-modal')
   }
 }
 </script>

@@ -49,13 +49,13 @@
     overflow: hidden;
     padding: 0.5rem 0.6rem;
     margin-bottom: 0.5rem;
-    color: #333C56;
+    color: #5b6a97;
     position: relative;
     transform: scale(0.85);
     transform-origin: left;
     transition: all 0.3s ease;
     &:hover {
-        color: #aaa;
+        color: #798cc5;
         text-decoration: none;
     }
     &.nuxt-link-active {

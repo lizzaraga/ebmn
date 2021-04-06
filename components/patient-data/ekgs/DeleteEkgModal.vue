@@ -5,11 +5,12 @@
     </header>
     <main>
       Are you sure you want to delete: Ekg {{ekg.ekg_id}} ?
-    </main>
-    <footer class="x-modal__footer">
+      <footer class="x-modal__footer">
       <button class="btn btn-action" @click="$bvModal.hide('delete-ekg-modal')">Cancel</button>
-      <button @click="doDeleteEkg" class="btn btn-action">Delete</button>
-    </footer>
+        <button @click="doDeleteEkg" class="btn btn-action">Delete</button>
+      </footer>
+    </main>
+    
   </b-modal>
 </template>
 <script lang="ts">
@@ -22,6 +23,8 @@ export default class DeleteEkgModal extends Vue{
   @Prop({required: true}) ekg!: IEkg
   doDeleteEkg(){
     this.$emit('delete', this.ekg)
+    //@ts-ignore
+    this.$bvModal.hide('delete-ekg-modal')
   }
 }
 </script>

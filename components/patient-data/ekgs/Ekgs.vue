@@ -1,7 +1,7 @@
 <template>
   <div id="ekgs">
     <div>
-      {{ekgs}}
+      <!-- {{ekgs}} -->
     </div>
     <div class="patient-data-grid">
       <div class="data-item" :key="ekg.ekg_id" v-for="ekg in ekgs">
@@ -37,7 +37,7 @@
   </div>
 </template>
 <script lang="ts">
-import { Component, getModule } from 'nuxt-property-decorator';
+import { Component, getModule, Prop } from 'nuxt-property-decorator';
 import Vue from 'vue'
 import EkgStore from '@/store/patient-data/ekg-store'
 import { IEkg } from '~/api/models/patient-data.model';
@@ -54,9 +54,10 @@ import CreateEkgModal from './CreateEkgModal.vue';
   }
 })
 export default class Ekgs extends Vue{
+  @Prop({required: true}) patientId!:number
   private ekgStore = getModule(EkgStore, this.$store)
   private currentEkg: IEkg = {ekg_id: -1,ekg_results_problems_list: [] }
-  patientId = 27
+  
 
   public get ekgs() {
     return this.ekgStore.ekgs
@@ -96,7 +97,7 @@ export default class Ekgs extends Vue{
     return moment(date).format('MMM Do YYYY, [<br/>] h:mm:ss a')
   }
   async mounted(){
-    await this.ekgStore.getEkgs(27)
+    await this.ekgStore.getEkgs(this.patientId)
   }
 }
 </script>

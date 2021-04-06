@@ -18,7 +18,7 @@ export default class AuthStore extends VuexModule{
 
   
   public get patientId () : number {
-    return this.user.patient_id!!
+    return this.user.id!!
   }
   
   
@@ -33,6 +33,7 @@ export default class AuthStore extends VuexModule{
     try {
       const user = await authApi.login(loginForm)
       this.context.commit('setUser', user)
+      
       
     } catch (error) {
       alert("Login failed")

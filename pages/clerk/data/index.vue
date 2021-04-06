@@ -1,12 +1,13 @@
 <template>
   <div >
-    <patient-data/>
+    <patient-data :patientId="patientId"/>
   </div>
 </template>
 <script lang="ts">
-import { Component } from 'nuxt-property-decorator';
+import { Component, getModule } from 'nuxt-property-decorator';
 import Vue from 'vue'
 import PatientData from '~/components/patient-data/PatientData.vue';
+import AuthStore from '~/store/auth-store';
 @Component({
   layout: 'dashboard',
   components:{
@@ -14,6 +15,9 @@ import PatientData from '~/components/patient-data/PatientData.vue';
   }
 })
 export default class ClerkDataPage extends Vue{
-  
+  private authStore = getModule(AuthStore, this.$store)
+  get patientId(){
+    return this.authStore.user.id
+  }
 }
 </script>

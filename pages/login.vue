@@ -90,6 +90,7 @@ import {ILogin, IUser} from 'api/models/auth.model'
 import {getModule} from 'vuex-module-decorators'
 import AuthStore from '@/store/auth-store'
 import hospitalApi from '~/api/hospital.api'
+import IdStore from '@/store/patient-data/id-store'
 import {ValidationObserver, ValidationProvider} from 'vee-validate'
 @Component({
   components:{
@@ -109,6 +110,8 @@ export default class Login extends Vue{
     await this.authStore.login(this.loginVM)
     
     const user: IUser = this.authStore.user
+    const idStore = getModule(IdStore, this.$store)
+    idStore.setPatientId(user.id!!)
     if(user.token){
       switch(user.job){
         case 'patient':
@@ -122,6 +125,9 @@ export default class Login extends Vue{
           break
         case 'admin':
           this.$router.push({name: 'admin'})
+          break
+        case 'health_personnel':
+          this.$router.push({name: 'hp'})
           break
       }
     }

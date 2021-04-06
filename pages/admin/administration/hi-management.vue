@@ -31,7 +31,7 @@
         <span class="title">{{isEditing ? 'Edit' : 'Create'}} hospital</span>
       </header>
       <main>
-        <form @submit.prevent="doEditHospital" id="edit-hi-form">
+        <form @submit.prevent id="edit-hi-form">
           <b-form-group label="Name"> 
             <b-input name="name" v-model="editHospital.hospital_name" placeholder="Hospital name"/>
           </b-form-group>
@@ -47,12 +47,15 @@
               v-model="editHospital.hospital_description"
             ></b-form-textarea>
           </b-form-group>
+          <footer class="x-modal__footer">
+            <button @click="doEditHospital"
+             class="btn btn-action main-action">{{isEditing ? 'Edit' : 'Create'}}</button>
+            <button class="btn btn-action" @click="$bvModal.hide('edit-hospital-modal')">Cancel</button>
+            
+          </footer>
         </form>
       </main>
-      <footer class="x-modal__footer">
-        <button class="btn btn-action" @click="$bvModal.hide('edit-hospital-modal')">Cancel</button>
-        <button @click="doEditHospital" class="btn btn-action">{{isEditing ? 'Edit' : 'Create'}}</button>
-      </footer>
+      
 
     </b-modal>
     <b-modal hide-header hide-footer  body-class="x-modal" id="delete-hospital-modal">
@@ -61,12 +64,14 @@
       </header>
       <main>
         Are you sure you want to delete: Health institute {{editHospital.hospital_id}} ?
-      </main>
-      <footer class="x-modal__footer">
-        <button class="btn btn-action" @click="$bvModal.hide('delete-hospital-modal')">Cancel</button>
-        <button @click="doDeleteHospital(editHospital.hospital_id)" class="btn btn-action">Delete</button>
-      </footer>
+        <footer class="x-modal__footer">
+          <button @click="doDeleteHospital(editHospital.hospital_id)" class="btn btn-action main-action">Delete</button>
+          <button class="btn btn-action" @click="$bvModal.hide('delete-hospital-modal')">Cancel</button>
+          
+        </footer>
 
+      </main>
+      
     </b-modal>
   </div>
 </template>

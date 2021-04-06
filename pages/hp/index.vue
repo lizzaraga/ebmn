@@ -10,10 +10,9 @@ import Component from 'vue-class-component';
 @Component({
   layout: 'dashboard'
 })
-export default class Patient extends Vue{
+export default class Hp extends Vue{
   mounted(){
-    this.$router.push({name: 'patient-data'})
+    this.$router.push({name: 'hp-data'})
   }
-
 }
 </script>

@@ -4,7 +4,7 @@
       <span class="title">Edit Allergy</span>
     </header>
     <main>
-      <form @submit.prevent="doStartEdit" id="edit-allergy-form">
+      <form @submit.prevent id="edit-allergy-form">
         
         <div class="row">
           <b-form-group class="col-12"  label="Status"> 
@@ -25,11 +25,13 @@
         </div>
        
       </form>
+      <footer class="x-modal__footer">
+        <button @click="doStartEdit" class="btn btn-action main-action">Edit</button>
+        <button class="btn btn-action" @click="$bvModal.hide('edit-allergy-modal')">Cancel</button>
+        
+      </footer>
     </main>
-    <footer class="x-modal__footer">
-      <button class="btn btn-action" @click="$bvModal.hide('edit-allergy-modal')">Cancel</button>
-      <button @click="doStartEdit" class="btn btn-action">Edit</button>
-    </footer>
+    
 
   </b-modal>
 </template>
@@ -60,6 +62,8 @@ export default class EditAllergyModal extends Vue{
     // @ts-ignore
     const formData = new FormData(form)
     this.$emit('edit', this.allergy, formData)
+    //@ts-ignore
+    this.$bvModal.hide('edit-allergy-modal')
   }
 }
 </script>

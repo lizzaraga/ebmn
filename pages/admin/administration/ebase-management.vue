@@ -35,14 +35,16 @@
                 </ValidationProvider>
               </b-col>
             </b-row>
+            <footer class="x-modal__footer">
+              <button @click="doCreateClerk" class="btn btn-action main-action">Create</button>
+              <button class="btn btn-action" @click="$bvModal.hide('create-clerk-modal')">Cancel</button>
+              
+            </footer>
+
           </form>
         </ValidationObserver>
       </main>
-      <footer class="x-modal__footer">
-        <button class="btn btn-action" @click="$bvModal.hide('create-clerk-modal')">Cancel</button>
-        <button @click="doCreateClerk" class="btn btn-action">Create</button>
-      </footer>
-
+      
     </b-modal>
     <b-modal hide-header hide-footer  body-class="x-modal" id="delete-clerk-modal">
       <header class="x-modal__header">
@@ -50,11 +52,14 @@
       </header>
       <main>
         Are you sure you want to delete: Clerk {{currClerk.user_is_clerk_id}} ?
+        <footer class="x-modal__footer">
+          <button @click="doDeleteClerk(currClerk.user_is_clerk_id)" 
+          class="btn btn-action main-action">Delete</button>
+          <button class="btn btn-action" @click="$bvModal.hide('delete-clerk-modal')">Cancel</button>
+          
+        </footer>
       </main>
-      <footer class="x-modal__footer">
-        <button class="btn btn-action" @click="$bvModal.hide('delete-clerk-modal')">Cancel</button>
-        <button @click="doDeleteClerk(currClerk.user_is_clerk_id)" class="btn btn-action">Delete</button>
-      </footer>
+      
 
     </b-modal>
   </div>

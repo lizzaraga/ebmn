@@ -1,7 +1,7 @@
 <template>
   <div id="radiologies">
     <div>
-      {{problems}}
+      <!-- {{problems}} -->
     </div>
     <div class="patient-data-grid">
       <div class="data-item" :key="pb.problem_id" v-for="pb in problems">
@@ -11,7 +11,7 @@
             <span class="title-value">{{pb.problem_icd}}</span>
           </div>
           <div class="actions">
-            <i class="bi bi-plus-square action" @click="openCreatePb"></i>
+            <!-- <i class="bi bi-plus-square action" @click="openCreatePb"></i> -->
             <i class="bi bi-pencil-square action action-edit" @click="openEditPb(pb)"></i>
             <i class="bi bi-trash action action-delete" @click="openDeletePb(pb)"></i>
           </div>
@@ -34,7 +34,7 @@
 </template>
 <script lang="ts">
 import moment from 'moment';
-import { Component, getModule } from 'nuxt-property-decorator';
+import { Component, getModule, Prop } from 'nuxt-property-decorator';
 import Vue from 'vue'
 import { IProblem } from '~/api/models/patient-data.model';
 import ProblemStore from '~/store/patient-data/problem-store';
@@ -48,9 +48,10 @@ import EditPbModal from './EditPbModal.vue';
   }
 })
 export default class Problems extends Vue{
+  @Prop({required: true}) patientId!:number
   private pbStore = getModule(ProblemStore, this.$store)
   private currentPb: IProblem = {problem_id: -1, }
-  patientId = 27
+  
   
   public get problems() {
     return this.pbStore.problems
@@ -90,7 +91,7 @@ export default class Problems extends Vue{
     return moment(date).format('MMM Do YYYY, [<br/>] h:mm:ss a')
   }
   async mounted(){
-    await this.pbStore.getProblems(27)
+    await this.pbStore.getProblems(this.patientId)
   }
 }
 </script>

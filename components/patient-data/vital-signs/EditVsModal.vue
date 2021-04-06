@@ -5,7 +5,7 @@
     </header>
     <main>
       <ValidationObserver>
-        <form @submit.prevent="doStartEdit" id="edit-vs-form">
+        <form @submit.prevent id="edit-vs-form">
           <b-row>
             <b-col>
               <ValidationProvider>
@@ -115,8 +115,9 @@
           
         </form>
         <footer class="x-modal__footer">
+          <button @click="doStartEdit" class="btn btn-action main-action">Edit</button>
           <button class="btn btn-action" @click="$bvModal.hide('edit-vs-modal')">Cancel</button>
-          <button @click="doStartEdit" class="btn btn-action">Edit</button>
+          
         </footer>
       </ValidationObserver>
     </main>
@@ -164,6 +165,8 @@ export default class EditVsModal extends Vue{
     })
     formData.set('date_of_update', (new Date()).toISOString())
     this.$emit('edit', formData)
+    //@ts-ignore
+    this.$bvModal.hide('edit-vs-modal')
   }
 }
 </script>

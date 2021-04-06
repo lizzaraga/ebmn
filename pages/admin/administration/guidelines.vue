@@ -59,7 +59,7 @@
         <span class="title">Edit guideline</span>
       </header>
       <main>
-        <form id="edit-guideline-form" @submit.prevent="doEditHospital">
+        <form id="edit-guideline-form" @submit.prevent>
           <span class="input-group-title">Single line text entries</span>
           <div class="row">
             <b-form-group class="col-4" label="Author"> 
@@ -126,12 +126,15 @@
               ></b-form-textarea>
             </b-form-group>
           </div>
+           <footer class="x-modal__footer">
+             <button @click="doEditGuideline" 
+            class="btn btn-action main-action">Edit</button>
+            <button class="btn btn-action" @click="$bvModal.hide('edit-guideline-modal')">Cancel</button>
+            
+          </footer>
         </form>
       </main>
-      <footer class="x-modal__footer">
-        <button class="btn btn-action" @click="$bvModal.hide('edit-guideline-modal')">Cancel</button>
-        <button @click="doEditGuideline" class="btn btn-action">Edit</button>
-      </footer>
+     
 
     </b-modal>
   </div>

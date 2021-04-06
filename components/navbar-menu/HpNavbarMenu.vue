@@ -4,7 +4,7 @@
       <i class="bi bi-pie-chart icon"></i>
       <span class="text">My data</span>
     </nuxt-link>
-    <nuxt-link class="v-item" to="/">
+    <nuxt-link class="v-item" :to="{name: 'hp-patients'}">
       <i class="bi bi-people icon"></i>
       <span class="text">Patients</span>
     </nuxt-link>

@@ -55,7 +55,7 @@
 </template>
 <script lang="ts">
 import moment from 'moment';
-import { Component, getModule } from 'nuxt-property-decorator';
+import { Component, getModule, Prop } from 'nuxt-property-decorator';
 import Vue from 'vue'
 import VSStore from '~/store/patient-data/vs-store';
 import EditVsModal from './EditVsModal.vue';
@@ -66,8 +66,9 @@ import EditVsModal from './EditVsModal.vue';
   }
 })
 export default class VitalSigns extends Vue{
+  @Prop({required: true}) patientId!:number
   private vsStore = getModule(VSStore, this.$store)
-  patientId = 27
+  
   
   addShadow = false
   public get vitalSigns() {
@@ -99,12 +100,12 @@ export default class VitalSigns extends Vue{
 
   destroy(){
     //@ts-ignore
-    this.$refs.scrollBox.removeEventListener('scroll', this.onBoxScroll)
+    document.querySelector('.vs-table-container').removeEventListener('scroll', this.onBoxScroll)
   }
   async mounted(){
-    await this.vsStore.getVitalSigns(27)
+    await this.vsStore.getVitalSigns(this.patientId)
     //@ts-ignore
-    this.$refs.scrollBox.addEventListener('scroll', this.onBoxScroll)
+    document.querySelector('.vs-table-container').addEventListener('scroll', this.onBoxScroll)
   }
 
   

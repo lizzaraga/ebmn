@@ -4,7 +4,7 @@
       <span class="title">Edit Problem</span>
     </header>
     <main>
-      <form @submit.prevent="doStartEdit" id="edit-pb-form">
+      <form @submit.prevent id="edit-pb-form">
         
         <div class="row">
           <b-form-group class="col-6"  label="Status"> 
@@ -16,14 +16,15 @@
           </b-form-group>
         </div>
         
-       
+       <footer class="x-modal__footer">
+         <button @click="doStartEdit" class="btn btn-action main-action">Edit</button>
+        <button class="btn btn-action" @click="$bvModal.hide('edit-pb-modal')">Cancel</button>
+        
+      </footer>
+
       </form>
     </main>
-    <footer class="x-modal__footer">
-      <button class="btn btn-action" @click="$bvModal.hide('edit-pb-modal')">Cancel</button>
-      <button @click="doStartEdit" class="btn btn-action">Edit</button>
-    </footer>
-
+    
   </b-modal>
 </template>
 <script lang="ts">
@@ -61,6 +62,8 @@ export default class EditPbModal extends Vue{
     // @ts-ignore
     const formData = new FormData(form)
     this.$emit('edit', this.pb, formData)
+    //@ts-ignore
+    this.$bvModal.hide('edit-pb-modal')
   }
 }
 </script>

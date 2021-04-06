@@ -1,7 +1,7 @@
 <template>
   <div id="surgeries">
     <div>
-      {{surgeries}}
+      <!-- {{surgeries}} -->
     </div>
     <div class="patient-data-grid">
       <div class="data-item" :key="sg.surgery_id" v-for="sg in surgeries">
@@ -37,7 +37,7 @@
   </div>
 </template>
 <script lang="ts">
-import { Component, getModule } from 'nuxt-property-decorator';
+import { Component, getModule, Prop } from 'nuxt-property-decorator';
 import Vue from 'vue'
 import SurgeryStore from '@/store/patient-data/surgery-store'
 import { ISurgery } from '~/api/models/patient-data.model';
@@ -53,9 +53,10 @@ import CreateSgModal from './CreateSurgeryModal.vue';
   }
 })
 export default class Surgeries extends Vue{
+  @Prop({required: true}) patientId!:number
   private surgeryStore = getModule(SurgeryStore, this.$store)
   private currentSg: ISurgery = {surgery_id: -1,surgery_result_problem_list: [] }
-  patientId = 27;
+  
   
   public get surgeries() {
     return this.surgeryStore.surgeries
@@ -94,7 +95,7 @@ export default class Surgeries extends Vue{
     return moment(date).format('MMM Do YYYY, [<br/>] h:mm:ss a')
   }
   async mounted(){
-    await this.surgeryStore.getSurgeries(27)
+    await this.surgeryStore.getSurgeries(this.patientId)
   }
 }
 </script>

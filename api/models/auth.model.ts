@@ -8,7 +8,7 @@ export interface IUser{
   email?: string,
   token?: string,
   job?: string,
-  patient_id?: number
+  id?: number
 }
 
 export interface IRegister{

@@ -12,7 +12,7 @@
     </nav>
     <nav id="v-navbar">
       <clerk-navbar-menu v-if="user.job == 'clerk'"/>
-      <hp-navbar-menu v-if="user.job == 'doctor'"/>
+      <hp-navbar-menu v-if="user.job == 'health_personnel'"/>
       <manager-navbar-menu v-if="user.job == 'manager'"/>
       <patient-navbar-menu v-if="user.job == 'patient'"/>
       <admin-navbar-menu v-if="user.job == 'admin'"/>
@@ -50,6 +50,7 @@ import AuthStore from '~/store/auth-store';
 export default class Dashboard extends Vue{
 
   private authStore = getModule(AuthStore, this.$store)
+  
   user?: IUser
 
   

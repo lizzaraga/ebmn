@@ -15,17 +15,17 @@
         <nuxt-link class="aside-menu-link" :to="{name: $route.name, 'hash': '/#substance-abuses'}">Substance Abuses</nuxt-link>
       </template>
       <div>
-        <general-infos v-if="hash.trim() == '/#general-infos'"/>
-        <legal-docs v-if="hash.trim() == '/#legal-docs'"/>
-        <labs v-if="hash.trim() == '/#labs'"/>
-        <radiologies v-if="hash.trim() == '/#radiologies'"/>
-        <ekgs v-if="hash.trim() == '/#ekg-list'"/>
-        <problems v-if="hash.trim() == '/#problem-list'"/>
-        <medications v-if="hash.trim() == '/#medication-list'"/>
-        <vital-signs v-if="hash.trim() == '/#vital-signs'"/>
-        <surgeries v-if="hash.trim() == '/#surgeries'"/>
-        <allergies v-if="hash.trim() == '/#allergies'"/>
-        <abusive-substances v-if="hash.trim() == '/#substance-abuses'"/>
+        <general-infos :patientId="patientId" v-if="hash.trim() == '/#general-infos'"/>
+        <legal-docs :patientId="patientId" v-if="hash.trim() == '/#legal-docs'"/>
+        <labs :patientId="patientId" v-if="hash.trim() == '/#labs'"/>
+        <radiologies :patientId="patientId" v-if="hash.trim() == '/#radiologies'"/>
+        <ekgs :patientId="patientId" v-if="hash.trim() == '/#ekg-list'"/>
+        <problems :patientId="patientId" v-if="hash.trim() == '/#problem-list'"/>
+        <medications :patientId="patientId" v-if="hash.trim() == '/#medication-list'"/>
+        <vital-signs :patientId="patientId" v-if="hash.trim() == '/#vital-signs'"/>
+        <surgeries :patientId="patientId" v-if="hash.trim() == '/#surgeries'"/>
+        <allergies :patientId="patientId" v-if="hash.trim() == '/#allergies'"/>
+        <abusive-substances :patientId="patientId" v-if="hash.trim() == '/#substance-abuses'"/>
       </div>
     </main-content-with-menu>
   </div>
@@ -33,6 +33,7 @@
 <script lang="ts">
 import Vue from 'vue'
 import Component from 'vue-class-component';
+import { Inject, Prop } from 'vue-property-decorator';
 import MainContentWithMenu from '~/components/MainContentWithMenu.vue';
 import AbusiveSubstances from './abusive-substances/AbusiveSubstances.vue';
 import Allergies from './allergies/Allergies.vue';
@@ -63,6 +64,7 @@ import VitalSigns from './vital-signs/VitalSigns.vue';
   }
 })
 export default class PatientData extends Vue{
+  @Prop({required: true}) patientId!:number
   mounted(){
     if(this.$route.hash == '')
       this.$router.replace({name: this.$route.name!!, 'hash': '/#general-infos'})

@@ -1,6 +1,6 @@
 <template>
   <div id="labs">
-    {{labs}}
+    <!-- {{labs}} -->
     <div class="patient-data-grid">
       <div class="data-item" :key="lab.lab_id" v-for="lab in labs">
         <header>
@@ -36,7 +36,7 @@
   </div>
 </template>
 <script lang="ts">
-import { Component, getModule } from 'nuxt-property-decorator';
+import { Component, getModule, Prop } from 'nuxt-property-decorator';
 import Vue from 'vue'
 import LabStore from '~/store/patient-data/lab-store';
 import moment from 'moment'
@@ -52,9 +52,9 @@ import CreateLabModal from './CreateLabModal.vue';
   }
 })
 export default class Labs extends Vue{
+  @Prop({required: true}) patientId!:number
   private labStore = getModule(LabStore, this.$store)
   private currentLab: ILab = {lab_id: -1, lab_results_problems_list: []}
-  patientId = 27
   
   public get labs() {
     return this.labStore.labs
@@ -94,7 +94,7 @@ export default class Labs extends Vue{
   }
 
   async mounted(){
-    await this.labStore.getLabs(27)
+    await this.labStore.getLabs(this.patientId)
   }
 }
 </script>

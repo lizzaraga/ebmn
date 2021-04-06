@@ -5,9 +5,14 @@
     padding: 1rem;
     &>.data-item {
         background-color: #ffffff;
-        //border: 1px solid #eee;
+        border: 1px solid #eee;
         border-radius: 8px;
         width: 430px;
+        box-shadow: 0 1px 3px rgba($color: #000000, $alpha: 0.06);
+        transition: all 0.4s ease;
+        &:hover {
+            box-shadow: 0 4px 38px rgba($color: #000000, $alpha: 0.08);
+        }
         &>header,
         &>footer {
             padding: 0.8rem 1rem;

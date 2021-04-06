@@ -37,7 +37,7 @@
 </template>
 <script lang="ts">
 import moment from 'moment';
-import { Component, getModule } from 'nuxt-property-decorator';
+import { Component, getModule, Prop } from 'nuxt-property-decorator';
 import Vue from 'vue'
 import { ILegalDocument } from '~/api/models/patient-data.model';
 import LDStore from '~/store/patient-data/ld-store';
@@ -50,10 +50,11 @@ import EditOrCreateLdModal from './EditOrCreateLdModal.vue';
   }
 })
 export default class LegalDocs extends Vue{
+  @Prop({required: true}) patientId!:number
   private ldStore = getModule(LDStore, this.$store)
   private currentLd: ILegalDocument = {document_id: -1, }
   isEditing = false
-  patientId = 27
+  
 
   public get lds() {
     return this.ldStore.docs

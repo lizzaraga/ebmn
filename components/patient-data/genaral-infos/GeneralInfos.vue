@@ -111,6 +111,8 @@ import GITextModal from './TextModal.vue';
   }
 })
 export default class GeneralInfos extends Vue{
+  @Prop({required: true}) patientId!:number
+
   private giStore = getModule(GIStore, this.$store)
   textFields = ['username', 'title', 'first_name', 'middle_name',
   'last_name', 'sufix', 'place_of_birth', 'ethnicity', 'language', 'occupation', 'religion',
@@ -154,7 +156,7 @@ export default class GeneralInfos extends Vue{
   ]
 
   selectedField = {}
-  patientId = 27
+  
 
   get gi(): IGeneralInfo{
     return this.giStore.gi
@@ -179,7 +181,7 @@ export default class GeneralInfos extends Vue{
     await this.giStore.updateGIBinaryField({ patientId: this.patientId, request: field})
   }
   async mounted(){
-    await this.giStore.getGeneralInfo(27)
+    await this.giStore.getGeneralInfo(this.patientId)
   }
 }
 </script>

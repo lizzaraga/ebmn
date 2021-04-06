@@ -5,11 +5,13 @@
     </header>
     <main>
       Are you sure you want to delete: Allergy {{allergy.allergy_id}} ?
+      <footer class="x-modal__footer">
+        <button @click="doDeleteAllergy" class="btn btn-action main-action">Delete</button>
+        <button class="btn btn-action" @click="$bvModal.hide('delete-allergy-modal')">Cancel</button>
+        
+      </footer>
     </main>
-    <footer class="x-modal__footer">
-      <button class="btn btn-action" @click="$bvModal.hide('delete-allergy-modal')">Cancel</button>
-      <button @click="doDeleteAllergy" class="btn btn-action">Delete</button>
-    </footer>
+    
   </b-modal>
 </template>
 <script lang="ts">
@@ -23,6 +25,8 @@ export default class DeleteAllergyModal extends Vue{
 
   doDeleteAllergy(){
     this.$emit('delete', this.allergy)
+    //@ts-ignore
+    this.$bvModal.hide('delete-allergy-modal')
   }
 }
 </script>

@@ -1,7 +1,7 @@
 <template>
   <div id="medications">
     <div>
-      {{medications}}
+      <!-- {{medications}} -->
     </div>
     <div class="patient-data-grid">
       <div class="data-item" :key="md.medication_id" v-for="md in medications">
@@ -38,7 +38,7 @@
 </template>
 <script lang="ts">
 import moment from 'moment';
-import { Component, getModule } from 'nuxt-property-decorator';
+import { Component, getModule, Prop } from 'nuxt-property-decorator';
 import Vue from 'vue'
 import { IMedication } from '~/api/models/patient-data.model';
 import MedicationStore from '~/store/patient-data/medication-store';
@@ -54,9 +54,10 @@ import EditMdModal from './EditMdModal.vue';
   }
 })
 export default class Medications extends Vue{
+  @Prop({required: true}) patientId!:number
   private medicationStore = getModule(MedicationStore, this.$store)
   private currentMd: IMedication = {medication_id: -1,medication_related_problems: [] }
-  patientId = 27
+  
   
   public get medications() {
     return this.medicationStore.medications
@@ -97,7 +98,7 @@ export default class Medications extends Vue{
     return moment(date).format('MMM Do YYYY, [<br/>] h:mm:ss a')
   }
   async mounted(){
-    await this.medicationStore.getMedications(27)
+    await this.medicationStore.getMedications(this.patientId)
   }
 }
 </script>

@@ -1,7 +1,7 @@
 <template>
   <div id="allergies">
     <div>
-      {{abusiveSubstances}}
+      <!-- {{abusiveSubstances}} -->
     </div>
      <div class="patient-data-grid">
       <div class="data-item" :key="subs.substance_id" v-for="subs in abusiveSubstances">
@@ -35,7 +35,7 @@
 </template>
 <script lang="ts">
 import moment from 'moment';
-import { Component, getModule } from 'nuxt-property-decorator';
+import { Component, getModule, Prop } from 'nuxt-property-decorator';
 import Vue from 'vue'
 import { IAbusiveSubstance } from '~/api/models/patient-data.model';
 import ASStore from '~/store/patient-data/as-store';
@@ -51,7 +51,7 @@ import EditAsModal from './EditAsModal.vue';
   }
 })
 export default class AbusiveSubstances extends Vue{
-  patientId = 27
+  @Prop({required: true}) patientId!:number
   private asStore = getModule(ASStore, this.$store)
   private currentAs: IAbusiveSubstance = {substance_id: -1, }
   

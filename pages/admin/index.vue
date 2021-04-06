@@ -11,6 +11,9 @@ import Component from 'vue-class-component';
   layout: 'dashboard'
 })
 export default class Admin extends Vue{
+  mounted(){
+    this.$router.push({name: 'admin-data'})
+  }
 
 }
 </script>

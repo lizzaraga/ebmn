@@ -4,8 +4,9 @@
       <span class="title">Create Surgery</span>
     </header>
     <main>
+      <ValidationObserver>
       <form @submit.prevent id="create-sg-form">
-        <ValidationObserver>
+        
           <b-row>
             <b-col class="position-relative">
               <ValidationProvider>
@@ -95,13 +96,14 @@
               </ValidationProvider>
             </b-col>
           </b-row>
-        </ValidationObserver>
+        <footer class="x-modal__footer">
+          <button @click="doCreateSg" class="btn btn-action main-action">Create</button>
+          <button class="btn btn-action" @click="$bvModal.hide('create-sg-modal')">Cancel</button>
+        </footer>
       </form>
+      </ValidationObserver>
     </main>
-    <footer class="x-modal__footer">
-      <button class="btn btn-action" @click="$bvModal.hide('create-sg-modal')">Cancel</button>
-      <button @click="doCreateSg" class="btn btn-action">Create</button>
-    </footer>
+    
   </b-modal>
 </template>
 <script lang="ts">
@@ -219,6 +221,8 @@ export default class CreateSgModal extends Vue{
     //@ts-ignore
     const formData = new FormData(form)
     this.$emit('create', formData)
+    //@ts-ignore
+    this.$bvModal.hide('create-sg-modal')
   }
 
   async created(){

@@ -72,13 +72,15 @@
               </ValidationProvider>
             </b-col>
           </b-row>
+          <footer class="x-modal__footer">
+            <button @click="doCreateAllergy" class="btn btn-action main-action">Create</button>
+            <button class="btn btn-action" @click="$bvModal.hide('create-allergy-modal')">Cancel</button>
+
+          </footer>
         </form>
       </ValidationObserver>
     </main>
-    <footer class="x-modal__footer">
-      <button class="btn btn-action" @click="$bvModal.hide('create-allergy-modal')">Cancel</button>
-      <button @click="doCreateAllergy" class="btn btn-action">Create</button>
-    </footer>
+    
   </b-modal>
 </template>
 <script lang="ts">
@@ -174,6 +176,8 @@ export default class CreateAllergyModal extends Vue{
     //@ts-ignore
     const formData = new FormData(form)
     this.$emit('create', formData)
+    //@ts-ignore
+    this.$bvModal.hide('create-allergy-modal')
   }
 
 }

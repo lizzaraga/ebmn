@@ -4,7 +4,7 @@
       <span class="title">Create Radiology</span>
     </header>
     <main>
-      <form id="create-ekg-form" @submit.prevent="doStartCreate">
+      <form id="create-ekg-form" @submit.prevent>
         <div class="row">
           <b-form-group class="col-6 position-relative"  label="Description"> 
             <b-form-input  debounce="100" @focus="showSearchResults"
@@ -50,13 +50,14 @@
             ></b-form-textarea>
           </b-form-group>
         </div>
-        
+        <footer class="x-modal__footer">
+          <button @click="doStartCreate" class="btn btn-action main-action">Create</button>
+          <button class="btn btn-action" @click="$bvModal.hide('create-ekg-modal')">Cancel</button>
+          
+        </footer>
       </form>
     </main>
-    <footer class="x-modal__footer">
-      <button class="btn btn-action" @click="$bvModal.hide('create-ekg-modal')">Cancel</button>
-      <button @click="doStartCreate" class="btn btn-action">Create</button>
-    </footer>
+    
 
   </b-modal>
 </template>
@@ -113,6 +114,8 @@ export default class CreateEkgModal extends Vue{
     formData.set('related_problems', this.selectedPbs.join(','))
     console.log('Multiselect: ', formData)
     this.$emit('create', formData)
+    //@ts-ignore
+    this.$bvModal.hide('create-ekg-modal')
   }
 
   async onSearchLoincCodes(searchTerm: string){

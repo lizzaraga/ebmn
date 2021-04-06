@@ -4,7 +4,7 @@
       <span class="title">Edit Substance</span>
     </header>
     <main>
-      <form @submit.prevent="doStartEdit" id="edit-as-form">
+      <form @submit.prevent id="edit-as-form">
         
         <div class="row">
           <b-form-group class="col-12"  label="Status"> 
@@ -23,14 +23,15 @@
               ></b-form-textarea>
           </b-form-group>
         </div>
-       
+        <footer class="x-modal__footer">
+          <button @click="doStartEdit" class="btn btn-action main-action">Edit</button>
+          <button class="btn btn-action " @click="$bvModal.hide('edit-as-modal')">Cancel</button>
+          
+        </footer>
+
       </form>
     </main>
-    <footer class="x-modal__footer">
-      <button class="btn btn-action" @click="$bvModal.hide('edit-as-modal')">Cancel</button>
-      <button @click="doStartEdit" class="btn btn-action">Edit</button>
-    </footer>
-
+    
   </b-modal>
 </template>
 <script lang="ts">
@@ -59,6 +60,8 @@ export default class EditAsModal extends Vue{
     // @ts-ignore
     const formData = new FormData(form)
     this.$emit('edit', this.as, formData)
+    //@ts-ignore
+    this.$bvModal.hide('edit-as-modal')
   }
 }
 </script>

@@ -4,7 +4,7 @@
       <span class="title">Edit Lab</span>
     </header>
     <main>
-      <form @submit.prevent="doStartEdit" id="edit-lab-form">
+      <form @submit.prevent id="edit-lab-form">
         
         <div class="row">
           <b-form-group class="col-6"  label="Units"> 
@@ -41,14 +41,15 @@
           </b-form-group>
           
         </div>
-        
+        <footer class="x-modal__footer">
+          <button @click="doStartEdit" class="btn btn-action main-action">Edit</button>
+          <button class="btn btn-action" @click="$bvModal.hide('edit-lab-modal')">Cancel</button>
+          
+        </footer>
+
       </form>
     </main>
-    <footer class="x-modal__footer">
-      <button class="btn btn-action" @click="$bvModal.hide('edit-lab-modal')">Cancel</button>
-      <button @click="doStartEdit" class="btn btn-action">Edit</button>
-    </footer>
-
+    
   </b-modal>
 </template>
 <script lang="ts">
@@ -89,6 +90,8 @@ export default class EditLabModal extends Vue{
       formData.delete('document_upload')
     }
     this.$emit('edit', this.lab, formData)
+    //@ts-ignore
+    this.$bvModal.hide('edit-lab-modal')
   }
 }
 </script>

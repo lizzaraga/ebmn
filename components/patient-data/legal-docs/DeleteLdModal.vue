@@ -5,11 +5,13 @@
     </header>
     <main>
       Are you sure you want to delete: Document {{ld.document_id}} ?
+      <footer class="x-modal__footer">
+        <button @click="doDeleteLd" class="btn btn-action main-action">Delete</button>
+        <button class="btn btn-action" @click="$bvModal.hide('delete-ld-modal')">Cancel</button>
+        
+      </footer>
     </main>
-    <footer class="x-modal__footer">
-      <button class="btn btn-action" @click="$bvModal.hide('delete-ld-modal')">Cancel</button>
-      <button @click="doDeleteLd" class="btn btn-action">Delete</button>
-    </footer>
+    
   </b-modal>
 </template>
 <script lang="ts">

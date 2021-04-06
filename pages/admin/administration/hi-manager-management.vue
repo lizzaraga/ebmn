@@ -42,14 +42,16 @@
                 </ValidationProvider>
               </b-col>
             </b-row>
+            <footer class="x-modal__footer">
+              <button @click="doCreateManager" class="btn btn-action main-action">Create</button>
+              <button class="btn btn-action" @click="$bvModal.hide('create-manager-modal')">Cancel</button>
+              
+            </footer>
+
           </form>
         </ValidationObserver>
       </main>
-      <footer class="x-modal__footer">
-        <button class="btn btn-action" @click="$bvModal.hide('create-manager-modal')">Cancel</button>
-        <button @click="doCreateManager" class="btn btn-action">Create</button>
-      </footer>
-
+      
     </b-modal>
     <b-modal hide-header hide-footer  body-class="x-modal" id="delete-manager-modal">
       <header class="x-modal__header">
@@ -57,12 +59,15 @@
       </header>
       <main>
         Are you sure you want to delete: Manager {{currManager.user_is_manager_id}} ?
-      </main>
-      <footer class="x-modal__footer">
-        <button class="btn btn-action" @click="$bvModal.hide('delete-manager-modal')">Cancel</button>
-        <button @click="doDeleteManager(currManager.user_is_manager_id)" class="btn btn-action">Delete</button>
-      </footer>
+        <footer class="x-modal__footer">
+          <button @click="doDeleteManager(currManager.user_is_manager_id)" 
+          class="btn btn-action main-action">Delete</button>
+          <button class="btn btn-action" @click="$bvModal.hide('delete-manager-modal')">Cancel</button>
+          
+        </footer>
 
+      </main>
+      
     </b-modal>
   </div>
 </template>

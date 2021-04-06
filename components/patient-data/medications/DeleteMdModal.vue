@@ -5,11 +5,12 @@
     </header>
     <main>
       Are you sure you want to delete: Medication {{md.medication_id}} ?
+      <footer class="x-modal__footer">
+        <button class="btn btn-action main-action" @click="$bvModal.hide('delete-md-modal')">Cancel</button>
+        <button @click="doDeleteMd" class="btn btn-action">Delete</button>
+      </footer>
     </main>
-    <footer class="x-modal__footer">
-      <button class="btn btn-action" @click="$bvModal.hide('delete-md-modal')">Cancel</button>
-      <button @click="doDeleteMd" class="btn btn-action">Delete</button>
-    </footer>
+    
   </b-modal>
 </template>
 <script lang="ts">
@@ -23,6 +24,8 @@ export default class DeleteMdModal extends Vue{
 
   doDeleteMd(){
     this.$emit('delete', this.md)
+    //@ts-ignore
+    this.$bvModal.hide('delete-md-modal')
   }
 }
 </script>

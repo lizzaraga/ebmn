@@ -4,27 +4,39 @@
         <span class="title">Update <span>{{field.name | formatName}}</span></span>
       </header>
       <main>
-        
-        <form @submit.prevent="onUpdate" id="gi-file-form">
-          <div class="form-group">
-            <input type="file" :name="field.name" :id="field.name" @change="onChanged($event)"
-              placeholder="Choose a file or drop it here..."
-              class="form-control"
-            />
-          </div>
-          {{innerField}}
-        </form>
+        <ValidationObserver v-slot="{invalid}">
+          <form @submit.prevent>
+            <ValidationProvider v-slot='{errors}' rules='required'>
+              <div class="form-group">
+                <label :for="field.name">{{formatName(field.name)}}</label>
+                <input type="file" :name="field.name" :id="field.name" @change="onChanged($event)"
+                  class="form-control"
+                />
+              </div>
+              <p v-if="errors.length > 0" class="error-text fs-6 d-flex align-items-center">
+                <i class="bi bi-exclamation-square-fill"></i>
+                <span class="ml-1">{{errors[0]}}</span>
+              </p>
+            </ValidationProvider>
+            <footer class="x-modal__footer">
+              <button @click="onUpdate" :disabled="invalid" class="btn btn-action main-action">Update</button>
+              <button type="reset" @click="$bvModal.hide('gi-file-modal')" class="btn btn-action">Cancel</button>
+            </footer>
+          </form>
+        </ValidationObserver>
       </main>
-      <footer class="x-modal__footer">
-        <button @click="onUpdate" class="btn btn-action">Update</button>
-      </footer>
-
+      
+      
     </b-modal>
 </template>
 <script lang="ts">
 import { Component, Prop, Watch } from 'nuxt-property-decorator';
 import Vue from 'vue'
+import {ValidationProvider, ValidationObserver} from 'vee-validate'
 @Component({
+  components:{
+    ValidationObserver, ValidationProvider
+  },
   filters:{
     formatName(value: string){
       if(!value) return '';
@@ -51,6 +63,8 @@ export default class GIFileModal extends Vue{
     const filename = `https://storage.googleapis.com/sincere-signal-267510.appspot.com/ebmnet/photos/${this.file?.name}`
     //@ts-ignore
     this.$emit('update', Object.assign({}, this.innerField, {value: filename, data: new FormData(form)}))
+    //@ts-ignore
+    this.$bvModal.hide('gi-file-modal')
   }
 
   onChanged(e: any){

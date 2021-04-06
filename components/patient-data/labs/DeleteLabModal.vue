@@ -5,11 +5,13 @@
     </header>
     <main>
       Are you sure you want to delete: LAB {{lab.lab_id}} ?
+      <footer class="x-modal__footer">
+        <button @click="doDeleteLab" class="btn btn-action main-action">Delete</button>
+        <button class="btn btn-action" @click="$bvModal.hide('delete-lab-modal')">Cancel</button>
+        
+      </footer>
     </main>
-    <footer class="x-modal__footer">
-      <button class="btn btn-action" @click="$bvModal.hide('delete-lab-modal')">Cancel</button>
-      <button @click="doDeleteLab" class="btn btn-action">Delete</button>
-    </footer>
+    
   </b-modal>
 </template>
 <script lang="ts">
@@ -23,6 +25,8 @@ export default class DeleteLabModal extends Vue{
 
   doDeleteLab(){
     this.$emit('delete', this.lab)
+    //@ts-ignore
+    this.$bvModal.hide('delete-lab-modal')
   }
 }
 </script>

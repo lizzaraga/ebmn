@@ -5,11 +5,13 @@
     </header>
     <main>
       Are you sure you want to delete: Surgery {{sg.surgery_id}} ?
+      <footer class="x-modal__footer">
+        <button @click="doDeleteSg" class="btn btn-action main-action">Delete</button>
+        <button class="btn btn-action" @click="$bvModal.hide('delete-sg-modal')">Cancel</button>
+        
+      </footer>
     </main>
-    <footer class="x-modal__footer">
-      <button class="btn btn-action" @click="$bvModal.hide('delete-sg-modal')">Cancel</button>
-      <button @click="doDeleteSg" class="btn btn-action">Delete</button>
-    </footer>
+    
   </b-modal>
 </template>
 <script lang="ts">
@@ -23,6 +25,8 @@ export default class DeleteSurgeryModal extends Vue{
 
   doDeleteSg(){
     this.$emit('delete', this.sg)
+    //@ts-ignore
+    this.$bvModal.hide('delete-sg-modal')
   }
 }
 </script>

@@ -11,7 +11,6 @@
 @import './modules/links';
 @import './modules/patient-data';
 @import './modules/_searchbar.scss';
-@import './modules/forms.scss';
 @import './modules/theme';
 * {
     font-family: 'Poppins', sans-serif;
@@ -86,12 +85,15 @@ body {
 }
 
 .form-group {
-    label {
+    label,
+    .col-form-label {
         font-size: 0.8rem;
         font-weight: 600;
         color: lighten($color: $primary-dark-color, $amount: 20);
     }
-    input {
+    input,
+    select,
+    textarea {
         border: 1px solid transparent;
         border-color: #eee;
         &.mini {

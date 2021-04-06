@@ -1,7 +1,7 @@
 <template>
   <div id="radiologies">
     <div>
-      {{radiologies}}
+      <!-- {{radiologies}} -->
     </div>
     <div class="patient-data-grid">
       <div class="data-item" :key="rd.problem_id" v-for="rd in radiologies">
@@ -38,7 +38,7 @@
 </template>
 <script lang="ts">
 import moment from 'moment';
-import { Component, getModule } from 'nuxt-property-decorator';
+import { Component, getModule, Prop } from 'nuxt-property-decorator';
 import Vue from 'vue'
 import { IRadiology } from '~/api/models/patient-data.model';
 import RadiologyStore from '~/store/patient-data/radiology-store';
@@ -54,10 +54,11 @@ import EditRdModal from './EditRdModal.vue';
   }
 })
 export default class Radiologies extends Vue{
+  @Prop({required: true}) patientId!:number
   private radiologyStore = getModule(RadiologyStore, this.$store)
   private currentRd: IRadiology = {radiology_id: -1,radiology_results_problems_list: [] }
   
-  patientId = 27;
+  
 
   public get radiologies() {
     return this.radiologyStore.radiologies
