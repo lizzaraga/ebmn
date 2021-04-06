@@ -3,6 +3,7 @@
 @import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.0/font/bootstrap-icons.css");
 @import './base/variables';
 @import './modules/loader';
+@import './modules/animations';
 @import './modules/menu';
 @import './modules/modal';
 @import './modules/card';
@@ -10,6 +11,8 @@
 @import './modules/links';
 @import './modules/patient-data';
 @import './modules/_searchbar.scss';
+@import './modules/forms.scss';
+@import './modules/theme';
 * {
     font-family: 'Poppins', sans-serif;
 }
@@ -32,7 +35,7 @@ html {
 }
 
 // Auth
-.auth-form {
+.auth-form.register {
     margin-top: 4rem;
     border: 1px solid #eee;
     border-radius: 5px;
@@ -77,5 +80,61 @@ html {
         padding-right: 1.4rem;
         padding-left: 1.4rem;
         margin-top: 1rem;
+    }
+}
+
+.auth-form {
+    .form-group {
+        label {
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: lighten($color: $primary-dark-color, $amount: 20);
+        }
+        input {
+            border: 1px solid transparent;
+            border-color: #eee;
+            //background-color: lighten($color: $primary-dark-color, $amount: 87);
+            &:focus {
+                border-color: lighten($color: $primary-dark-color, $amount: 60);
+                box-shadow: 0 0 0 3px rgba($color: $primary-color, $alpha: 0.4);
+            }
+            &::placeholder {
+                font-size: 0.9rem;
+                color: #888
+            }
+        }
+        .error-text {
+            margin-top: 8px;
+            color: crimson;
+            font-size: 0.9rem;
+            font-weight: 300;
+        }
+    }
+}
+
+.x-btn {
+    background-color: #eee;
+    padding: 0;
+    font-size: 0.9rem;
+    font-weight: 500;
+    height: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 100px;
+    padding: 0 1rem;
+    border-radius: 5px;
+    border: none;
+    &.x-btn-primary-dark {
+        background-color: $primary-dark-color;
+        color: whitesmoke;
+    }
+    &.x-btn-link-color {
+        background-color: $link-color;
+        color: whitesmoke;
+    }
+    &:disabled {
+        opacity: 0.7;
+        cursor: not-allowed;
     }
 }

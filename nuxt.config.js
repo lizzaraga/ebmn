@@ -19,7 +19,7 @@ export default {
 
     // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
     plugins: [
-        { src: '@/plugins/validators.axios.ts', ssr: false },
+        { src: '@/plugins/validators.plugin.ts', ssr: false },
         '@/plugins/axios.plugin.js',
         '@/plugins/filters.plugin.js'
     ],
@@ -42,6 +42,7 @@ export default {
         '@nuxtjs/axios',
         // https://go.nuxtjs.dev/pwa
         '@nuxtjs/pwa',
+        "@nuxtjs/toast"
     ],
 
     // Axios module configuration: https://go.nuxtjs.dev/config-axios
@@ -55,5 +56,7 @@ export default {
     },
 
     // Build Configuration: https://go.nuxtjs.dev/config-build
-    build: {}
+    build: {
+        transpile: ['vee-validate/dist/rules']
+    }
 }

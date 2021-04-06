@@ -28,3 +28,13 @@
         }
     }
 }
+
+.x-link {
+    font-size: 0.9rem;
+    color: $link-color;
+    transition: all 0.4s ease;
+    &:hover {
+        text-decoration: none;
+        color: darken($color: $link-color, $amount: 10);
+    }
+}

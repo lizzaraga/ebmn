@@ -1,0 +1,11 @@
+.scale50-enter,
+.scale50-leave-to {
+    transform: scale(0.5);
+    opacity: 0;
+}
+
+.scale50-enter-active,
+.scale50-leave-active {
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    opacity: 0.3s linear;
+}

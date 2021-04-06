@@ -25,8 +25,16 @@
     height: 100%;
 }
 
+.h-screen {
+    height: 100vh;
+}
+
 .w-full {
     width: 100%;
+}
+
+.w-screen {
+    height: 100vw;
 }
 
 .overflow-hidden {
@@ -47,4 +55,9 @@
 
 .overflow-y-auto {
     overflow-y: auto;
+}
+
+.auth-form-layout {
+    display: grid;
+    grid-template-rows: auto 1fr auto;
 }
