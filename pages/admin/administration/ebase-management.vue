@@ -110,10 +110,16 @@ export default class EBaseManagement extends Vue{
     const form = document.querySelector('#create-clerk-form')
     //@ts-ignore
     const formData = new FormData(form)
+    //@ts-ignore
+    this.$bvModal.hide('create-clerk-modal')
     await this.adminStore.createClerk(formData)
+    
   }
   async doDeleteClerk(clerkId: number){
+    //@ts-ignore
+    this.$bvModal.hide('delete-clerk-modal')
     await this.adminStore.deleteClerk(clerkId)
+    
   }
   
   mounted(){

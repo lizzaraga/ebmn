@@ -129,10 +129,16 @@ export default class HIManagerManagement extends Vue{
     const form = document.querySelector('#create-manager-form')
     //@ts-ignore
     const formData = new FormData(form)
+    //@ts-ignore
+    this.$bvModal.hide('create-manager-modal')
     await this.adminStore.createManager(formData)
+    
   }
   async doDeleteManager(managerId: number){
+    //@ts-ignore
+    this.$bvModal.hide('delete-manager-modal')
     await this.adminStore.deleteManager(managerId)
+    
   }
   
   

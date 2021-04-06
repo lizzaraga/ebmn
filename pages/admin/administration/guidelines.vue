@@ -169,9 +169,13 @@ export default class Guidelines extends Vue{
   }
   async doEditGuideline(){
     const form = document.querySelector("#edit-guideline-form")
+    
     //@ts-ignore
     const formData = new FormData(form)
+    //@ts-ignore
+    this.$bvModal.hide('edit-guideline-modal')
     await this.adminStore.editGuideline({guidelineId: Number(this.editGl.diagnosis_id), formData})
+    
   }
   mounted(){
     this.adminStore.getGuidelines()

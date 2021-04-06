@@ -125,13 +125,19 @@ export default class HIManagement extends Vue{
     const form = document.querySelector('#edit-hi-form')
     //@ts-ignore
     const formData = new FormData(form)
+    //@ts-ignore
+    this.$bvModal.hide('edit-hospital-modal')
     this.isEditing 
     ? await this.hospitalStore.editHospital({hospitalId: this.editHospital.hospital_id!!, data: formData })
     : await this.hospitalStore.createHospital(formData)
+    
   }
   
   async doDeleteHospital(hospitalId: number){
+    //@ts-ignore
+    this.$bvModal.hide('delete-hospital-modal')
     await this.hospitalStore.deleteHospital(hospitalId)
+    
   }
   
   mounted(){

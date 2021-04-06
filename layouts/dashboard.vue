@@ -18,14 +18,15 @@
             <div v-show="search.showSearchResults" class="searchbar-results">
               <header>
                 <span>Results</span>
+                <i @click="search.showSearchResults = false" style="cursor: pointer" class="bi bi-x-circle"></i>
               </header>
-              <main>
-                <div class="items">
-                  <span @click="onClickPatient(patient)" :key="patient.patient_id" v-for="patient in search.patients" class="item">
+              <section>
+                <div class="results">
+                  <span @click="onClickPatient(patient)" :key="patient.patient_id" v-for="patient in search.patients" class="results-item">
                     {{patient.patient_name}}
                   </span>
                 </div>
-              </main>
+              </section>
             </div>
           </div>
         </form>
@@ -268,8 +269,7 @@ main{
     position: absolute;
     left: 0;
     right: 0;
-    height: 200px;
-    overflow: auto;
+    
     background-color: $primary-dark-color;
     border-radius: 8px;
     margin-top: 0.6rem;
@@ -281,14 +281,18 @@ main{
       font-weight: 600;
       height: 40px;
       line-height: 40px;
+      display: flex;
+      justify-content: space-between;
     }
-    main{
+    section{
       padding: 0.8rem 0;
       min-height: 40px;
-      &>.items{
+      max-height: 200px;
+      overflow: auto;
+      &>.results{
         display: flex;
         flex-direction: column;
-        &>.item{
+        &>.results-item{
           cursor: pointer;
           height: 40px;
           line-height: 40px;
