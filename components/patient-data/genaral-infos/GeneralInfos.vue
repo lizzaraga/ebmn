@@ -64,7 +64,7 @@
             <span  v-if='gi[name] == null || gi[name].trim() == ""' class="value">
               N/A
             </span>
-            <a v-else @click.self.stop target="_blank" :href="gi[name].trim()" class="value">
+            <a v-else @click.self.stop target="_blank" :href="gi[name].trim()" class="value x-link">
               {{getFileName(gi[name].trim())}}
             </a>
           </div>
@@ -176,7 +176,6 @@ export default class GeneralInfos extends Vue{
     await this.giStore.updateGIField({ patientId: this.patientId, request: field})
   }
   async onUpdateFile(field: any){
-    console.log(field)
     await this.giStore.updateGIBinaryField({ patientId: this.patientId, request: field})
   }
   async mounted(){
@@ -185,6 +184,7 @@ export default class GeneralInfos extends Vue{
 }
 </script>
 <style lang="scss" scoped>
+@import '@/assets/scss/base/_variables.scss';
 #general-infos{
   
 }
@@ -214,11 +214,19 @@ export default class GeneralInfos extends Vue{
     .gi-data-item{
       cursor: pointer;
       display: grid;
+      outline: none;
       grid-template-rows: auto 1fr;
       background-color: #fff;
-      border-radius: 1rem;
+      border-radius: 8px;
+      border: 1px solid #eee;
       box-shadow: 0 1px 3px rgba($color: #000000, $alpha: 0.06);
       transition: all 0.4s ease;
+      &:focus{
+        outline: none;
+        border: 1px solid $primary-dark-color;
+        color: white;
+        background-color: $primary-dark-color;
+      }
       &>.name, &>.value{
         padding: 0.8rem;
       }
@@ -226,6 +234,10 @@ export default class GeneralInfos extends Vue{
         padding-bottom: 0;
         font-size: 0.85rem;
         font-weight: 300;
+      }
+      &>.value{
+        font-size: 0.8rem;
+        font-weight: 600;
       }
       &:hover{
         box-shadow: 0 4px 38px rgba($color: #000000, $alpha: 0.08);

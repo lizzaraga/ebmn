@@ -4,24 +4,35 @@
         <span class="title">Update <span>{{field.name | formatName}}</span></span>
       </header>
       <main>
-        
-        <form @submit.prevent="onUpdate">
-          <b-form-group :label="formatName(field.name)"> 
-            <b-input type="email" v-model='innerField.value' :placeholder="`New ${formatName(field.name)}`"/>
-          </b-form-group>
-          {{innerField}}
-        </form>
+        <ValidationObserver v-slot="{invalid}">
+          <form @submit.prevent="onUpdate">
+            <ValidationProvider v-slot='{errors}' rules='required|email'>
+              <div class="form-group">
+                <label :for="field.name">{{formatName(field.name)}}</label>
+                <b-input type="email" class="form-control" v-model='innerField.value' :placeholder="`New ${formatName(field.name)}`"/>
+              </div>
+              <p v-if="errors.length > 0" class="error-text fs-6 d-flex align-items-center">
+                <i class="bi bi-exclamation-square-fill"></i>
+                <span class="ml-1">{{errors[0]}}</span>
+              </p>
+            </ValidationProvider>
+            <footer class="x-modal__footer">
+              <button type="submit" :disabled="invalid" class="btn btn-action main-action">Update</button>
+              <button type="cancel" @click="$bvModal.hide('gi-email-modal')" class="btn btn-action">Cancel</button>
+            </footer>
+          </form>
+        </ValidationObserver>
       </main>
-      <footer class="x-modal__footer">
-        <button @click="onUpdate" class="btn btn-action">Update</button>
-      </footer>
-
     </b-modal>
 </template>
 <script lang="ts">
 import { Component, getModule, Prop, Watch } from 'nuxt-property-decorator';
 import Vue from 'vue'
+import {ValidationProvider, ValidationObserver} from 'vee-validate'
 @Component({
+  components:{
+    ValidationObserver, ValidationProvider
+  },
   filters:{
     formatName(value: string){
       if(!value) return '';
@@ -43,6 +54,8 @@ export default class GIEmailModal extends Vue{
 
   async onUpdate(){
     this.$emit('update', Object.assign({}, this.innerField))
+    //@ts-ignore
+    this.$bvModal.hide('gi-tel-modal')
   }
   formatName(value: string){
     if(!value) return '';
