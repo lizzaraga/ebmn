@@ -29,8 +29,8 @@ export default class MainContentWithMenu extends Vue{
     padding-top: $navbar-thickness;
     //border-right: 1px solid #000;
     //background-color: #fdfeff;
-    background-color: $primary-dark-color;
-    box-shadow: 4px 0 12px rgba($color: #000000, $alpha: 0.1);
+    background-color: #E1E9F1;
+    //box-shadow: 4px 0 12px rgba($color: #000000, $alpha: 0.1);
     z-index: 4;
     height: 100vh;
     overflow-y: auto;
@@ -39,6 +39,8 @@ export default class MainContentWithMenu extends Vue{
     padding-top: $navbar-thickness;
     position: relative;
     overflow-y: auto;
+    background-color: #EDF1F5;
+    
   }
 }
 </style>

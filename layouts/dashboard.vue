@@ -2,11 +2,11 @@
   <div id="dashboard" class="h-screen w-screen" style="overflow: auto">
     <nav  id="h-navbar" class="d-flex justify-content-between align-items-center">
       <div id="dashboard-logo">
-        <img width="35px" src="@/assets/svgs/logo.svg"/>
+        <img width="35px" src="@/assets/svgs/logo-black.svg"/>
       </div>
       
       <div class="d-flex align-items-center flex-row-reverse">
-        <nuxt-link class="x-link mr-4" style="font-size: 0.7rem" to="/">
+        <nuxt-link class="mr-4" style="font-size: 0.9rem" to="/">
           <div class="d-flex align-items-center">
             <span>Log out</span>
           </div>
@@ -152,9 +152,9 @@ export default class Dashboard extends Vue{
   width: 100%;
   position: fixed;
   //border-bottom: 1px solid #eee;
-  background-color: lighten($color: $primary-dark-color, $amount: 2); //$primary-dark-color;
+  background-color: white; //$primary-dark-color;
   //box-shadow: 0 2px 4px rgba($color: #000000, $alpha: 0.05);
-  box-shadow: 0px 4px 12px rgba($color: #000000, $alpha: 0.3);
+  box-shadow: 0px 4px 12px rgba($color: #000000, $alpha: 0.05);
   z-index: $navbar-zindex;
 
   &>#dashboard-logo{
@@ -170,9 +170,9 @@ export default class Dashboard extends Vue{
   left: 0;
   //border-right: 1px solid #eee;
   position: fixed;
-  background-color: $primary-dark-color;
+  background-color: white;
   //box-shadow: 2px 0 4px rgba($color: #000000, $alpha: 0.05);
-  box-shadow: 4px 0 12px rgba($color: #000000, $alpha: 0.1);
+  box-shadow: 4px 0 12px rgba($color: #000000, $alpha: 0.05);
   z-index: $navbar-zindex - 1;
   padding-top: $navbar-thickness * 1.5;
   display: flex;
@@ -182,7 +182,8 @@ export default class Dashboard extends Vue{
   &>#user-bloc{
     width: 100%;
     height: $navbar-v-thickness + 10px;
-    border-top: 2px solid $primary-dark-color;
+    //border-top: 2px solid $primary-dark-color;
+    background-color: #EEF1F3;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -194,8 +195,8 @@ export default class Dashboard extends Vue{
       display: flex;
       align-items: center;
       justify-content: center;
-      background-color: $link-color;
-      color: rgb(43, 39, 39);
+      background-color: #CCD8F0;
+      color: #8CB2EA;
       border-radius: 50%;
       font-size: 0.8rem;
       font-weight: 600;
@@ -209,7 +210,7 @@ export default class Dashboard extends Vue{
       text-overflow: ellipsis;
       overflow: hidden;
       text-align: center;
-      color: whitesmoke;
+      color: #164791;
       width:  $navbar-v-thickness - 10px;
     }
   }
