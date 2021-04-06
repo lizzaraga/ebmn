@@ -1,7 +1,7 @@
 <template>
   <div id="legal-docs">
     <div>
-      {{lds}}
+      <!-- {{lds}} -->
     </div>
     <div class="patient-data-grid">
       <div class="data-item" :key="ld.document_id" v-for="ld in lds">

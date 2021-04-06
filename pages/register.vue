@@ -133,7 +133,7 @@
               </form>
             </ValidationObserver>
           </div>
-          <p style="font-size: 0.8rem; color: gray" class="text-center">© 2021. E-base Medical Network App.</p>
+          <p style="font-size: 0.8rem; color: #444" class="text-center">© 2021. E-base Medical Network App.</p>
         </b-col>
       </transition>
       <b-col class="d-flex align-items-center justify-content-center">
@@ -184,7 +184,4 @@ export default class Login extends Vue{
 }
 </script>
 <style lang="scss" >
-html,body{
-  background-color: #fafafa;
-}
-</style>
+

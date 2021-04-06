@@ -65,7 +65,7 @@
               </form>
             </ValidationObserver>
           </div>
-          <p style="font-size: 0.8rem; color: gray" class="text-center">© 2021. E-base Medical Network App.</p>
+          <p style="font-size: 0.8rem; color: #444" class="text-center">© 2021. E-base Medical Network App.</p>
         </b-col>
       </transition>
       <b-col class="d-flex align-items-center justify-content-center">
@@ -74,7 +74,7 @@
             <img width="50" src="@/assets/svgs/logo.svg" alt="">
             <span class="link-color" style="font-size: 0.8rem; font-weight: 700">E-base Medical Network</span>
           </div>
-          <h2 class="text-white" style="font-size: 3rem; font-weight: 700">Hi, welcome back !</h2>
+          <h2 class="text-white " style="font-size: 3rem; font-weight: 700">Hi, welcome back !</h2>
           <p style="color: #fffa; font-weight: 300; margin-top: 1.1rem; font-size: 1.2rem">
             Lorem ipsum dolor sit, amet consectetur adipisicing elit. Amet qui quisquam, eligendi illum quae libero.
           </p>
