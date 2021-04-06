@@ -36,6 +36,10 @@ export interface IGeneralInfo{
   house_map?: string,
   emergency_contacts: object[]
 }
+export interface IPatient{
+  patient_id?: number,
+  patient_name?: string
+}
 export interface IUpdateGI{
   name: string;
   type: string;

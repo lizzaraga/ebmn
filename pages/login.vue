@@ -110,8 +110,11 @@ export default class Login extends Vue{
     await this.authStore.login(this.loginVM)
     
     const user: IUser = this.authStore.user
-    const idStore = getModule(IdStore, this.$store)
-    idStore.setPatientId(user.id!!)
+    if(user.job == 'health_personnel'){
+      const idStore = getModule(IdStore, this.$store)
+      idStore.setPatientId(user.id!!)
+    }
+    
     if(user.token){
       switch(user.job){
         case 'patient':

@@ -1,5 +1,5 @@
 import Axios, {CancelTokenSource}  from 'axios'
-import {IAbusiveSubstance, IAllergy, ICptCodeSurgery, IEkg, IGeneralInfo, ILab, ILabInstitute, ILegalDocument, IMedication, IProblem, IRadiology, IRxNormLabel, ISurgery, IUpdateGI, IUpdateGIFile, IVitalSigns} from '@/api/models/patient-data.model'
+import {IAbusiveSubstance, IAllergy, ICptCodeSurgery, IEkg, IGeneralInfo, ILab, ILabInstitute, ILegalDocument, IMedication, IPatient, IProblem, IRadiology, IRxNormLabel, ISurgery, IUpdateGI, IUpdateGIFile, IVitalSigns} from '@/api/models/patient-data.model'
 import { IClerkDiagnosis } from './models/clerk.model'
 
 class PatientDataApi {
@@ -32,6 +32,15 @@ class PatientDataApi {
         })
         } catch (error) {
         return Promise.reject(error)
+        }
+    }
+
+    async getPatients(searchTerm: string, token: string){
+        try {
+            const res = await Axios.get(`/general_patient_list/get/${token}/${searchTerm}`)
+            return Promise.resolve<IPatient[]>(res.data.patients)
+        } catch (error) {
+            return Promise.reject(error)
         }
     }
 

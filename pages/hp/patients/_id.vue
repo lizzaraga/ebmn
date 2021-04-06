@@ -5,6 +5,7 @@
 import Vue from 'vue'
 import Component from 'vue-class-component';
 @Component({
+  layout: 'dashboard',
   validate({route}){
     return !isNaN(Number(route.params.id))
   }

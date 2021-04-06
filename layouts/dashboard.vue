@@ -1,14 +1,35 @@
 <template>
   <div id="dashboard" class="h-screen w-screen" style="overflow: auto">
-    <nav id="h-navbar" class="d-flex justify-content-between align-items-center">
+    <nav  id="h-navbar" class="d-flex justify-content-between align-items-center">
       <div id="dashboard-logo">
         <img width="35px" src="@/assets/svgs/logo.svg"/>
       </div>
-      <nuxt-link class="x-link mr-4" style="font-size: 0.7rem" to="/">
-        <div class="d-flex align-items-center">
-          <span>Log out</span>
-        </div>
-      </nuxt-link>
+      
+      <div class="d-flex align-items-center flex-row-reverse">
+        <nuxt-link class="x-link mr-4" style="font-size: 0.7rem" to="/">
+          <div class="d-flex align-items-center">
+            <span>Log out</span>
+          </div>
+        </nuxt-link>
+        <form v-if="patientId != -1" @submit.prevent>
+          <div class="form-group search" style="margin:0; margin-right: 0.8rem;">
+            <input  v-model="search.searchTerm" @blur="onSearchBarBlur" :class='{"expand": expandSearchBar}' placeholder="Type patient name" type="text" class="form-control">
+            <i @click="onSearchIconClick" class="bi bi-search search-icon"></i>
+            <div v-show="search.showSearchResults" class="searchbar-results">
+              <header>
+                <span>Results</span>
+              </header>
+              <main>
+                <div class="items">
+                  <span @click="onClickPatient(patient)" :key="patient.patient_id" v-for="patient in search.patients" class="item">
+                    {{patient.patient_name}}
+                  </span>
+                </div>
+              </main>
+            </div>
+          </div>
+        </form>
+      </div>
     </nav>
     <nav id="v-navbar">
       <clerk-navbar-menu v-if="user.job == 'clerk'"/>
@@ -29,14 +50,18 @@
 <script lang="ts">
 import Vue from 'vue'
 import Component from 'vue-class-component';
+import { Watch } from 'vue-property-decorator';
 import { getModule } from 'vuex-module-decorators';
 import { IUser } from '~/api/models/auth.model';
+import { IPatient } from '~/api/models/patient-data.model';
+import patientDataApi from '~/api/patient-data.api';
 import AdminNavbarMenuVue from '~/components/navbar-menu/AdminNavbarMenu.vue';
 import ClerkNavbarMenuVue from '~/components/navbar-menu/ClerkNavbarMenu.vue';
 import HpNavbarMenuVue from '~/components/navbar-menu/HpNavbarMenu.vue';
 import ManagerNavbarMenuVue from '~/components/navbar-menu/ManagerNavbarMenu.vue';
 import PatientNavbarMenuVue from '~/components/navbar-menu/PatientNavbarMenu.vue';
 import AuthStore from '~/store/auth-store';
+import IdStore from '~/store/patient-data/id-store';
 @Component({
   middleware: ['auth.mid'],
   components:{
@@ -50,19 +75,71 @@ import AuthStore from '~/store/auth-store';
 export default class Dashboard extends Vue{
 
   private authStore = getModule(AuthStore, this.$store)
-  
+  private idStore = getModule(IdStore, this.$store)
   user?: IUser
-
+  expandSearchBar = false
+  
+  search: {
+    searchTerm: string,
+    patients: IPatient[],
+    showSearchResults: boolean 
+  } = {
+    searchTerm : "",
+    showSearchResults: false,
+    patients:  []
+  }
   
   public get userInitial() : string {
     return this.user?.username != undefined ? this.user.username!![0].toUpperCase() : ""
   }
+
+  get patientId(){
+    return this.idStore.patientId
+  }
+
+  @Watch('search.searchTerm')
+  onSearchTermChanged(value: string){
+    if(value.trim() != "")
+      this.onSearchPatient(value)
+    else this.search.patients = []
+  }
+  @Watch('search.patients')
+  onPahtientsChanged(value: IPatient[]){
+    if(value.length == 0) this.search.showSearchResults = false
+    else this.search.showSearchResults = true
+  }
+  
   
   constructor(){
     super()
     this.user = this.authStore.user
   }
+  onSearchBarBlur(){
+     if(this.search.searchTerm.trim() == ""){
+       this.expandSearchBar = false
+    }
+  }
+  onSearchIconClick(){
+    //@ts-ignore
+    document.querySelector('.form-group.search > input').focus()
+    this.expandSearchBar = true
+  }
 
+  async onSearchPatient(searchTerm: string){
+    try {
+      const response = await patientDataApi.getPatients(searchTerm, this.authStore.token)
+      this.search.patients = response
+    } catch (error) {
+      this.search.patients = []
+    }
+  }
+
+  onClickPatient(patient: IPatient){
+    this.idStore.setPatientId(patient.patient_id!!)
+    this.$router.push({name: 'hp-patients-id', params: {id: patient.patient_id+''}, hash: '/#general-infos'})
+    this.search.showSearchResults = false
+    this.search.searchTerm = patient.patient_name!!
+  }
 
 }
 </script>
@@ -145,5 +222,88 @@ main{
   height: 100vh;
   overflow: hidden;
   
+}
+
+.form-group.search{
+  background-color: transparent;
+  position: relative;
+
+  input{
+    background-color: #333C56;
+    border-color: transparent;
+    padding-right: 40px;
+    border-radius: 8px;
+    height: 45px;
+    width: 50px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: rgba($color: #C2DEFF, $alpha: 0.8);
+    transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+    &.expand{
+      width: 250px;
+    }
+    &:focus{
+      border-color: rgba($color: #C2DEFF, $alpha: 0.5);
+      box-shadow: 0 0 0 3px rgba($color: #C2DEFF, $alpha: 0.4);
+    }
+    &::placeholder{
+      color: rgba($color: #C2DEFF, $alpha: 0.5);
+      font-size: 0.8rem;
+      
+    }
+  }
+  .search-icon{
+    cursor: pointer;
+    color: #C2DEFF;
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 55px;
+    height: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .searchbar-results{
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 200px;
+    overflow: auto;
+    background-color: $primary-dark-color;
+    border-radius: 8px;
+    margin-top: 0.6rem;
+    box-shadow: 0 4px 20px rgba($color: #000000, $alpha: 0.2);
+    color: #C2DEFF;
+
+    header{
+      padding: 0 0.8rem;
+      font-weight: 600;
+      height: 40px;
+      line-height: 40px;
+    }
+    main{
+      padding: 0.8rem 0;
+      min-height: 40px;
+      &>.items{
+        display: flex;
+        flex-direction: column;
+        &>.item{
+          cursor: pointer;
+          height: 40px;
+          line-height: 40px;
+          padding: 0 0.8rem;
+          font-size: 0.8rem;
+          font-weight: 500;
+          color: rgba($color: #C2DEFF, $alpha: .75);
+
+          &:hover{
+            color: #C2DEFF;
+            background-color: rgba($color: #C2DEFF, $alpha: 0.1);
+          }
+        }
+      }
+    }
+  }
 }
 </style>
