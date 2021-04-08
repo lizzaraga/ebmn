@@ -87,7 +87,7 @@ export default class ClerkStore extends VuexModule{
     const token = this.context.rootGetters['auth-store/token']
     try {
       await clerkApi.updateVaccine(token, vaccine)
-      this.context.dispatch('getVaccines')
+      this.context.dispatch('getVaccines', this.clerkHospital.hospital_id)
     } catch (error) {
       alert('Failed to update vaccine')
     }
@@ -97,7 +97,7 @@ export default class ClerkStore extends VuexModule{
     const token = this.context.rootGetters['auth-store/token']
     try {
       await clerkApi.updateDrug(token, drug)
-      this.context.dispatch('getDrugs')
+      this.context.dispatch('getDrugs', this.clerkHospital.hospital_id)
     } catch (error) {
       alert('Failed to update drug')
     }
@@ -138,7 +138,7 @@ export default class ClerkStore extends VuexModule{
     const token = this.context.rootGetters['auth-store/token']
     try {
       await clerkApi.updateScreening(token, screening)
-      this.context.dispatch('getScreenings')
+      this.context.dispatch('getScreenings', this.clerkHospital.hospital_id)
     } catch (error) {
       alert('Failed to update screening')
     }
@@ -148,7 +148,7 @@ export default class ClerkStore extends VuexModule{
     const token = this.context.rootGetters['auth-store/token']
     try {
       await clerkApi.updateDiagnosis(token, diagnosis)
-      this.context.dispatch('getDiagnosis')
+      this.context.dispatch('getDiagnosis', this.clerkHospital.hospital_id)
     } catch (error) {
       alert('Failed to update diagnosis')
     }
@@ -158,7 +158,7 @@ export default class ClerkStore extends VuexModule{
     const token = this.context.rootGetters['auth-store/token']
     try {
       await clerkApi.updateSurgery(token, surgery)
-      this.context.dispatch('getSurgeries')
+      this.context.dispatch('getSurgeries', this.clerkHospital.hospital_id)
     } catch (error) {
       alert('Failed to update surgery')
     }

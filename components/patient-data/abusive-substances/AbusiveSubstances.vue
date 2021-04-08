@@ -1,33 +1,40 @@
 <template>
-  <div id="allergies">
-    <div>
-      <!-- {{abusiveSubstances}} -->
-    </div>
-     <div class="patient-data-grid">
-      <div class="data-item" :key="subs.substance_id" v-for="subs in abusiveSubstances">
-        <header>
-          <div class="title-field">
-            <span class="title-key" >Substance:</span>
-            <span class="title-value">{{subs.substance}}</span>
-          </div>
-          <div class="actions">
-            <i class="bi bi-plus-square action" @click="openCreateSubstance"></i>
-            <i class="bi bi-pencil-square action action-edit" @click="openEditSubstance(subs)"></i>
-            <i class="bi bi-trash action action-delete" @click="openDeleteSubstance(subs)"></i>
-          </div>
-        </header>
-        <main>
-          
-        </main>
-        <!-- <footer >
-          <div class="date-field">
-            <span class="date-key" >Date first recorded</span>
-            <span class="date-value" v-html="convertDate(allergy.date_first_recorded)"></span>
-          </div>
-          
-        </footer> -->
+  <div id="allergies" class="data-grid">
+    
+    <div class="data-grid-main">
+     
+      <div class="patient-data-grid">
+        <div class="data-item" :key="subs.substance_id" v-for="subs in abusiveSubstances">
+          <header>
+            <div class="title-field">
+              <span class="title-key" >Substance:</span>
+              <span class="title-value">{{subs.substance}}</span>
+            </div>
+            <div class="actions">
+              <i class="bi bi-pencil-square action action-edit" @click="openEditSubstance(subs)"></i>
+              <i class="bi bi-trash action action-delete" @click="openDeleteSubstance(subs)"></i>
+            </div>
+          </header>
+          <main>
+            <div class="data-row">
+              <span class="data-key">Status</span>
+              <span class="data-value">{{subs.status}}</span>
+            </div>
+            <div class="data-row">
+              <span class="data-key">Substance details</span>
+              <span class="data-value">{{subs.substance_details}}</span>
+            </div>
+            <div class="data-row">
+              <span class="data-key">Comments</span>
+              <span class="data-value">{{subs.comments}}</span>
+            </div>
+          </main>
+        </div>
       </div>
     </div>
+    <footer class="fixed-footer">
+      <button class="btn btn-footer-action" @click="openCreateSubstance">Create Substance</button>
+    </footer>
     <delete-as-modal @delete="onDeleteAs" :as="currentAs"/>
     <edit-as-modal @edit='onEditAs' :as="currentAs"/>
     <create-as-modal @create="onCreateAs"/>

@@ -1,7 +1,7 @@
 <template>
-  <div id="general-infos" >
-    <div >
-      <div   class="gi-data-group">
+  <div class="data-grid" >
+    <div class="data-grid-main">
+      <div  class="gi-data-group">
         <header>Text fields</header>
         <main>
           <div @click="selectedField = {name, value: gi[name]}" v-b-modal="'gi-text-modal'" :key="name" v-for="name in textFields" class="gi-data-item">
@@ -71,6 +71,7 @@
         </main>
       </div>
     </div>
+    <footer class="fixed-footer"></footer>
     <gi-text-modal @update='onUpdateField' :field="selectedField"/>
     <gi-email-modal @update='onUpdateField' :field="selectedField"/>
     <gi-tel-modal @update='onUpdateField' :field="selectedField"/>
@@ -78,6 +79,8 @@
     <gi-date-modal @update='onUpdateField' :field="selectedField"/>
     <gi-file-modal @update="onUpdateFile" :field="selectedField"/>
     <gi-select-modal @update='onUpdateField' :field="selectedField"/>
+    
+    
     
   </div>
 </template>
@@ -187,9 +190,6 @@ export default class GeneralInfos extends Vue{
 </script>
 <style lang="scss" scoped>
 @import '@/assets/scss/base/_variables.scss';
-#general-infos{
-  
-}
 .gi-data-group{
   header{
     padding: 0.8rem;
@@ -247,4 +247,6 @@ export default class GeneralInfos extends Vue{
     }
   }
 }
+
+
 </style>

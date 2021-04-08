@@ -278,7 +278,7 @@ class PatientDataApi {
     }
 
     private searchDiagnosisTokenSource!: CancelTokenSource
-    async searchDiagnosis(token: string, searchTerm: string){
+    async searchDiagnosis(token: string, searchTerm: string): Promise<IClerkDiagnosis[]>{
         if(this.searchDiagnosisTokenSource != null){
             this.searchDiagnosisTokenSource.cancel("Request was cancelled due to the new request")
         }
@@ -289,7 +289,7 @@ class PatientDataApi {
             })
             return Promise.resolve<IClerkDiagnosis[]>(response.data.diagnosis)
         } catch (error) {
-            Promise.resolve(error)
+            return Promise.resolve(error)
         }
     }
 

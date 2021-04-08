@@ -9,13 +9,13 @@
           <b-form-group label="Hospital"> 
             <b-form-select  v-model="selected" :options="options"></b-form-select>
           </b-form-group>
-          
+          <footer class="x-modal__footer">
+            <button @click="doSelectHospital" class="btn btn-action main-action">Select</button>
+          </footer>
+
         </form>
       </main>
-      <footer class="x-modal__footer">
-        <button @click="doSelectHospital" class="btn btn-action">Select</button>
-      </footer>
-
+      
     </b-modal>
   </div>
 </template>

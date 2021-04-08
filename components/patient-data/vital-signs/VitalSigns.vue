@@ -1,55 +1,54 @@
 <template>
-  <div id="vital-signs">
-    <!-- <div>
-      {{vitalSigns}}
-      <button class="btn" @click="openEditVs">Edit vs</button> 
-    </div> -->
-    <div class="px-4 py-3 d-flex align-items-center justify-content-between">
-      <h3 style="font-weight: 200">Vital Signs</h3>
-      <button @click="openEditVs" class="btn btn-primary" style="font-size: 0.8rem; padding: 0.6rem 1.2rem; font-weight: 500">Update</button>
-    </div>
-    <div class="px-4 py-3">
-      <div class="vs-container" >
-        <div class="titles" :class="{'with-shadow': addShadow}">
-          <span>Date of update</span>
-          <span>Height</span>
-          <span>Weight</span>
-          <span>Body mass index</span>
-          <span>Waist circumference</span>
-          <span>Head circumference</span>
-          <span>Temperature</span>
-          <span>Pulse</span>
-          <span>Respiratory rate</span>
-          <span>Pain scale</span>
-          <span>Pregnancy month</span>
-          <span>Muac</span>
-          <span>Oxygen flow rate</span>
-          <span>Systolic bp</span>
-          <span>Dyastolic bp</span>
-        </div>
-        <div class="vs-table-container" :class="{'with-shadow': addShadow}" ref="scrollBox">
-          <table>
-          <tbody>
-            <tr><td  :key="'date_of_update_'+index+item" v-for="(item, index) in vitalSigns['date_of_update'].split(',').reverse()"><div v-html="convertDate(item)"></div></td></tr>
-            <tr><td :key="'height_'+index+item" v-for="(item, index) in vitalSigns['height'].split(',').reverse()">{{item}}</td></tr>
-            <tr><td :key="'weight_'+index+item" v-for="(item, index) in vitalSigns['weight'].split(',').reverse()">{{item}}</td></tr>
-            <tr><td :key="'body_mass_index_'+index+item" v-for="(item, index) in vitalSigns['body_mass_index'].split(',').reverse()">{{item}}</td></tr>
-            <tr><td :key="'waist_circumference_'+index+item" v-for="(item, index) in vitalSigns['waist_circumference'].split(',').reverse()">{{item}}</td></tr>
-            <tr><td :key="'head_circumference_'+index+item" v-for="(item, index) in vitalSigns['head_circumference'].split(',').reverse()">{{item}}</td></tr>
-            <tr><td :key="'temperature_'+index+item" v-for="(item, index) in vitalSigns['temperature'].split(',').reverse()">{{item}}</td></tr>
-            <tr><td :key="'pulse_'+index+item" v-for="(item, index) in vitalSigns['pulse'].split(',').reverse()">{{item}}</td></tr>
-            <tr><td :key="'respiratory_rate_'+index+item" v-for="(item, index) in vitalSigns['respiratory_rate'].split(',').reverse()">{{item}}</td></tr>
-            <tr><td :key="'pain_scale_'+index+item" v-for="(item, index) in vitalSigns['pain_scale'].split(',').reverse()">{{item}}</td></tr>
-            <tr><td :key="'pregnancy_month_'+index+item" v-for="(item, index) in vitalSigns['pregnancy_month'].split(',').reverse()">{{item}}</td></tr>
-            <tr><td :key="'muac_'+index+item" v-for="(item, index) in vitalSigns['muac'].split(',').reverse()">{{item}}</td></tr>
-            <tr><td :key="'oxygen_flow_rate_'+index+item" v-for="(item, index) in vitalSigns['oxygen_flow_rate'].split(',').reverse()">{{item}}</td></tr>
-            <tr><td :key="'systolic_bp_'+index+item" v-for="(item, index) in vitalSigns['systolic_bp'].split(',').reverse()">{{item}}</td></tr>
-            <tr><td :key="'diastolic_bp_'+index+item" v-for="(item, index) in vitalSigns['diastolic_bp'].split(',').reverse()">{{item}}</td></tr>
-          </tbody>
-        </table>
+  <div id="vital-signs" class="data-grid">
+    
+     <div class="data-grid-main">
+      
+      <div class="px-4 py-3">
+        <div class="vs-container" >
+          <div class="titles" :class="{'with-shadow': addShadow}">
+            <span>Date of update</span>
+            <span>Height</span>
+            <span>Weight</span>
+            <span>Body mass index</span>
+            <span>Waist circumference</span>
+            <span>Head circumference</span>
+            <span>Temperature</span>
+            <span>Pulse</span>
+            <span>Respiratory rate</span>
+            <span>Pain scale</span>
+            <span>Pregnancy month</span>
+            <span>Muac</span>
+            <span>Oxygen flow rate</span>
+            <span>Systolic bp</span>
+            <span>Dyastolic bp</span>
+          </div>
+          <div class="vs-table-container" :class="{'with-shadow': addShadow}" ref="scrollBox">
+            <table>
+            <tbody>
+              <tr><td  :key="'date_of_update_'+index+item" v-for="(item, index) in vitalSigns['date_of_update'].split(',').reverse()"><div v-html="convertDate(item)"></div></td></tr>
+              <tr><td :key="'height_'+index+item" v-for="(item, index) in vitalSigns['height'].split(',').reverse()"><div class="value"><span>{{item}}</span></div></td></tr>
+              <tr><td :key="'weight_'+index+item" v-for="(item, index) in vitalSigns['weight'].split(',').reverse()"><div class="value"><span>{{item}}</span></div></td></tr>
+              <tr><td :key="'body_mass_index_'+index+item" v-for="(item, index) in vitalSigns['body_mass_index'].split(',').reverse()"><div class="value"><span>{{item}}</span></div></td></tr>
+              <tr><td :key="'waist_circumference_'+index+item" v-for="(item, index) in vitalSigns['waist_circumference'].split(',').reverse()"><div class="value"><span>{{item}}</span></div></td></tr>
+              <tr><td :key="'head_circumference_'+index+item" v-for="(item, index) in vitalSigns['head_circumference'].split(',').reverse()"><div class="value"><span>{{item}}</span></div></td></tr>
+              <tr><td :key="'temperature_'+index+item" v-for="(item, index) in vitalSigns['temperature'].split(',').reverse()"><div class="value"><span>{{item}}</span></div></td></tr>
+              <tr><td :key="'pulse_'+index+item" v-for="(item, index) in vitalSigns['pulse'].split(',').reverse()"><div class="value"><span>{{item}}</span></div></td></tr>
+              <tr><td :key="'respiratory_rate_'+index+item" v-for="(item, index) in vitalSigns['respiratory_rate'].split(',').reverse()"><div class="value"><span>{{item}}</span></div></td></tr>
+              <tr><td :key="'pain_scale_'+index+item" v-for="(item, index) in vitalSigns['pain_scale'].split(',').reverse()"><div class="value"><span>{{item}}</span></div></td></tr>
+              <tr><td :key="'pregnancy_month_'+index+item" v-for="(item, index) in vitalSigns['pregnancy_month'].split(',').reverse()"><div class="value"><span>{{item}}</span></div></td></tr>
+              <tr><td :key="'muac_'+index+item" v-for="(item, index) in vitalSigns['muac'].split(',').reverse()"><div class="value"><span>{{item}}</span></div></td></tr>
+              <tr><td :key="'oxygen_flow_rate_'+index+item" v-for="(item, index) in vitalSigns['oxygen_flow_rate'].split(',').reverse()"><div class="value"><span>{{item}}</span></div></td></tr>
+              <tr><td :key="'systolic_bp_'+index+item" v-for="(item, index) in vitalSigns['systolic_bp'].split(',').reverse()"><div class="value"><span>{{item}}</span></div></td></tr>
+              <tr><td :key="'diastolic_bp_'+index+item" v-for="(item, index) in vitalSigns['diastolic_bp'].split(',').reverse()"><div class="value"><span>{{item}}</span></div></td></tr>
+            </tbody>
+          </table>
+          </div>
         </div>
       </div>
     </div>
+    <footer class="fixed-footer">
+      <button class="btn btn-footer-action" @click="openEditVs">Update Vital Signs</button>
+    </footer>
     <edit-vs-modal @edit="onEditVs"/>
   </div>
 </template>
@@ -132,7 +131,7 @@ $border-color: #F0F0F0;
     border-right: 1px solid $border-color;
     transition: all 0.4s ease;
     &.with-shadow{
-      box-shadow: 4px 0 18px rgba($color: #000000, $alpha: 0.05);
+      box-shadow: 2px 0 20px rgba($color: #000000, $alpha: 0.05);
       border-right: 1px solid transparent;
     }
     &>span{
@@ -153,10 +152,12 @@ $border-color: #F0F0F0;
     font-weight: 300;
     overflow-x: auto;
     overflow-y: auto;
+    background-color: #fff;
     transition: all 0.4s ease;
     &.with-shadow{
-      box-shadow: inset 4px 0 18px rgba($color: #000000, $alpha: 0.05),
-    inset -4px 0 18px rgba($color: #000000, $alpha: 0.05);
+      box-shadow: inset 4px 0 4px rgba($color: #000000, $alpha: 0.1),
+    inset -1px 0 1px rgba($color: #000000, $alpha: 0.05),
+    inset -4px 0 12px rgba($color: #000000, $alpha: 0.05);
     }
     table{
     width: 100%;
@@ -178,7 +179,27 @@ $border-color: #F0F0F0;
           padding: 0 0.8rem;
           text-align: center;
           &>div{
-            width: 160px ;
+            
+          }
+          .value{
+            height: 100%;
+            width: 180px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            &>span{
+              background-color: rgba($color: #088AE9, $alpha: 0.29);
+              color: #696868;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              font-size: 0.7rem;
+              font-weight: 600;
+              padding: 0 0.8rem;
+              min-width: 80px;
+              height: 30px;
+              border-radius: 30px;
+            }
           }
           
         }

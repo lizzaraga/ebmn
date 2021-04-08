@@ -1,38 +1,82 @@
 <template>
-  <div id="labs">
-    <!-- {{labs}} -->
-    <div class="patient-data-grid">
-      <div class="data-item" :key="lab.lab_id" v-for="lab in labs">
-        <header>
-          <div class="title-field">
-            <span class="title-key" >Loinc Code:</span>
-            <span class="title-value">{{lab.lab_loinc_code}}</span>
-          </div>
-          <div class="actions">
-            <i class="bi bi-plus-square action" @click="openCreateLab"></i>
-            <i class="bi bi-pencil-square action action-edit" @click="openEditLab(lab)"></i>
-            <i class="bi bi-trash action action-delete" @click="openDeleteLab(lab)"></i>
-          </div>
-        </header>
-        <main>
-          
-        </main>
-        <footer >
-          <div class="date-field">
-            <span class="date-key" >Date issued</span>
-            <span class="date-value" v-html="convertDate(lab.lab_date_issued)"></span>
-          </div>
-          <div class="date-field">
-            <span class="date-key">Date last modified</span>
-            <span class="date-value" v-html="convertDate(lab.lab_date_last_modified)"></span>
-          </div>
-        </footer>
+  <div id="labs" class="data-grid">
+    
+    <div class="data-grid-main">
+      
+      <div class="patient-data-grid">
+        <div class="data-item" :key="lab.lab_id" v-for="lab in labs">
+          <header>
+            <div class="title-field">
+              <span class="title-key" >Loinc Code:</span>
+              <span class="title-value">{{lab.lab_loinc_code}}</span>
+            </div>
+            <div class="actions">
+              
+              <i class="bi bi-pencil-square action action-edit" @click="openEditLab(lab)"></i>
+              <i class="bi bi-trash action action-delete" @click="openDeleteLab(lab)"></i>
+            </div>
+          </header>
+          <main>
+            <div class="data-row">
+              <span class="data-key">Ordered at: </span>
+              <span class="data-value">{{lab.lab_ordered_at}}</span>
+            </div>
+            <div class="data-row">
+              <span class="data-key">Done at: </span>
+              <span class="data-value">{{lab.lab_done_at}}</span>
+            </div>
+            <div class="data-row">
+              <span class="data-key">Units: </span>
+              <span class="data-value">{{lab.lab_units}}</span>
+            </div>
+            <div class="data-row">
+              <span class="data-key">Abnormal flag: </span>
+              <span class="data-value">{{lab.lab_abnormal_flag}}</span>
+            </div>
+            <div class="data-row">
+              <span class="data-key">Instructions</span>
+              <span class="data-value">{{lab.lab_order_instructions}}</span>
+            </div>
+            <div class="data-row">
+              <span class="data-key">Results</span>
+              <span class="data-value">{{lab.lab_results}}</span>
+            </div>
+            <div class="data-row">
+              <span class="data-key">Description: </span>
+              <span class="data-value">{{lab.lab_description}}</span>
+            </div>
+            <div class="data-row">
+              <span class="data-key">Problems: </span>
+              <span class="data-value">{{lab.lab_results_problems_list.join(', ')}}</span>
+            </div>
+            <div class="data-row">
+              <span class="data-key">Document:</span>
+              <a :href="lab.lab_document_upload_url" target="_blank" style="color: #088AE9" class="data-value d-flex align-items-center">
+                <i class="bi bi-link-45deg"></i>
+                <span class="ml-2">{{getFileName(lab.lab_document_upload_url)}}</span>
+              </a>
+            </div>
+          </main>
+          <footer >
+            <div class="date-field">
+              <span class="date-key" >Date issued</span>
+              <span class="date-value" v-html="convertDate(lab.lab_date_issued)"></span>
+            </div>
+            <div class="date-field">
+              <span class="date-key">Date last modified</span>
+              <span class="date-value" v-html="convertDate(lab.lab_date_last_modified)"></span>
+            </div>
+          </footer>
+        </div>
       </div>
+      
     </div>
     <delete-lab-modal @delete="onDeleteLab" :lab="currentLab"/>
     <edit-lab-modal @edit="onEditLab" :lab="currentLab"/>
     <create-lab-modal @create="onCreateLab"/>
-    
+    <footer class="fixed-footer">
+      <button class="btn btn-footer-action" @click="openCreateLab">Create Lab</button>
+    </footer>
   </div>
 </template>
 <script lang="ts">
@@ -92,7 +136,11 @@ export default class Labs extends Vue{
   convertDate(date: string){
     return moment(date).format('MMM Do YYYY, [<br/>] h:mm:ss a')
   }
-
+  getFileName(path: string){
+    if(path == undefined) return ""
+    const parts = path.split('/')
+    return parts.pop()
+  }
   async mounted(){
     await this.labStore.getLabs(this.patientId)
   }

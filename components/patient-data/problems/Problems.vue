@@ -1,35 +1,70 @@
 <template>
-  <div id="radiologies">
-    <div>
-      <!-- {{problems}} -->
-    </div>
-    <div class="patient-data-grid">
-      <div class="data-item" :key="pb.problem_id" v-for="pb in problems">
-        <header>
-          <div class="title-field">
-            <span class="title-key" >Cpt Code:</span>
-            <span class="title-value">{{pb.problem_icd}}</span>
-          </div>
-          <div class="actions">
-            <!-- <i class="bi bi-plus-square action" @click="openCreatePb"></i> -->
-            <i class="bi bi-pencil-square action action-edit" @click="openEditPb(pb)"></i>
-            <i class="bi bi-trash action action-delete" @click="openDeletePb(pb)"></i>
-          </div>
-        </header>
-        <main>
-          
-        </main>
-        <footer >
-          <div class="date-field">
-            <span class="date-key" >Date onset</span>
-            <span class="date-value" v-html="convertDate(pb.problem_date_onset)"></span>
-          </div>
-          
-        </footer>
+  <div id="problems" class="data-grid">
+    <div class="data-grid-main">
+      
+      <div class="patient-data-grid">
+        <div class="data-item" :key="pb.problem_id" v-for="pb in problems">
+          <header>
+            <div class="title-field">
+              <span class="title-key" >Cpt Code:</span>
+              <span class="title-value">{{pb.problem_icd}}</span>
+            </div>
+            <div class="actions">
+              
+              <i class="bi bi-pencil-square action action-edit" @click="openEditPb(pb)"></i>
+              <i class="bi bi-trash action action-delete" @click="openDeletePb(pb)"></i>
+            </div>
+          </header>
+          <main>
+            <div class="data-row">
+              <span class="data-key">Author: </span>
+              <span class="data-value">{{pb.author}}</span>
+            </div>
+            <div class="data-row">
+              <span class="data-key">Name: </span>
+              <span class="data-value">{{pb.problem_name}}</span>
+            </div>
+            <div class="data-row">
+              <span class="data-key">Title: </span>
+              <span class="data-value">{{pb.title}}</span>
+            </div>
+            <div class="data-row">
+              <span class="data-key">Organ system: </span>
+              <span class="data-value">{{pb.problem_organ_system}}</span>
+            </div>
+            <div class="data-row">
+              <span class="data-key">Current status: </span>
+              <span class="data-value">{{pb.problem_current_status}}</span>
+            </div>
+            <div class="data-row">
+              <span class="data-key">Priority: </span>
+              <span class="data-value">{{pb.problem_priority}}</span>
+            </div>
+            <div class="data-row">
+              <span class="data-key">Diagnosed at: </span>
+              <span class="data-value">{{pb.problem_diagnosed_at}}</span>
+            </div>
+            <div class="data-row">
+              <span class="data-key">Treatment at: </span>
+              <span class="data-value">{{pb.problem_treatment_at}}</span>
+            </div>
+          </main>
+          <footer >
+            <div class="date-field">
+              <span class="date-key" >Date onset</span>
+              <span class="date-value" v-html="convertDate(pb.problem_date_onset)"></span>
+            </div>
+            
+          </footer>
+        </div>
       </div>
     </div>
+    <footer class="fixed-footer">
+      <button class="btn btn-footer-action" @click="openCreatePb">Create Problem</button>
+    </footer>
     <delete-pb-modal @delete="onDeletePb" :pb="currentPb"/>
     <edit-pb-modal @edit="onEditPb" :pb="currentPb"/>
+    <create-pb-modal @create="onCreatePb"/>
   </div>
 </template>
 <script lang="ts">
@@ -40,11 +75,13 @@ import { IProblem } from '~/api/models/patient-data.model';
 import ProblemStore from '~/store/patient-data/problem-store';
 import DeletePbModal from './DeletePbModal.vue';
 import EditPbModal from './EditPbModal.vue';
+import CreatePbModal from './CreatePbModal.vue'
 
 @Component({
   components:{
     deletePbModal: DeletePbModal,
-    editPbModal: EditPbModal
+    editPbModal: EditPbModal,
+    CreatePbModal
   }
 })
 export default class Problems extends Vue{

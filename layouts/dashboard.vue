@@ -1,5 +1,5 @@
 <template>
-  <div id="dashboard" class="h-screen w-screen" style="overflow: auto">
+  <div id="dashboard" class="h-screen w-screen" style="overflow: auto; background-color: red">
     <nav  id="h-navbar" class="d-flex justify-content-between align-items-center">
       <div id="dashboard-logo">
         <img width="35px" src="@/assets/svgs/logo-black.svg"/>

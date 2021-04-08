@@ -1,13 +1,36 @@
-.patient-data-grid {
+$data-footer-height: 50px;
+.data-grid {
+    padding-top: $navbar-thickness;
+    position: relative;
+    overflow: hidden;
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-gap: 1rem;
+    height: 100vh;
+    grid-template-rows: 1fr $data-footer-height;
+    .data-grid-main {
+        overflow-y: auto;
+    }
+    .fixed-footer {
+        background-color: #fff;
+        box-shadow: 0 -4px 12px rgba($color: #000000, $alpha: 0.05);
+        border-top: 1px solid #eee;
+        display: flex;
+        flex-direction: row-reverse;
+        align-items: center;
+        padding: 0 1rem;
+    }
+}
+
+.patient-data-grid {
+    display: flex;
+    flex-wrap: wrap;
     padding: 1rem;
     &>.data-item {
         background-color: #ffffff;
         border: 1px solid #eee;
         border-radius: 8px;
         width: 430px;
+        margin-right: 1rem;
+        margin-bottom: 1rem;
         box-shadow: 0 1px 3px rgba($color: #000000, $alpha: 0.06);
         transition: all 0.4s ease;
         &:hover {
@@ -38,6 +61,21 @@
                 align-items: center;
                 &>.action {
                     margin-left: 1rem;
+                    height: 28px;
+                    width: 28px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    background-color: #EEE;
+                    border-radius: 50px;
+                    font-size: 0.8rem;
+                    color: #0ca37d;
+                    background-color: lighten($color: #15ce9f, $amount: 43);
+                    &:last-child,
+                    &.delete {
+                        color: crimson;
+                        background-color: lighten($color: crimson, $amount: 43);
+                    }
                 }
             }
         }
@@ -60,6 +98,33 @@
         }
         &>main {
             padding: 0.8rem 1rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            .data-row {
+                display: flex;
+                flex-direction: column;
+                margin-bottom: 8px;
+                .data-key {
+                    font-size: 0.7rem;
+                    font-weight: 500;
+                    color: #333;
+                }
+                .data-value {
+                    font-size: 0.7rem;
+                    font-weight: 400;
+                    color: #888
+                }
+            }
         }
     }
+}
+
+.btn.btn-footer-action {
+    font-size: 0.76rem;
+    background-color: #f0F0F0;
+    border-radius: 8px;
+    padding: 0.6rem 1.3rem;
+    font-weight: 600;
+    color: $primary-color;
+    background-color: lighten($color: $primary-color, $amount: 43)
 }

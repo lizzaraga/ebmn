@@ -1,36 +1,92 @@
 <template>
-  <div id="medications">
-    <div>
-      <!-- {{medications}} -->
-    </div>
-    <div class="patient-data-grid">
-      <div class="data-item" :key="md.medication_id" v-for="md in medications">
-        <header>
-          <div class="title-field">
-            <span class="title-key" >Rxnorm Label:</span>
-            <span class="title-value">{{md.medication_rxnorm_label}}</span>
-          </div>
-          <div class="actions">
-            <i class="bi bi-plus-square action" @click="openCreateMd"></i>
-            <i class="bi bi-pencil-square action action-edit" @click="openEditMd(md)"></i>
-            <i class="bi bi-trash action action-delete" @click="openDeleteMd(md)"></i>
-          </div>
-        </header>
-        <main>
-          
-        </main>
-        <footer >
-          <div class="date-field">
-            <span class="date-key" >Date Ordered</span>
-            <span class="date-value" v-html="convertDate(md.medication_date_ordered)"></span>
-          </div>
-          <div class="date-field">
-            <span class="date-key" >Date last modified</span>
-            <span class="date-value" v-html="convertDate(md.medication_last_modified)"></span>
-          </div>
-        </footer>
+  <div id="medications" class="data-grid">
+    
+    <div class="data-grid-main">
+   
+      <div class="patient-data-grid">
+        
+        <div class="data-item" :key="md.medication_id" v-for="md in medications">
+          <header>
+            <div class="title-field">
+              <span class="title-key" >Rxnorm Label:</span>
+              <span class="title-value">{{md.medication_rxnorm_label}}</span>
+            </div>
+            <div class="actions">
+            
+              <i class="bi bi-pencil-square action action-edit" @click="openEditMd(md)"></i>
+              <i class="bi bi-trash action action-delete" @click="openDeleteMd(md)"></i>
+            </div>
+          </header>
+          <main>
+            <div class="data-row">
+              <span class="data-key">Ordered by</span>
+              <span class="data-value">{{md.medication_ordered_by}}</span>
+            </div>
+            <div class="data-row">
+              <span class="data-key">Health Institute</span>
+              <span class="data-value">{{md.medication_dispenser_health_institute}}</span>
+            </div>
+            <div class="data-row">
+              <span class="data-key">Route</span>
+              <span class="data-value">{{md.medication_route}}</span>
+            </div>
+            <div class="data-row">
+              <span class="data-key">Reception status</span>
+              <span class="data-value">{{md.medication_reception_status}}</span>
+            </div>
+            <div class="data-row">
+              <span class="data-key">Frequency</span>
+              <span class="data-value">{{md.medication_frequency}}</span>
+            </div>
+            <div class="data-row">
+              <span class="data-key">Type of therapy</span>
+              <span class="data-value">{{md.medication_type_of_therapy}}</span>
+            </div>
+            <div class="data-row">
+              <span class="data-key">Duration</span>
+              <span class="data-value">{{md.medication_duration}}</span>
+            </div>
+            <div class="data-row">
+              <span class="data-key">Dosage</span>
+              <span class="data-value">{{md.medication_dosage}}</span>
+            </div>
+            <div class="data-row">
+              <span class="data-key">Dosage unit</span>
+              <span class="data-value">{{md.medication_dosage_unit}}</span>
+            </div>
+            <div class="data-row">
+              <span class="data-key">Dosage volume</span>
+              <span class="data-value">{{md.medication_volume_dosage}}</span>
+            </div>
+            <div class="data-row">
+              <span class="data-key">Instr. on prescription</span>
+              <span class="data-value">{{md.medication_instruction_on_prescription}}</span>
+            </div>
+            <div class="data-row">
+              <span class="data-key">Instr. on delivery</span>
+              <span class="data-value">{{md.medication_instructions_on_delivery}}</span>
+            </div>
+            <div class="data-row">
+              <span class="data-key">Problems: </span>
+              <span class="data-value">{{md.medication_related_problems.join(', ')}}</span>
+            </div>
+          </main>
+          <footer >
+            <div class="date-field">
+              <span class="date-key" >Date Ordered</span>
+              <span class="date-value" v-html="convertDate(md.medication_date_ordered)"></span>
+            </div>
+            <div class="date-field">
+              <span class="date-key" >Date last modified</span>
+              <span class="date-value" v-html="convertDate(md.medication_last_modified)"></span>
+            </div>
+          </footer>
+        </div>
       </div>
     </div>
+    <footer class="fixed-footer">
+      <button class="btn btn-footer-action" @click="openCreateMd">Create Medication</button>
+    </footer>
     <delete-md-modal @delete="onDeleteMd" :md="currentMd"/>
     <edit-md-modal @edit="onEditMd" :md="currentMd"/>
     <create-md-modal @create="onCreateMd"/>
