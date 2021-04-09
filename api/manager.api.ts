@@ -1,10 +1,18 @@
 import Axios from 'axios'
 import { IClerkDiagnosis, IClerkDrug, IClerkScreening, IClerkSurgery, IClerkVaccine } from './models/clerk.model'
-import { IHealthWorker } from './models/manager.model'
+import { IHealthWorker, IReferral } from './models/manager.model'
 
 
 class ManagerApi {
 
+  async getManagerHospital(token: string, managerId: number){
+    try {
+      const response = await Axios.get(`/manager/hospital/get/${managerId}/`)
+      return Promise.resolve<number>(response.data.manager_health_institute)
+    } catch (error) {
+      return Promise.reject(error)
+    }
+  }
   async getHealthWorkers(token: string){
     try {
       const response = await Axios.get(`/health_personnels/get/${token}/`)
@@ -73,7 +81,30 @@ class ManagerApi {
     }
   }
   
-
+  async getReferralsIn(token: string, hospitalId: number){
+    try {
+      const res = Axios.get(`/referrals/get/in/${token}/${hospitalId}/`)
+      return Promise.resolve<IReferral[]>((await res).data.diagnosis)
+    } catch (error) {
+      return Promise.reject(error)
+    }
+  }
+  async getReferralsOut(token: string, hospitalId: number){
+    try {
+      const res = Axios.get(`/referrals/get/out/${token}/${hospitalId}/`)
+      return Promise.resolve<IReferral[]>((await res).data.diagnosis)
+    } catch (error) {
+      return Promise.reject(error)
+    }
+  }
+  async updateReferral(token: string, referralId: number, formData: FormData){
+    try {
+      const res = Axios.put(`referrals/update/${token}/${referralId}/`, formData)
+      return Promise.resolve(res)
+    } catch (error) {
+      return Promise.reject(error)
+    }
+  }
 }
 
 export default new ManagerApi()

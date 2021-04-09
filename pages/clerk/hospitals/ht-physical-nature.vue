@@ -81,7 +81,7 @@
             </b-row>
             <footer class="x-modal__footer">
               <button @click="doEdit" class="btn btn-action main-action">Edit</button>
-              <button class="btn btn-action" @click="$bvModal.hide('edit-modal')">Cancel</button>
+              <button class="btn btn-action" @click="$bvModal.hide('edit-physical-nature-modal')">Cancel</button>
             </footer>
           </form>
           

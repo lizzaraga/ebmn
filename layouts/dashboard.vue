@@ -1,5 +1,5 @@
 <template>
-  <div id="dashboard" class="h-screen w-screen" style="overflow: auto; background-color: red">
+  <div id="dashboard" style="height: 100vh; overflow: hidden">
     <nav  id="h-navbar" class="d-flex justify-content-between align-items-center">
       <div id="dashboard-logo">
         <img width="35px" src="@/assets/svgs/logo-black.svg"/>
@@ -13,21 +13,8 @@
         </nuxt-link>
         <form v-if="patientId != -1" @submit.prevent>
           <div class="form-group search" style="margin:0; margin-right: 0.8rem;">
-            <input  v-model="search.searchTerm" @blur="onSearchBarBlur" :class='{"expand": expandSearchBar}' placeholder="Type patient name" type="text" class="form-control">
+            <input  v-model="search.searchTerm"  :class='{"expand": expandSearchBar}' placeholder="Type patient name" type="text" class="form-control">
             <i @click="onSearchIconClick" class="bi bi-search search-icon"></i>
-            <div v-show="search.showSearchResults" class="searchbar-results">
-              <header>
-                <span>Results</span>
-                <i @click="search.showSearchResults = false" style="cursor: pointer" class="bi bi-x-circle"></i>
-              </header>
-              <section>
-                <div class="results">
-                  <span @click="onClickPatient(patient)" :key="patient.patient_id" v-for="patient in search.patients" class="results-item">
-                    {{patient.patient_name}}
-                  </span>
-                </div>
-              </section>
-            </div>
           </div>
         </form>
       </div>
@@ -98,18 +85,6 @@ export default class Dashboard extends Vue{
     return this.idStore.patientId
   }
 
-  @Watch('search.searchTerm')
-  onSearchTermChanged(value: string){
-    if(value.trim() != "")
-      this.onSearchPatient(value)
-    else this.search.patients = []
-  }
-  @Watch('search.patients')
-  onPahtientsChanged(value: IPatient[]){
-    if(value.length == 0) this.search.showSearchResults = false
-    else this.search.showSearchResults = true
-  }
-  
   
   constructor(){
     super()

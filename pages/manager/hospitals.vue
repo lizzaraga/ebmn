@@ -22,6 +22,6 @@ import MainContentWithMenu from '~/components/MainContentWithMenu.vue';
   }
 })
 export default class Hospitals extends Vue{
-
+  
 }
 </script>

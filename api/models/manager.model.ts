@@ -8,3 +8,14 @@ export interface IAdminManager{
   hospital_name?: string,
   user?: string
 }
+
+export interface IReferral{
+  referral_id?: number,
+  patient_name?: string,
+  email?: string,
+  type_referral?: string,
+  order_instructions?: string, 
+  ordered_at?: string,
+  status?: string,
+  description?: string
+}
