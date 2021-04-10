@@ -1,48 +1,6 @@
 <template>
-  <!-- <div>
-    <div class="row mx-auto container d-flex justify-content-center">
-      <form @submit.prevent="doRegister" class="position-relative col-6 auth-form">
-        <header>
-          <span class="title">Register</span>
-          <nuxt-link to="/login">Log in</nuxt-link>
-        </header>
-        <div class="loader-backdrop" v-show="isRegister">
-          <span class="loader"></span>
-        </div>
-        <div class="entries">
-          <div class="row">
-            <div class="form-group col-6">
-              <label for="username">Username</label>
-              <input type="text" name="username" placeholder="Your username" id="username" class="form-control">
-            </div>
-            <div class="form-group col-6">
-              <label for="">Email</label>
-              <input class="form-control" type="email" name="email" placeholder="Your email" id="email" v-model="registerVM.email">
-            </div>
-          </div>
-          <div class="row">
-            <div class="form-group col-6">
-              <label for="phone_number">Phone number</label>
-              <input class="form-control" type="tel" name="phone_number" placeholder="Your phone number" id="phone_number">
-            </div>
-            <div class="form-group col-6">
-              <label for="">Password</label>
-              <input class="form-control" type="password" name="password" placeholder="Your password" id="password" v-model="registerVM.password">
-            </div>
-          </div>
-          <div class="row">
-            <div class="form-group col-6">
-              <label for="pwd_confirm">Password confirmation</label>
-              <input type="password" name="pwd_confirm" id="pwd_confirm" placeholder="Confirm your password" class="form-control">
-            </div>
-          </div>
-        </div>
-        
-        <button type="submit" class="btn btn-danger">Register</button>
-      </form>
-    </div>
-  </div> -->
-  <div class="bg-primary-dark h-screen overflow-x-hidden">
+ 
+  <!-- <div class="bg-primary-dark h-screen overflow-x-hidden">
     <b-row class="h-100">
       <transition name="scale50" appear>
         <b-col cols="5"  class="bg-white m-4 auth-form-layout rounded-lg p-4 grid-row-auto-fill">
@@ -149,6 +107,118 @@
         </div>
       </b-col>
     </b-row>
+  </div> -->
+ <div class="h-screen" style="overflow-y: auto; background-color: #fafafa">
+    <section id="auth-section">
+      <div class="container h-100">
+        <b-row class="h-100" >
+          <b-col cols="3" class="h-100 d-flex align-items-center">
+            <h4 class="text-white" style="font-weight: 600">
+              Connect, share and react with people in your life.
+            </h4>
+          </b-col>
+          <b-col cols="4">
+
+          </b-col>
+          <b-col cols="5">
+            <transition name="scale50" appear>
+              <div class="form-box shadow">
+                <div class="loader-backdrop" v-show="isRegister">
+                  <span class="loader"></span>
+                </div>
+                <h4 style="font-weight: 700">Create your account !</h4>
+                <span class="text-muted" style="font-size: 0.9rem">All fields are required</span>
+                <ValidationObserver v-slot="{invalid}">
+                  <form @submit.prevent class="x-auth-form">
+                    <b-row>
+                      <b-col>
+                        <ValidationProvider rules='required' v-slot='{errors}'>
+                          <div class="form-group">
+                            <label for="username">Username</label>
+                            <input v-model="registerVM.username" name="username" type="username" placeholder="Your username" class="form-control">
+                            <p v-if="errors.length > 0" class="error-text fs-6 d-flex align-items-center">
+                              <i class="bi bi-exclamation-square-fill"></i>
+                              <span class="ml-1">{{errors[0]}}</span>
+                            </p>
+                          </div>
+                        </ValidationProvider>
+                      </b-col>
+                      <b-col>
+                        <ValidationProvider rules='required|email' v-slot='{errors}'>
+                          <div class="form-group ">
+                            <label for="email">Email</label>
+                            <div class="with-icon">
+                              <i class="icon bi bi-envelope"></i>
+                              <input v-model="registerVM.email" name="email" type="email" placeholder="Your email" class="form-control">
+                            </div>
+                            <p v-if="errors.length > 0" class="error-text fs-6 d-flex align-items-center">
+                              <i class="bi bi-exclamation-square-fill"></i>
+                              <span class="ml-1">{{errors[0]}}</span>
+                            </p>
+                          </div>
+                        </ValidationProvider>
+                      </b-col>
+                    </b-row>
+                    <b-row>
+                      <b-col>
+                        <ValidationProvider v-slot='{errors}' rules='required'>
+                          <div class="form-group">
+                            <label for="phone_number">Phone number</label>
+                            <input v-model="registerVM.phone_number" type="tel" name="phone_number" placeholder="Your phone number" class="form-control">
+                            <p v-if="errors.length > 0" class="error-text fs-6 d-flex align-items-center">
+                              <i class="bi bi-exclamation-square-fill"></i>
+                              <span class="ml-1">{{errors[0]}}</span>
+                            </p>
+                          </div>
+                        </ValidationProvider>
+                      </b-col>
+                      <b-col>
+                        <ValidationProvider v-slot='{errors}' rules='required'>
+                          <div class="form-group">
+                            <label for="password">Password</label>
+                            <div class="with-icon">
+                              <input v-model="registerVM.password" :type="`${showPwd ? 'text': 'password'}`" placeholder="Your password" class="form-control">
+                              <i @click="showPwd = !showPwd"  :class="`icon bi ${showPwd ? 'bi-eye-slash': 'bi-eye'}`"></i>
+                            </div>
+                            <p v-if="errors.length > 0" class="error-text fs-6 d-flex align-items-center">
+                              <i class="bi bi-exclamation-square-fill"></i>
+                              <span class="ml-1">{{errors[0]}}</span>
+                            </p>
+                          </div>
+                        </ValidationProvider>
+                      </b-col>
+                    </b-row>
+                    <b-row>
+                      <b-col >
+                        <ValidationProvider v-slot='{errors}' :rules='"required|samePwd:"+registerVM.password'>
+                          <div class="form-group">
+                            <label for="password">Confirm password</label>
+                            <input v-model="cpwd" type="password" placeholder="Confirm your password"
+                             class="form-control">
+                            <!-- <div class="with-icon">
+                              <input v-model="cpwd" type="password" placeholder="Confirm your password" class="form-control">
+                              <i class="icon bi bi-eye"></i>
+                            </div> -->
+                            <p v-if="errors.length > 0" class="error-text fs-6 d-flex align-items-center">
+                              <i class="bi bi-exclamation-square-fill"></i>
+                              <span class="ml-1">{{errors[0]}}</span>
+                            </p>
+                          </div>
+                        </ValidationProvider>
+                      </b-col>
+                    </b-row>
+                    <button :disabled='invalid' type="submit">Register</button>
+                    <p class="text-center mt-4" style="font-size: 0.8rem; color: #666">
+                      Already have an account ? <nuxt-link to="/login">Log In</nuxt-link>
+                    </p>
+                  </form>
+                </ValidationObserver>
+              </div>
+            </transition>
+          </b-col>
+        </b-row>
+      </div>
+    </section>
   </div>
 </template>
 <script lang="ts">
@@ -170,6 +240,7 @@ export default class Login extends Vue{
   private isRegister = false
   registerVM: IRegister = {}
   cpwd = ""
+  showPwd = false
 
 
   async doRegister(){
@@ -183,5 +254,5 @@ export default class Login extends Vue{
   }
 }
 </script>
-<style lang="scss" >
+
 

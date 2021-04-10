@@ -4,8 +4,8 @@
         <span class="title">Update <span>{{field.name | formatName}}</span></span>
       </header>
       <main>
-        <ValidationObserver v-slot="{invalid}">
-          <form @submit.prevent>
+        <ValidationObserver >
+          <form @submit.prevent id="gi-file-form">
             <ValidationProvider v-slot='{errors}' rules='required'>
               <div class="form-group">
                 <label :for="field.name">{{formatName(field.name)}}</label>
@@ -19,7 +19,7 @@
               </p>
             </ValidationProvider>
             <footer class="x-modal__footer">
-              <button @click="onUpdate" :disabled="invalid" class="btn btn-action main-action">Update</button>
+              <button @click="onUpdate" :disabled="file == null" class="btn btn-action main-action">Update</button>
               <button type="reset" @click="$bvModal.hide('gi-file-modal')" class="btn btn-action">Cancel</button>
             </footer>
           </form>

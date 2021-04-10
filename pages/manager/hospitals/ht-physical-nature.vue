@@ -98,13 +98,11 @@
                 <span class="data-key">Status</span>
                 <span class="data-value">{{iRef.status}}</span>
               </div>
-            </main>
-            <footer >
-              <div class="date-field">
-                <span class="date-key" >Ordered at</span>
-                <span class="date-value" v-html="convertDate(iRef.ordered_at)"></span>
+              <div class="data-row">
+                <span class="data-key">Ordered at</span>
+                <span class="data-value">{{oRef.ordered_at}}</span>
               </div>
-            </footer>
+            </main>
           </div>
         </div>
         <div class="patient-data-grid" v-show="$route.hash == '/#referrals-outgoing'">
@@ -141,13 +139,13 @@
                 <span class="data-key">Status</span>
                 <span class="data-value">{{oRef.status}}</span>
               </div>
-            </main>
-            <footer >
-              <div class="date-field">
-                <span class="date-key" >Ordered at</span>
-                <span class="date-value" v-html="convertDate(oRef.ordered_at)"></span>
+              <div class="data-row">
+                <span class="data-key">Ordered at</span>
+                <span class="data-value">{{oRef.ordered_at}}</span>
               </div>
-            </footer>
+            </main>
+            
+            
           </div>
         </div>
       </div>

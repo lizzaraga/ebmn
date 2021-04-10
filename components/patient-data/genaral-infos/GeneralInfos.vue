@@ -1,7 +1,52 @@
 <template>
   <div class="data-grid" >
     <div class="data-grid-main">
+      <header class="patient-resume">
+        <div class="h-100 d-flex align-items-center">
+          <img class="shadow" id="patient-image"  :src="gi['photo']" alt="">
+        </div>
+        <div class="resume">
+          <div class="h-100 d-flex flex-column justify-content-center">
+            <div class="resume-data">
+              <span class="resume-key">Name : </span>
+              <span class="resume-value"> {{gi['username']}}</span>
+            </div>
+            <div class="resume-data">
+              <span class="resume-key">Gender :</span>
+              <span class="resume-value"> {{ gi["sex"] == null || gi['sex'].trim() == ""  ? 'N/A': gi['sex'].trim()}}</span>
+            </div>
+            <div class="resume-data">
+              <span class="resume-key">Age : </span> 
+              <span class="resume-value"> {{ gi["age"] == null || gi['age'].trim() == ""  ? 'N/A': gi['age'].trim()}}</span>
+            </div>
+            <div class="resume-data">
+              <span class="resume-key">Date of birth : </span>
+              <span class="resume-value"> {{ gi["date_of_birth"] == null || gi["date_of_birth"].trim() == ""  ? 'N/A': gi["date_of_birth"].trim()}}</span>
+            </div>
+            <div class="resume-data">
+              <span class="resume-key">Patient code : </span>
+              <span class="resume-value"> {{ gi["u_id"] == null || gi["u_id"].trim() == ""  ? 'N/A': gi["u_id"].trim()}}</span>
+            </div>
+          </div>
+          <div class="h-100 d-flex flex-column justify-content-center">
+            <div class="resume-data">
+              <span class="resume-key">Phone :</span>
+              <span class="resume-value">{{gi["phone_number"] == null || gi['phone_number'].trim() == ""  ? 'N/A': gi['phone_number'].trim()}}</span>
+            </div>
+            <div class="resume-data">
+              <span class="resume-key">Gender :</span>
+              <span class="resume-value">{{gi["email"] == null || gi['email'].trim() == ""  ? 'N/A': gi['email'].trim()}}</span>
+            </div>
+            <div class="resume-data">
+              <span class="resume-key">Address :</span> 
+              <span class="resume-value">{{gi["region_of_residence"] == null || gi['region_of_residence'].trim() == ""  ? 'N/A': gi['region_of_residence'].trim()}}</span>
+            </div>
+            
+          </div>
+        </div>
+      </header>
       <div  class="gi-data-group">
+        
         <header>Text fields</header>
         <main>
           <div @click="selectedField = {name, value: gi[name]}" v-b-modal="'gi-text-modal'" :key="name" v-for="name in textFields" class="gi-data-item">
@@ -247,6 +292,45 @@ export default class GeneralInfos extends Vue{
     }
   }
 }
+.patient-resume{
+  display: grid;
+  grid-template-columns: 100px 1fr;
+  padding: 1rem;
+  height: 200px;
+  border-bottom: 1px solid #ddd;
 
+  #patient-image{
+    object-fit: cover;
+    border-radius: 50%;
+    padding: 8px;
+    background-color: white;
+    height: 100px;
+    width: 100px;
+  }
+  .resume{
+    padding-left: 1rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    div{
+      min-width: 230px;
+      .resume-data{
+        display: grid;
+        margin-bottom: 5px;
+        grid-template-columns: 1fr 1fr;
+        align-items: center;
+        
+        .resume-key{
+          font-size: 0.8rem;
+          font-weight: 600;
+        }
+        .resume-value{
+          font-size: 0.9rem;
+          font-weight: 300;
+
+        }
+      }
+    }
+  }
+}
 
 </style>

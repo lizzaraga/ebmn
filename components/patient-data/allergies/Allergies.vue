@@ -2,7 +2,6 @@
   <div id="allergies" class="data-grid">
     
     <div class="data-grid-main">
-      {{allergies}}
       <div class="patient-data-grid">
         <div class="data-item" :key="allergy.allergy_id" v-for="allergy in allergies">
           <header>
