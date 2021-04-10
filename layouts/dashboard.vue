@@ -6,7 +6,7 @@
       </div>
       
       <div class="d-flex align-items-center flex-row-reverse">
-        <nuxt-link class="mr-4" style="font-size: 0.9rem" to="/">
+        <nuxt-link class="mr-4" style="font-size: 0.9rem" to="/login">
           <div class="d-flex align-items-center">
             <span>Log out</span>
           </div>
