@@ -84,7 +84,7 @@ class ManagerApi {
   async getReferralsIn(token: string, hospitalId: number){
     try {
       const res = Axios.get(`/referrals/get/in/${token}/${hospitalId}/`)
-      return Promise.resolve<IReferral[]>((await res).data.diagnosis)
+      return Promise.resolve<IReferral[]>((await res).data.referrals)
     } catch (error) {
       return Promise.reject(error)
     }
@@ -92,7 +92,7 @@ class ManagerApi {
   async getReferralsOut(token: string, hospitalId: number){
     try {
       const res = Axios.get(`/referrals/get/out/${token}/${hospitalId}/`)
-      return Promise.resolve<IReferral[]>((await res).data.diagnosis)
+      return Promise.resolve<IReferral[]>((await res).data.referrals)
     } catch (error) {
       return Promise.reject(error)
     }

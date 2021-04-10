@@ -11,9 +11,9 @@
             <span>Log out</span>
           </div>
         </nuxt-link>
-        <form v-if="patientId != -1" @submit.prevent>
+        <form id="search-patient-id-form" v-if="patientId != -1" @submit.prevent="onSearchPatientId">
           <div class="form-group search" style="margin:0; margin-right: 0.8rem;">
-            <input  v-model="search.searchTerm"  :class='{"expand": expandSearchBar}' placeholder="Type patient name" type="text" class="form-control">
+            <input @blur="onSearchbarBlur" name="user_id"  v-model="patientCode"  :class='{"expand": expandSearchBar}' placeholder="Type patient code" type="text" class="form-control">
             <i @click="onSearchIconClick" class="bi bi-search search-icon"></i>
           </div>
         </form>
@@ -66,16 +66,8 @@ export default class Dashboard extends Vue{
   private idStore = getModule(IdStore, this.$store)
   user?: IUser
   expandSearchBar = false
-  
-  search: {
-    searchTerm: string,
-    patients: IPatient[],
-    showSearchResults: boolean 
-  } = {
-    searchTerm : "",
-    showSearchResults: false,
-    patients:  []
-  }
+
+  patientCode =  ""
   
   public get userInitial() : string {
     return this.user?.username != undefined ? this.user.username!![0].toUpperCase() : ""
@@ -86,36 +78,42 @@ export default class Dashboard extends Vue{
   }
 
   
+  
   constructor(){
     super()
     this.user = this.authStore.user
   }
-  onSearchBarBlur(){
-     if(this.search.searchTerm.trim() == ""){
-       this.expandSearchBar = false
-    }
-  }
+
   onSearchIconClick(){
     //@ts-ignore
     document.querySelector('.form-group.search > input').focus()
     this.expandSearchBar = true
   }
-
-  async onSearchPatient(searchTerm: string){
+  onSearchbarBlur(){
+    if(this.patientCode.trim() == "")
+      this.expandSearchBar = false
+  }
+  async onSearchPatientId(){
     try {
-      const response = await patientDataApi.getPatients(searchTerm, this.authStore.token)
-      this.search.patients = response
+      const form = document.querySelector('#search-patient-id-form')
+      //@ts-ignore
+      const formData = new FormData(form)
+      const patientId = await patientDataApi.searchPatientId(this.authStore.token, formData)
+      if(patientId == undefined){
+        alert("No patient found for this code !")
+      }
+      else {
+        this.$router.push({name: 'hp-patients-id', params: { id: patientId.toString()},
+          hash: this.$route.hash})
+          this.idStore.setPatientId(patientId)
+      }
+      
+      
     } catch (error) {
-      this.search.patients = []
+      alert("An error occurred during the patient search")
     }
   }
 
-  onClickPatient(patient: IPatient){
-    this.idStore.setPatientId(patient.patient_id!!)
-    this.$router.push({name: 'hp-patients-id', params: {id: patient.patient_id+''}, hash: '/#general-infos'})
-    this.search.showSearchResults = false
-    this.search.searchTerm = patient.patient_name!!
-  }
 
 }
 </script>
@@ -206,15 +204,15 @@ main{
   position: relative;
 
   input{
-    background-color: #333C56;
-    border-color: transparent;
+    background-color: white;
+    border-color: 1px solid #eee;
     padding-right: 40px;
     border-radius: 8px;
     height: 45px;
     width: 50px;
     font-size: 0.8rem;
-    font-weight: 600;
-    color: rgba($color: #C2DEFF, $alpha: 0.8);
+    
+    
     transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
     &.expand{
       width: 250px;
@@ -224,14 +222,14 @@ main{
       box-shadow: 0 0 0 3px rgba($color: #C2DEFF, $alpha: 0.4);
     }
     &::placeholder{
-      color: rgba($color: #C2DEFF, $alpha: 0.5);
+      
       font-size: 0.8rem;
       
     }
   }
   .search-icon{
     cursor: pointer;
-    color: #C2DEFF;
+    color: $primary-color;
     position: absolute;
     right: 0;
     top: 0;

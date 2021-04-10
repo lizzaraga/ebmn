@@ -78,8 +78,8 @@ export default class ManagerStore extends VuexModule{
   async getInRefferals(){
     const token = this.context.rootGetters['auth-store/token']
     try {
-      const id = await managerApi.getReferralsIn(token, this.managerHpId)
-      this.context.commit('SET_IN_REFERRALS')
+      const referrals = await managerApi.getReferralsIn(token, this.managerHpId)
+      this.context.commit('SET_IN_REFERRALS', referrals)
     } catch (error) {
       alert('Get in referrals failed')
     }
@@ -88,8 +88,8 @@ export default class ManagerStore extends VuexModule{
   async getOutRefferals(){
     const token = this.context.rootGetters['auth-store/token']
     try {
-      const id = await managerApi.getReferralsOut(token, this.managerHpId)
-      this.context.commit('SET_OUT_REFERRALS')
+      const referrals = await managerApi.getReferralsOut(token, this.managerHpId)
+      this.context.commit('SET_OUT_REFERRALS', referrals)
     } catch (error) {
       alert('Get out referrals failed')
     }

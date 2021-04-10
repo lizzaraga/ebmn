@@ -95,7 +95,7 @@
                 <span class="data-value">{{iRef.description}}</span>
               </div>
               <div class="data-row">
-                <span class="data-key">Description</span>
+                <span class="data-key">Status</span>
                 <span class="data-value">{{iRef.status}}</span>
               </div>
             </main>
@@ -138,7 +138,7 @@
                 <span class="data-value">{{oRef.description}}</span>
               </div>
               <div class="data-row">
-                <span class="data-key">Description</span>
+                <span class="data-key">Status</span>
                 <span class="data-value">{{oRef.status}}</span>
               </div>
             </main>
@@ -241,7 +241,7 @@ export default class HTPhysicalNature extends Vue{
     return [
       {value: null, text: 'Please select one', disabled: true},
       {value: "Done", text: 'Done'},
-      {value: "Not done", text: 'Not done'}
+      {value: "Not Done", text: 'Not Done'}
     ]
   }
   public get drugs() {

@@ -15,6 +15,14 @@ class PatientDataApi {
         return Promise.reject(error)
         }
     }
+    async searchPatientId(token: string, formData: FormData){
+        try {
+            const respone = await Axios.post(`/general_info/get_data/${token}/`, formData)
+            return Promise.resolve<number>(respone.data.user_id)
+        } catch (error) {
+            return Promise.reject(error)
+        }
+    }
     async updateGIField(patientId: number, token: string, request: any){
         try {
         const response = await Axios.put(`/general_info/update/${patientId}/${token}/`, request)
