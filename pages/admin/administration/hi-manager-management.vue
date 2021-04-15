@@ -1,74 +1,81 @@
 <template>
-  <div>
-    <button @click="openCreateModal" class="mx-4 my-2 btn btn-primary">Create manager</button>
-    <div class="data managers">
-      <div class="card-data manager" :key="mg.user_is_manager_id" v-for="mg in managers">
-        <header>
-          <span class="title">{{mg.hospital_name}}</span>
-          <div class="actions">
-            <span @click="openDeleteModal(mg)" class="action">
-              <i class="bi bi-x-square"></i>
-            </span>
-          </div>
+  <div class="data-grid">
+    <div class="data-grid-main">
+      
+      <div class="patient-data-grid">
+        <div class="data-item" :key="mg.user_is_manager_id" v-for="mg in managers">
+          <header>
+            <div class="title-field">
+              <span class="title-key">Hospital name:</span>
+              <span class="title-value">{{mg.hospital_name}}</span>
+            </div>
+            
+            <div class="actions">
+              <i @click="openDeleteModal(mg)" class="bi bi-x-square action"></i>
+            </div>
+          </header>
+          <main>
+            <div class="data-row">
+              <span class="data-key">Manager name</span>
+              <span class="data-value">{{mg.user}}</span>
+            </div>
+          </main>
+        </div>
+      </div>
+      <b-modal hide-header hide-footer  body-class="x-modal" id="create-manager-modal">
+        <header class="x-modal__header">
+          <span class="title">Create manager</span>
         </header>
         <main>
-          <div class="d-flex flex-column card-data-item">
-            <span class="key">Manager name</span>
-            <span class="value">{{mg.user}}</span>
-          </div>
+          <ValidationObserver>
+            <form @submit.prevent id="create-manager-form">
+              <b-row>
+                <b-col>
+                  <ValidationProvider>
+                    <b-form-group label="Name" label-for="name">
+                      <b-form-select :options="users" :value="null" name="name" />
+                    </b-form-group>
+                  </ValidationProvider>
+                </b-col>
+                <b-col>
+                  <ValidationProvider>
+                    <b-form-group label="Hospital" label-for="health_institute">
+                      <b-form-select :options="hospitals" :value="null" name="health_institute" />
+                    </b-form-group>
+                  </ValidationProvider>
+                </b-col>
+              </b-row>
+              <footer class="x-modal__footer">
+                <button @click="doCreateManager" class="btn btn-action main-action">Create</button>
+                <button class="btn btn-action" @click="$bvModal.hide('create-manager-modal')">Cancel</button>
+                
+              </footer>
+
+            </form>
+          </ValidationObserver>
         </main>
-      </div>
+        
+      </b-modal>
+      <b-modal hide-header hide-footer  body-class="x-modal" id="delete-manager-modal">
+        <header class="x-modal__header">
+          <span class="title">Delete manager</span>
+        </header>
+        <main>
+          Are you sure you want to delete: Manager {{currManager.user_is_manager_id}} ?
+          <footer class="x-modal__footer">
+            <button @click="doDeleteManager(currManager.user_is_manager_id)" 
+            class="btn btn-action main-action">Delete</button>
+            <button class="btn btn-action" @click="$bvModal.hide('delete-manager-modal')">Cancel</button>
+            
+          </footer>
+
+        </main>
+        
+      </b-modal>
     </div>
-    <b-modal hide-header hide-footer  body-class="x-modal" id="create-manager-modal">
-      <header class="x-modal__header">
-        <span class="title">Create manager</span>
-      </header>
-      <main>
-        <ValidationObserver>
-          <form @submit.prevent id="create-manager-form">
-            <b-row>
-              <b-col>
-                <ValidationProvider>
-                  <b-form-group label="Name" label-for="name">
-                    <b-form-select :options="users" :value="null" name="name" />
-                  </b-form-group>
-                </ValidationProvider>
-              </b-col>
-              <b-col>
-                <ValidationProvider>
-                  <b-form-group label="Hospital" label-for="health_institute">
-                    <b-form-select :options="hospitals" :value="null" name="health_institute" />
-                  </b-form-group>
-                </ValidationProvider>
-              </b-col>
-            </b-row>
-            <footer class="x-modal__footer">
-              <button @click="doCreateManager" class="btn btn-action main-action">Create</button>
-              <button class="btn btn-action" @click="$bvModal.hide('create-manager-modal')">Cancel</button>
-              
-            </footer>
-
-          </form>
-        </ValidationObserver>
-      </main>
-      
-    </b-modal>
-    <b-modal hide-header hide-footer  body-class="x-modal" id="delete-manager-modal">
-      <header class="x-modal__header">
-        <span class="title">Delete manager</span>
-      </header>
-      <main>
-        Are you sure you want to delete: Manager {{currManager.user_is_manager_id}} ?
-        <footer class="x-modal__footer">
-          <button @click="doDeleteManager(currManager.user_is_manager_id)" 
-          class="btn btn-action main-action">Delete</button>
-          <button class="btn btn-action" @click="$bvModal.hide('delete-manager-modal')">Cancel</button>
-          
-        </footer>
-
-      </main>
-      
-    </b-modal>
+    <footer class="fixed-footer">
+      <button class="btn btn-footer-action" @click="openCreateModal">Create Manager</button>
+    </footer>
   </div>
 </template>
 <script lang="ts">

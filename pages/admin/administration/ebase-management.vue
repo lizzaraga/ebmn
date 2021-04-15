@@ -1,67 +1,73 @@
 <template>
-  <div>
-    <button @click="openCreateModal" class="mx-4 my-2 btn btn-primary">Create clerk</button>
-    <div class="data clerks">
-      <div class="card-data clerk" :key="clerk.user_is_clerk_id" v-for="clerk in clerks">
-        <header>
-          <span class="title">Clerk</span>
-          <div class="actions">
-            <span @click="openDeleteModal(clerk)" class="action">
-              <i class="bi bi-x-square"></i>
-            </span>
-          </div>
+  <div class="data-grid">
+    <div class="data-grid-main">
+      
+      <div class="patient-data-grid">
+        <div class="data-item" :key="clerk.user_is_clerk_id" v-for="clerk in clerks">
+          <header>
+            <div class="title-field">
+              <span class="title-key">Clerk Id:</span>
+              <span class="title-value">{{clerk.user_is_clerk_id}}</span>
+            </div>
+            <div class="actions">
+              <i @click="openDeleteModal(clerk)" class="bi bi-x-square action"></i>
+            </div>
+          </header>
+          <main>
+            <div class="data-row">
+              <span class="data-key">Clerk name</span>
+              <span class="data-value">{{clerk.user}}</span>
+            </div>
+          </main>
+        </div>
+      </div>
+      <b-modal hide-header hide-footer  body-class="x-modal" id="create-clerk-modal">
+        <header class="x-modal__header">
+          <span class="title">Create clerk</span>
         </header>
         <main>
-          <div class="d-flex flex-column card-data-item">
-            <span class="key">Clerk name</span>
-            <span class="value">{{clerk.user}}</span>
-          </div>
+          <ValidationObserver>
+            <form @submit.prevent id="create-clerk-form">
+              <b-row>
+                <b-col>
+                  <ValidationProvider>
+                    <b-form-group label="Name" label-for="name">
+                      <b-form-select :options="users" :value="null" name="name" />
+                    </b-form-group>
+                  </ValidationProvider>
+                </b-col>
+              </b-row>
+              <footer class="x-modal__footer">
+                <button @click="doCreateClerk" class="btn btn-action main-action">Create</button>
+                <button class="btn btn-action" @click="$bvModal.hide('create-clerk-modal')">Cancel</button>
+                
+              </footer>
+
+            </form>
+          </ValidationObserver>
         </main>
-      </div>
+        
+      </b-modal>
+      <b-modal hide-header hide-footer  body-class="x-modal" id="delete-clerk-modal">
+        <header class="x-modal__header">
+          <span class="title">Delete clerk</span>
+        </header>
+        <main>
+          Are you sure you want to delete: Clerk {{currClerk.user_is_clerk_id}} ?
+          <footer class="x-modal__footer">
+            <button @click="doDeleteClerk(currClerk.user_is_clerk_id)" 
+            class="btn btn-action main-action">Delete</button>
+            <button class="btn btn-action" @click="$bvModal.hide('delete-clerk-modal')">Cancel</button>
+            
+          </footer>
+        </main>
+        
+
+      </b-modal>
     </div>
-    <b-modal hide-header hide-footer  body-class="x-modal" id="create-clerk-modal">
-      <header class="x-modal__header">
-        <span class="title">Create clerk</span>
-      </header>
-      <main>
-        <ValidationObserver>
-          <form @submit.prevent id="create-clerk-form">
-            <b-row>
-              <b-col>
-                <ValidationProvider>
-                  <b-form-group label="Name" label-for="name">
-                    <b-form-select :options="users" :value="null" name="name" />
-                  </b-form-group>
-                </ValidationProvider>
-              </b-col>
-            </b-row>
-            <footer class="x-modal__footer">
-              <button @click="doCreateClerk" class="btn btn-action main-action">Create</button>
-              <button class="btn btn-action" @click="$bvModal.hide('create-clerk-modal')">Cancel</button>
-              
-            </footer>
-
-          </form>
-        </ValidationObserver>
-      </main>
-      
-    </b-modal>
-    <b-modal hide-header hide-footer  body-class="x-modal" id="delete-clerk-modal">
-      <header class="x-modal__header">
-        <span class="title">Delete clerk</span>
-      </header>
-      <main>
-        Are you sure you want to delete: Clerk {{currClerk.user_is_clerk_id}} ?
-        <footer class="x-modal__footer">
-          <button @click="doDeleteClerk(currClerk.user_is_clerk_id)" 
-          class="btn btn-action main-action">Delete</button>
-          <button class="btn btn-action" @click="$bvModal.hide('delete-clerk-modal')">Cancel</button>
-          
-        </footer>
-      </main>
-      
-
-    </b-modal>
+    <footer class="fixed-footer">
+      <button class="btn btn-footer-action" @click="openCreateModal">Create Clerk</button>
+    </footer>
   </div>
 </template>
 <script lang="ts">
