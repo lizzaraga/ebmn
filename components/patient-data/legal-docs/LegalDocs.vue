@@ -120,7 +120,7 @@ export default class LegalDocs extends Vue{
     return parts.pop()
   }
   async mounted(){
-    await this.ldStore.getDocs(27)
+    await this.ldStore.getDocs(this.patientId)
   }
 }
 </script>

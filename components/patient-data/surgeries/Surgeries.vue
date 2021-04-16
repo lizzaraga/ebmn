@@ -78,7 +78,7 @@
     </footer>
     <edit-surgery-modal @edit="onEditSg" :sg="currentSg"/>
     <delete-surgery-modal @delete="onDeleteSg" :sg="currentSg"/>
-    <create-surgery-modal @create="onCreateSg"/>
+    <create-surgery-modal :patientId="patientId" @create="onCreateSg"/>
   </div>
 </template>
 <script lang="ts">

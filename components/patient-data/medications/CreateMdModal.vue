@@ -139,7 +139,7 @@ import { getModule } from 'vuex-module-decorators';
 import AuthStore from '~/store/auth-store';
 import hospitalApi from '~/api/hospital.api';
 import hiApi from '~/api/hi.api';
-import { Watch } from 'nuxt-property-decorator';
+import { Prop, Watch } from 'nuxt-property-decorator';
 import { IRxNormLabel } from '~/api/models/patient-data.model';
 import { IHealthInstitute } from '~/api/models/hospital.model';
 @Component({
@@ -149,6 +149,7 @@ import { IHealthInstitute } from '~/api/models/hospital.model';
   }
 })
 export default class CreateMdModal extends Vue{
+  @Prop({required: true}) patientId!:number
   private authStore = getModule(AuthStore, this.$store)
   rxnormLabels: IRxNormLabel[] = [] 
   his: IHealthInstitute[] = []
@@ -297,7 +298,7 @@ export default class CreateMdModal extends Vue{
     try {
       const {token} = this.authStore.user
       //@ts-ignore
-      this.problems = (await patientDataApi.getProblems(token!!, 27)).map(e => {
+      this.problems = (await patientDataApi.getProblems(token!!, this.patientId)).map(e => {
         return {
           value: e.problem_id, text: e.problem_name
         }

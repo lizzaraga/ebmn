@@ -13,8 +13,10 @@
         </nuxt-link>
         <form id="search-patient-id-form" v-if="patientId != -1" @submit.prevent="onSearchPatientId">
           <div class="form-group search" style="margin:0; margin-right: 0.8rem;">
-            <input @blur="onSearchbarBlur" name="user_id"  v-model="patientCode"  :class='{"expand": expandSearchBar}' placeholder="Type patient code" type="text" class="form-control">
+            <!-- <input @blur="onSearchbarBlur" name="user_id"  v-model="patientCode"  :class='{"expand": expandSearchBar}' placeholder="Type patient code" type="text" class="form-control">
+            <i @click="onSearchIconClick" class="bi bi-search search-icon"></i> -->
             <i @click="onSearchIconClick" class="bi bi-search search-icon"></i>
+            <input type="text" name="user_id" placeholder="Search patient by code"  v-model="patientCode">
           </div>
         </form>
       </div>
@@ -202,24 +204,23 @@ main{
 .form-group.search{
   background-color: transparent;
   position: relative;
-
+  background-color: #f5f5f5;
+  overflow: hidden;
+  height: 40px;
+  border-radius: 20px;
   input{
-    background-color: white;
-    border-color: 1px solid #eee;
-    padding-right: 40px;
-    border-radius: 8px;
-    height: 45px;
-    width: 50px;
+    width: 100%;
+    padding-left: 40px;
+    border: none;
+    background-color: #fff0;
+    height: 100%;
+    width: 250px;
     font-size: 0.8rem;
-    
-    
+    outline: none;
     transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
-    &.expand{
-      width: 250px;
-    }
+    
     &:focus{
-      border-color: rgba($color: #C2DEFF, $alpha: 0.5);
-      box-shadow: 0 0 0 3px rgba($color: #C2DEFF, $alpha: 0.4);
+      outline: none;
     }
     &::placeholder{
       
@@ -229,15 +230,17 @@ main{
   }
   .search-icon{
     cursor: pointer;
-    color: $primary-color;
+    color: #666;
     position: absolute;
-    right: 0;
+    left: 0;
     top: 0;
-    width: 55px;
-    height: 45px;
+    width: 40px;
+    height: 40px;
+    font-size: 0.9rem;
     display: flex;
     align-items: center;
     justify-content: center;
+    
   }
   .searchbar-results{
     position: absolute;

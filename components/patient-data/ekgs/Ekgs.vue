@@ -66,8 +66,8 @@
       <button class="btn btn-footer-action" @click="openCreateEkg">Create Ekg</button>
     </footer>
     <delete-ekg-modal @delete="onDeleteEkg" :ekg="currentEkg"/>
-    <edit-ekg-modal @edit="onEditEkg" :ekg="currentEkg"/>
-    <create-ekg-modal @create="onCreateEkg"/>
+    <edit-ekg-modal  @edit="onEditEkg" :ekg="currentEkg"/>
+    <create-ekg-modal :patientId="patientId" @create="onCreateEkg"/>
   </div>
 </template>
 <script lang="ts">

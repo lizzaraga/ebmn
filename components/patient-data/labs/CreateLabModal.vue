@@ -62,7 +62,7 @@
   </b-modal>
 </template>
 <script lang="ts">
-import { Component, getModule, Watch } from 'nuxt-property-decorator'
+import { Component, getModule, Prop, Watch } from 'nuxt-property-decorator'
 import Vue from 'vue'
 import hiApi from '~/api/hi.api'
 import hospitalApi from '~/api/hospital.api'
@@ -74,6 +74,7 @@ import ProblemStore from '~/store/patient-data/problem-store'
 
 @Component
 export default class CreateLabModal extends Vue{
+  @Prop({required: true}) patientId!:number
   private hospitalStore = getModule(HospitalStore, this.$store) 
   private authStore = getModule(AuthStore, this.$store)
   private problemStore = getModule(ProblemStore, this.$store)
@@ -171,7 +172,7 @@ export default class CreateLabModal extends Vue{
       alert("Get hospitals failed")
     }
     try {
-      await this.problemStore.getProblems(27)
+      await this.problemStore.getProblems(this.patientId)
       const pbs = this.problemStore.problems.map(p => {
         return {
           text: p.problem_name, value: p.problem_id

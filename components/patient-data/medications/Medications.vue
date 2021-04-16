@@ -89,7 +89,7 @@
     </footer>
     <delete-md-modal @delete="onDeleteMd" :md="currentMd"/>
     <edit-md-modal @edit="onEditMd" :md="currentMd"/>
-    <create-md-modal @create="onCreateMd"/>
+    <create-md-modal :patientId="patientId" @create="onCreateMd"/>
   </div>
 </template>
 <script lang="ts">

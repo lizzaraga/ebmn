@@ -50,7 +50,7 @@ export default class LDStore extends VuexModule{
   async deleteDoc({patientId, docId}: {patientId: number, docId: number}){
     const token = this.context.rootGetters['auth-store/token']
     try {
-      await patientDataApi.deleteAS(token, docId)
+      await patientDataApi.deleteLegalDoc(docId, token)
       this.context.dispatch('getDocs', patientId)
     } catch (error) {
       alert("Delete legal doc failed")

@@ -100,7 +100,7 @@
               </div>
               <div class="data-row">
                 <span class="data-key">Ordered at</span>
-                <span class="data-value">{{oRef.ordered_at}}</span>
+                <span class="data-value">{{iRef.ordered_at}}</span>
               </div>
             </main>
           </div>

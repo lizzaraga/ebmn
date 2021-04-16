@@ -73,7 +73,7 @@
     </div>
     <delete-lab-modal @delete="onDeleteLab" :lab="currentLab"/>
     <edit-lab-modal @edit="onEditLab" :lab="currentLab"/>
-    <create-lab-modal @create="onCreateLab"/>
+    <create-lab-modal :patientId="patientId" @create="onCreateLab"/>
     <footer class="fixed-footer">
       <button class="btn btn-footer-action" @click="openCreateLab">Create Lab</button>
     </footer>

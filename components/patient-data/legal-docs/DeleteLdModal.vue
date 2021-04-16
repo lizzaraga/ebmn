@@ -25,6 +25,8 @@ export default class DeleteLdModal extends Vue{
 
   doDeleteLd(){
     this.$emit('delete', this.ld)
+    //@ts-ignore
+    this.$bvModal.hide('delete-ld-modal')
   }
 }
 </script>

@@ -113,7 +113,7 @@ export default class Allergies extends Vue{
     return moment(date).format('MMM Do YYYY, [<br/>] h:mm:ss a')
   }
   async mounted(){
-    await this.allergyStore.getAllergies(27)
+    await this.allergyStore.getAllergies(this.patientId)
   }
 }
 </script>

@@ -66,7 +66,7 @@
     </footer>
     <delete-rd-modal @delete="onDeleteRd" :rd="currentRd"/>
     <edit-rd-modal @edit="onEditRd" :rd="currentRd"/>
-    <create-rd-modal @create="onCreateRd"/>
+    <create-rd-modal :patientId="patientId" @create="onCreateRd"/>
   </div>
 </template>
 <script lang="ts">

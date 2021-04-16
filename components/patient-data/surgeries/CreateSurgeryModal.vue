@@ -110,7 +110,7 @@
 import Vue from 'vue'
 import Component from 'vue-class-component';
 import {ValidationProvider, ValidationObserver} from 'vee-validate'
-import { getModule, Watch } from 'nuxt-property-decorator';
+import { getModule, Prop, Watch } from 'nuxt-property-decorator';
 import hospitalApi from '~/api/hospital.api';
 import AuthStore from '~/store/auth-store';
 import ProblemStore from '~/store/patient-data/problem-store';
@@ -124,6 +124,7 @@ import hiApi from '~/api/hi.api';
   }
 })
 export default class CreateSgModal extends Vue{
+  @Prop({required: true}) patientId!:number
   private authStore = getModule(AuthStore, this.$store)
   private problemStore = getModule(ProblemStore, this.$store)
   problems = []
@@ -244,7 +245,7 @@ export default class CreateSgModal extends Vue{
       alert("Get hospitals failed")
     }
     try {
-      await this.problemStore.getProblems(27)
+      await this.problemStore.getProblems(this.patientId)
       // @ts-ignore
       this.problems = this.problemStore.problems.map(p => {
         return {
