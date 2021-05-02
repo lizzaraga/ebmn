@@ -15,6 +15,12 @@ export default class AllergyStore extends VuexModule{
   SET_ALLERGIES(data: IAllergy[]){
     this.allergies = data
   }
+  @VuexMutation
+  RESET_STORE(){
+    this.allergies = []
+    
+  }
+
 
   // ACTIONS
 

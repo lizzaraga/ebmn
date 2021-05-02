@@ -27,6 +27,10 @@ export default class AuthStore extends VuexModule{
   setUser(user: IUser){
     this.user = user
   }
+  @VuexMutation
+  RESET_STORE(){
+    this.user = {}
+  }
   
   @VuexAction({rawError: true})
   async login(loginForm: ILogin){

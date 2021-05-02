@@ -15,6 +15,11 @@ export default class ProblemStore extends VuexModule{
   SET_PROBLEMS(data: IProblem[]){
     this.problems = data
   }
+  @VuexMutation
+  RESET_STORE(){
+    this.problems = []
+    
+  }
 
   // ACTIONS
 

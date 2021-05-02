@@ -63,6 +63,18 @@ export default class ManagerStore extends VuexModule{
   setSurgeries(data: IClerkSurgery[]){
     this.surgeries = data
   }
+  @VuexMutation
+  RESET_STORE(){
+    this.vaccines = []
+    this.drugs = []
+    this.screenings = []
+    this.diagnosis = []
+    this.surgeries = []
+    this.healthWorkers = []
+    this.outReferrals = []
+    this.inReferrals = []
+    this.managerHpId = -1
+  }
 
   @VuexAction
   async getManagerHospital(managerId: number){

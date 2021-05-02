@@ -15,6 +15,11 @@ export default class EkgStore extends VuexModule{
   SET_EKGS(data: IEkg[]){
     this.ekgs = data
   }
+  @VuexMutation
+  RESET_STORE(){
+    this.ekgs = []
+    
+  }
 
   // ACTIONS
 

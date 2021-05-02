@@ -9,14 +9,14 @@
           <b-row>
             <b-col>
               <ValidationProvider>
-                <b-form-group label="Height" label-for="height">
+                <b-form-group label="Height [in cm]" label-for="height">
                   <b-input type="number" name="height" id="height"></b-input>
                 </b-form-group>
               </ValidationProvider>
             </b-col>
             <b-col>
               <ValidationProvider>
-                <b-form-group label="Weight" label-for="weight">
+                <b-form-group label="Weight [in kg]" label-for="weight">
                   <b-input type="number" name="weight" id="weight"></b-input>
                 </b-form-group>
               </ValidationProvider>
@@ -30,7 +30,7 @@
             </b-col>
             <b-col>
               <ValidationProvider>
-                <b-form-group label="Waist circumference" label-for="waist_circumference">
+                <b-form-group label="Waist circumference [in cm]" label-for="waist_circumference">
                   <b-input type="number" name="waist_circumference" id="waist_circumference"></b-input>
                 </b-form-group>
               </ValidationProvider>
@@ -39,21 +39,21 @@
           <b-row>
             <b-col>
               <ValidationProvider>
-                <b-form-group label="Head circumference" label-for="head_circumference">
+                <b-form-group label="Head circumference [in cm]" label-for="head_circumference">
                   <b-input type="number" name="head_circumference" id="head_circumference"></b-input>
                 </b-form-group>
               </ValidationProvider>
             </b-col>
             <b-col>
               <ValidationProvider>
-                <b-form-group label="Temperature" label-for="temperature">
+                <b-form-group label="Temperature [in deg Celcius]" label-for="temperature">
                   <b-input type="number" name="temperature" id="temperature"></b-input>
                 </b-form-group>
               </ValidationProvider>
             </b-col>
             <b-col>
               <ValidationProvider>
-                <b-form-group label="Pulse" label-for="pulse">
+                <b-form-group label="Pulse [in bpm]" label-for="pulse">
                   <b-input type="number" name="pulse" id="pulse"></b-input>
                 </b-form-group>
               </ValidationProvider>
@@ -90,7 +90,7 @@
             </b-col>
             <b-col>
               <ValidationProvider>
-                <b-form-group label="Oxygen flow rate" label-for="oxygen_flow_rate">
+                <b-form-group label="Oxygen flow rate [in L/min]" label-for="oxygen_flow_rate">
                   <b-input  name="oxygen_flow_rate" id="oxygen_flow_rate"></b-input>
                 </b-form-group>
               </ValidationProvider>
@@ -99,14 +99,14 @@
           <b-row>
             <b-col>
               <ValidationProvider>
-                <b-form-group label="Systolic bp" label-for="systolic_bp">
+                <b-form-group label="Systolic bp [in mmHg]" label-for="systolic_bp">
                   <b-input  name="systolic_bp" id="systolic_bp"></b-input>
                 </b-form-group>
               </ValidationProvider>
             </b-col>
             <b-col>
               <ValidationProvider>
-                <b-form-group label="Diastolic bp" label-for="diastolic_bp">
+                <b-form-group label="Diastolic bp [in mmHg]" label-for="diastolic_bp">
                   <b-input  name="diastolic_bp" id="diastolic_bp"></b-input>
                 </b-form-group>
               </ValidationProvider>

@@ -15,6 +15,11 @@ export default class LDStore extends VuexModule{
   SET_DOCS(data: ILegalDocument[]){
     this.docs = data
   }
+  @VuexMutation
+  RESET_STORE(){
+    this.docs = []
+    
+  }
 
   @VuexAction
   async getDocs(patientId: number){

@@ -23,6 +23,11 @@ export default class GIStore extends VuexModule{
     temp[name] = value
     this.gi = {...this.gi, ...temp}
   }
+  @VuexMutation
+  RESET_STORE(){
+    this.gi = {emergency_contacts: []}
+    
+  }
 
   @VuexAction
   async getGeneralInfo(patientId: number){

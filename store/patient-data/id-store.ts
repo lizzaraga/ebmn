@@ -13,6 +13,11 @@ export default class IdStore extends VuexModule{
   SET_PATIENT_ID(data: number){
     this.patientId = data
   }
+  @VuexMutation
+  RESET_STORE(){
+    this.patientId = -1
+    
+  }
 
   @VuexAction
   setPatientId(data: number){

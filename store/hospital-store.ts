@@ -15,6 +15,12 @@ export default class HospitalStore extends VuexModule{
   setHospitals(data: IHospital[]){
     this.hospitals = data
   }
+  @VuexMutation
+  RESET_STORE(){
+    this.hospitals = []
+    
+  }
+
 
   @VuexAction
   async getHospitals(){

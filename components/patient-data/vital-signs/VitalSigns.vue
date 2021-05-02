@@ -7,20 +7,20 @@
         <div class="vs-container" >
           <div class="titles" :class="{'with-shadow': addShadow}">
             <span>Date of update</span>
-            <span>Height</span>
-            <span>Weight</span>
+            <span>Height [in cm]</span>
+            <span>Weight [in kg]</span>
             <span>Body mass index</span>
-            <span>Waist circumference</span>
-            <span>Head circumference</span>
-            <span>Temperature</span>
-            <span>Pulse</span>
+            <span>Waist circumference [in cm]</span>
+            <span>Head circumference [in cm]</span>
+            <span>Temperature [in deg Celcius]</span>
+            <span>Pulse [in bpm]</span>
             <span>Respiratory rate</span>
             <span>Pain scale</span>
             <span>Pregnancy month</span>
             <span>Muac</span>
-            <span>Oxygen flow rate</span>
-            <span>Systolic bp</span>
-            <span>Dyastolic bp</span>
+            <span>Oxygen flow rate [in L/min]</span>
+            <span>Systolic bp [in mmHg]</span>
+            <span>Dyastolic bp [in mmHg]</span>
           </div>
           <div class="vs-table-container" :class="{'with-shadow': addShadow}" ref="scrollBox">
             <table>

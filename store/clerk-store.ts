@@ -52,6 +52,18 @@ export default class ClerkStore extends VuexModule{
     this.surgeries = data
   }
 
+  @VuexMutation
+  RESET_STORE(){
+    this.vaccines = []
+    this.drugs = []
+    this.screenings = []
+    this.diagnosis = []
+    this.surgeries = []
+    this.clerkHospital = {}
+    this.clerkHospitalHasBeenHandled = false
+  }
+  
+
   
   @VuexAction
   updateClerkHospitalHandle(data: boolean){

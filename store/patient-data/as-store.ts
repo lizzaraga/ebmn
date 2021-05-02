@@ -15,6 +15,11 @@ export default class ASStore extends VuexModule{
   SET_AS(data: IAbusiveSubstance[]){
     this.abusiveSubstances = data
   }
+  @VuexMutation
+  RESET_STORE(){
+    this.abusiveSubstances = []
+    
+  }
 
   // ACTIONS
 

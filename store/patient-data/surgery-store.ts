@@ -15,6 +15,11 @@ export default class SurgeryStore extends VuexModule{
   SET_SURGERIES(data: ISurgery[]){
     this.surgeries = data
   }
+  @VuexMutation
+  RESET_STORE(){
+    this.surgeries = []
+    
+  }
 
   // ACTIONS
 

@@ -16,6 +16,11 @@ export default class MedicationStore extends VuexModule{
   SET_MEDICATIONS(data: IMedication[]){
     this.medications = data
   }
+  @VuexMutation
+  RESET_STORE(){
+    this.medications = []
+    
+  }
 
   @VuexAction
   async getMedications(patientId: number){

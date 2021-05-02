@@ -20,6 +20,21 @@ export default class VSStore extends VuexModule{
     pulse: '', respiratory_rate: '', systolic_bp: '', temperature: '',
     waist_circumference: '', weight: ''
   }
+  @VuexMutation
+  RESET_STORE(){
+    this.vitalSigns = {
+      body_mass_index: '',
+      date_of_update: '',
+      diastolic_bp: '',
+      head_circumference: '',
+      height: '',
+      muac: '',
+      oxygen_flow_rate: '', pain_scale: '', pregnancy_month: '',
+      pulse: '', respiratory_rate: '', systolic_bp: '', temperature: '',
+      waist_circumference: '', weight: ''
+    }
+    
+  }
 
   @VuexMutation
   SET_VITAL_SIGNS(data: IVitalSigns){

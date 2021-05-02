@@ -15,6 +15,11 @@ export default class RadiologyStore extends VuexModule{
   SET_RADIOLOGIES(data: IRadiology[]){
     this.radiologies = data
   }
+  @VuexMutation
+  RESET_STORE(){
+    this.radiologies = []
+    
+  }
 
   // ACTIONS
 

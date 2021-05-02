@@ -13,6 +13,12 @@ export default class PatientStore extends VuexModule{
   setEmergencies(data: IEmergency[]){
     this.emergencies = data
   }
+  @VuexMutation
+  RESET_STORE(){
+    this.emergencies = []
+    
+  }
+
 
   @VuexAction
   async getEmergencies(){

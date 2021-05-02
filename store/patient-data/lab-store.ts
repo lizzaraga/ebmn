@@ -15,6 +15,11 @@ export default class LabStore extends VuexModule{
   SET_LABS(data: ILab[]){
     this.labs = data
   }
+  @VuexMutation
+  RESET_STORE(){
+    this.labs = []
+    
+  }
 
   @VuexAction
   async getLabs(patientId: number){

@@ -39,6 +39,13 @@ export default class AdminStore extends VuexModule{
     this.users = data
   }
 
+  @VuexMutation
+  RESET_STORE(){
+    this.managers = []
+    this.clerks = []
+    this.guidelines = []
+    this.users = []
+  }
 
   
   @VuexAction
