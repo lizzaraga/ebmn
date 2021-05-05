@@ -24,4 +24,6 @@ export default class IdStore extends VuexModule{
     this.context.commit('SET_PATIENT_ID', data)
   }
 
+  
+
 }

@@ -6,7 +6,8 @@
       </div>
       
       <div class="d-flex align-items-center flex-row-reverse">
-        <nuxt-link class="mr-4" style="font-size: 0.9rem" to="/login">
+       
+        <nuxt-link @click.native="onLogout" class="mr-4" style="font-size: 0.9rem" to="/login">
           <div class="d-flex align-items-center">
             <span>Log out</span>
           </div>
@@ -52,6 +53,7 @@ import ManagerNavbarMenuVue from '~/components/navbar-menu/ManagerNavbarMenu.vue
 import PatientNavbarMenuVue from '~/components/navbar-menu/PatientNavbarMenu.vue';
 import AuthStore from '~/store/auth-store';
 import IdStore from '~/store/patient-data/id-store';
+import ReinitStore from '~/store/reinit-store';
 @Component({
   middleware: ['auth.mid'],
   components:{
@@ -66,6 +68,7 @@ export default class Dashboard extends Vue{
 
   private authStore = getModule(AuthStore, this.$store)
   private idStore = getModule(IdStore, this.$store)
+  private reinitStore = getModule(ReinitStore, this.$store)
   user?: IUser
   expandSearchBar = false
 
@@ -114,6 +117,11 @@ export default class Dashboard extends Vue{
     } catch (error) {
       alert("An error occurred during the patient search")
     }
+  }
+
+  onLogout(){
+   
+    this.reinitStore.reinit()
   }
 
 
